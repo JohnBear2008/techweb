@@ -1,0 +1,367 @@
+<div class="contentDiv">
+
+<blockquote class="layui-elem-quote layui-text">
+<p>欢迎用户：<%-(locals.session==null)?"":locals.session.yjUser.AID%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账号有效期至:<%-locals.session.yjUser.VidDate%></p>
+
+</blockquote>
+<HR></br>
+<form class="layui-form" action="">
+
+<div class="layui-form-item">
+<label class="layui-form-label">选择代理商</label>
+ <div class="layui-input-block">
+   <select id="AID" name="AID"  lay-search="" >
+  <!-- <option value="">在系统中添加过的代理商,输入代理商编号或简称可快速选择,未添加过的代理商请先添加!</option>-->
+   </select>
+</div>
+</div>
+
+
+
+<div class="layui-form-item">
+<label class="layui-form-label">机台编号:</label>
+<div class="layui-input-block">
+    <input type="text" name="MCode" id="MCode"  placeholder="示例:MA1234567891000  最长16位,必填 " autocomplete="off" class="layui-input" value="" maxlength="16">
+</div>
+</div>
+
+<div class="layui-form-item">
+<label class="layui-form-label">客户简称:</label>
+<div class="layui-input-block">
+    <input type="text" name="Customer" id="Customer"  placeholder="可输入客户信息,方便管理查找,选填 " autocomplete="off" class="layui-input" value="" maxlength="16">
+</div>
+</div>
+
+<div class="layui-form-item">
+<div class="layui-inline">
+<label class="layui-form-label">到期日期:</label>
+<div class="layui-input-inline">
+    <input type="text" name="ASEndDay" id="ASEndDay" lay-verify="date" placeholder="YYYY-MM-DD,必选" autocomplete="off" class="layui-input" >
+</div>
+</div>
+</div>
+
+<div class="layui-form-item">
+<label class="layui-form-label">到期后:</label>
+
+    <input type="radio" name="MRadio" id="MRadio" value="1" title="继续加密" checked="checked">
+
+    <input type="radio" name="MRadio" id="MRadio" value="2" title="永久解密"> 
+
+
+</div>
+
+
+
+
+<div class="layui-form-item">
+<div class="layui-input-block">
+<button type="button" class="layui-btn" name="ASSN" id="ASSN">点击生成密钥文件</button>
+<button type="button" class="layui-btn" name="ASPW" id="ASPW">计算密码</button>
+<!---button type设定为button  不要设定为submit,设置成submit 点击按钮后会自动刷新页面---------------------------->
+</div>
+</div>
+
+  
+<div class="layui-form-item">
+<label class="layui-form-label">密码:</label>
+<div class="layui-input-block">
+    <input type="text" name="PWResult" id="PWResult"  placeholder="计算成功后此处显示解锁密码,在面板界面输入解锁,与SP密钥文件有同等效果" autocomplete="off" class="layui-input">
+</div>
+</div> 
+
+
+</form>
+
+</div>
+<!----------定义web显示内容---------------------------->
+
+
+<script type="text/javascript">
+    var  processAID="MSAgent";
+    var  subProcessAID="MSAkey";
+    var g_ScreenFlat=$(window).width()>1366?true:false;
+    
+  
+    $(function(){
+        g_subProcesses.renderAgentSP=function(){
+        	
+        	var VidDate="<%-locals.session.yjUser.VidDate%>";
+        	
+        	var maxDate=getMaxDate(VidDate);
+//定义界面日期FORM界面-----------	
+        	layui.use(['form','layedit', 'laydate'], function(){
+        	    var form = layui.form
+        	            ,layer = layui.layer
+        	            ,layedit = layui.layedit
+        	            ,laydate = layui.laydate;
+
+
+        	    
+        	    
+        	    var laydate = layui.laydate;
+ 	            var DivDate= laydate.render({
+ 	            elem: '#ASEndDay',//选择器结束时间
+ 	            type: 'date',
+ 	            min:Ndate,//设置min默认最小值
+ 	            max:maxDate,
+
+ 	        });
+        	    
+        	    
+        	    //加载代理商数据---------------------------------
+          		FID="<%-locals.session.yjUser.FID%>";
+
+  			  
+      			$("#AID").empty();
+      			  
+      			  $.ajax({
+                        method:'get',
+                        data:{FID:FID},
+                        url:"/app/MSFactory/getAgentChoose",
+                        success:function(data){
+                        	
+                        	 $("#AID").append($('<option value='+""+'>'+"输入代理商编号或简称可快速选择,未添加过的代理商请先添加,必选!"+'</option>'));
+
+                            for(i=0;i<data.length;i++)
+                        	{
+                            	  $("#AID").append($('<option value='+data[i].AID+'>'+data[i].AID+data[i].AName+'</option>'));	                       	   
+                        	}
+                            form.render("select"); //不要放在for循环里否则会卡顿,最后一次性渲染即可
+
+                        },
+                        error:function(){}
+                    })
+      			        			  
+      		
+      		 //加载代理商数据---------------------------------
+
+        	 });
+        	
+//定义界面日期FORM界面-----------	
+        	
+//---------------检查信息----------------------
+        	
+        	function checkAID(){
+        		AID=$('#AID').val();
+        		if(AID!=""){
+        			return true
+        		}else{
+        			layer.alert("代理商必选,请检查,如无代理商请先新增!");
+        			return false
+        		}
+        	}
+        	
+        	
+        	
+        	//自动修改为大写------------
+            $("#MCode").blur(function(){   
+        		
+        		var MCode=$("#MCode").val();
+            	
+        		$("#MCode").val(MCode.toUpperCase());
+    			
+        	});
+        	
+        	function checkMCode(){
+            	
+//        		AID=$('#AID').val();
+        		if($('#MCode').val()==""){
+        			layer.alert("请输入机台编号！")
+        			return false 
+        		}
+        		else 
+                return true 
+        		
+            	} 
+        	
+        	
+
+        	
+        	
+        	
+        	
+        	
+
+//加密单一参数      
+        function encryptS(){
+        	
+        	$('#FInfo').val()
+        	
+        	 MCode=$("#MCode").val().toUpperCase();
+        	
+        	 Len=MCodeLen(MCode.length);
+
+    		 ASEndDay=$("#ASEndDay").val();
+    		
+
+    	     FASEndDay= moment(ASEndDay).format("YYMMDD");//格式化日期
+    		
+    		 MRadio=$("#MRadio:checked").val();
+
+    		 ses="<%-locals.session.yjUser.FID%>"+$('#AID').val();
+    		
+    		source =ses+Len+MCode+FASEndDay+MRadio;
+
+        	var cc = encryptByDESModeEBC(CryptoJS.enc.Utf8.parse(source)).toUpperCase();
+//        	layer.alert(cc);
+        	return cc;
+        	}
+        	
+
+        
+
+        
+        
+        function getPW(){
+        	
+        	
+            MCode=$("#MCode").val().toUpperCase();
+
+        	
+        	Len=MCodeLen(MCode.length);
+
+
+    		 ASEndDay=$("#ASEndDay").val();
+    		
+
+    	     FASEndDay= moment(ASEndDay).format("YYMMDD");//格式化日期
+    		
+    		 MRadio=$("#MRadio:checked").val();
+
+    		 ses="<%-locals.session.yjUser.FID%>"+$('#AID').val();
+    		
+
+    		 partA=ses+Len+MCode;
+    		 Alen=partA.length;
+    		 
+
+    		
+
+    		partB=FASEndDay+MRadio;
+    		
+
+    		PW=PWenc(partA,partB).toUpperCase();
+    		layer.alert("计算密码成功!");
+    		$("#PWResult").val(PW);
+    		return PW;
+
+  		
+
+        	
+        }
+//        	
+//定义记录信息函数     	
+        function logInfo(data){
+            $.ajax({
+                method:'post',
+                url:'/app/MSFactory/logInfo',
+                data:data,
+                success:function(data,textStatus){
+
+                    
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown){
+                	
+
+                }
+            })
+        }
+//-----------------------------        
+//          
+           //定义按下生成平均密钥时运行函数
+             $('#ASSN').off("click").on("click",function(){
+            	 
+            	 var ASEndDay=$("#ASEndDay").val();
+            	 
+            	 if(checkAID()&&checkMCode()&&VidDateContrast(ASEndDay,VidDate)){
+         			
+         			var ssp=encryptS();
+         			
+         			if($("#MRadio:checked").val()==2){
+         				var Ptype="YES"    				
+         			}else{
+         				var Ptype="NO"
+         			}
+
+         			var data={
+         					 UID:"<%-locals.session.yjUser.AID%>",
+         					 MKID:"<%-locals.session.yjUser.FID%>",
+                             AGID:$('#AID').val(),
+                             MCID:$("#MCode").val().toUpperCase(),
+                             Customer:$('#Customer').val(),
+                             EndDate:$("#ASEndDay").val(),
+                             CreateDate:Ndate,
+                             SP:ssp,
+                             PW:"",
+                             Type:Ptype,
+                             FQ:"NO",
+                             downloadNum:"1"
+         			}
+         			
+         			
+         			
+//         			alert("发送"+JSON.stringify(data));
+
+         			logInfo(data);
+         			
+         			
+
+                	 var blob = new Blob([ssp], {});//去除文件头参数
+                	saveAs(blob, data.MCID+"_"+moment(data.EndDate).format("YYMMDD")+".sp");//为保存的文件名
+         			
+         		}
+
+                    		
+             })
+             
+             
+             
+             
+//定义 按下计算密码按钮时函数        
+             $('#ASPW').off("click").on("click",function(){
+            	 
+            	 var ASEndDay=$("#ASEndDay").val();            	 
+            	 if(checkAID()&&checkMCode()&&VidDateContrast(ASEndDay,VidDate)){
+            	 
+            	 var ssp=encryptS();
+            	 var spw=getPW();
+            	 
+            	 if($("#MRadio:checked").val()==2){
+      				var Ptype="YES"    				
+      			}else{
+      				var Ptype="NO"
+      			}
+            	 
+      			 var data={
+      					  UID:"<%-locals.session.yjUser.AID%>",
+      					  MKID:"<%-locals.session.yjUser.FID%>",
+                          AGID:$('#AID').val(),
+                          MCID:$("#MCode").val().toUpperCase(),
+                          Customer:$('#Customer').val(),
+                          EndDate:$("#ASEndDay").val(),
+                          CreateDate:Ndate,
+                          SP:ssp,
+                          PW:spw,
+                          Type:Ptype,
+                          FQ:"NO",
+                          downloadNum:"0"
+      			 }
+      		
+ 
+
+      			logInfo(data);
+            	  
+            	 
+            	 }
+              })
+        	
+              
+              
+              
+              
+
+            
+        }
+    }); 
+</script>

@@ -1,0 +1,38 @@
+<% layout('./MSFactory.ejs') -%> 
+<% block('AgentAdmin',partial("./AgentAdmin.ejs")) -%> 
+<% block('AgentAdd',partial("./AgentAdd.ejs")) -%> 
+<% block('AgentUpdate',partial("./AgentUpdate.ejs")) -%> 
+<% block('AgentSP',partial("./AgentSP.ejs")) -%> 
+<% block('AgentSPAdmin',partial("./AgentSPAdmin.ejs")) -%> 
+<% block('MSFMK',partial("./MSFMK.ejs")) -%> 
+<script type="text/javascript" src="/js/fileSaver.min.js"></script>
+<script type="text/javascript" src="/js/zip.js"></script>
+<script type="text/javascript" src="/js/mime-types.js"></script>
+<script type="text/javascript" src="/js/deflate.js"></script>
+<script type="text/javascript" src="/js/ZipArchive.js"></script>
+<script type="text/javascript"  src="/js/tripledes.js"></script>
+<script type="text/javascript"  src="/js/core.js"></script>
+<script type="text/javascript"  src="/js/var.js"></script>
+<script type="text/javascript"  src="/js/tkfuns.js"></script>
+<script type="text/javascript"  src="/js/tkenc.js"></script>
+<script type="text/javascript"  src="/js/mode-ecb.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/divContent.css">
+<script type="text/javascript"  src="/css/divcss/layui/layui.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/divcss/layui/css/layui.css">
+
+
+
+<script type="text/javascript">
+    var  processAID="MSFactory";
+    var  subProcessAID="AgentAdmin";
+    $(function(){
+    	
+    	var OID="<%-locals.session.yjUser.AID%>".substring(3,6);
+//    	alert(OID);
+    	if(OID>1){
+    		window.location.href="/app/account/logout";
+    	}
+    	
+        g_subProcesses["render"+subProcessAID]();
+    });
+</script>

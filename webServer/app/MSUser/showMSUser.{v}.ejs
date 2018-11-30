@@ -1,0 +1,19 @@
+<% layout('./MSUser.ejs') -%> 
+<% block('userInfo',partial("./userInfo.ejs")) -%> 
+<% block('userPW',partial("./userPW.ejs")) -%> 
+
+
+
+<% script("/socket.io/socket.io.js") -%>
+<link rel="stylesheet" type="text/css" href="/css/divContent.css">
+<script type="text/javascript"  src="/css/divcss/layui/layui.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/divcss/layui/css/layui.css">
+
+
+<script type="text/javascript">
+    var  processAID="MSUser";
+    var  subProcessAID="userInfo";
+    $(function(){
+        g_subProcesses["render"+subProcessAID]();
+    });
+</script>

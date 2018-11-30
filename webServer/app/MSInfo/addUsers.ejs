@@ -1,0 +1,403 @@
+<div class="contentDiv">
+
+<blockquote class="layui-elem-quote layui-text">
+使用注意事项:</br>
+	1.该工具用于添加停机工具WEB版厂家账号或厂家代理商账号 </br>
+	2.输入厂商编码查找厂商需注意大写,小写编号无法查找到厂商</br>
+	3.选择厂商权限时,代理商编号可不输入,默认为001
+	4.账号默认初始密码为123456
+</blockquote>
+	
+	
+	
+	<p>欢迎用户：<%-(locals.session==null)?"":locals.session.yjUser.AID%><%-locals.session.yjUser.name%> 登录系统</p>  
+	<HR></br>
+	
+	
+	<form class="layui-form" id="UserAddForm" action="">
+	
+	<div class="layui-form-item">
+       <label class="layui-form-label">选择厂家</label>
+        <div class="layui-input-block">
+          <select id="UserFInfo" name="UserFInfo"  lay-search="" maxlength="20">
+          <option value="">输入正确厂家编号或厂家名称可快速选择</option>
+          </select>
+      </div>
+    </div>
+    
+    <div class="layui-form-item">
+    <label class="layui-form-label">账号类型:</label>
+        <input type="radio" name="UserType" id="UserType" value="1" title="厂家权限" checked="checked" class="rad" lay-filter="aaa">
+        <input type="radio" name="UserType" id="UserType" value="2" title="代理商权限" class="rad" lay-filter="aaa"> 
+    </div>
+
+    
+    <div class="layui-form-item">
+    <label class="layui-form-label">代理商编号:</label>
+    <div class="layui-input-inline">
+        <input type="text" name="ACode" id="ACode"  placeholder="可输002-998 " autocomplete="off" class="layui-input" maxlength="3" value="001"  disabled="disabled">
+    </div>
+    </div>
+    
+    
+    <div class="layui-form-item"  >
+    <label class="layui-form-label">初始密码:</label>
+    <div class="layui-input-inline">
+        <input type="password" name="IntPW" id="IntPW"  placeholder="密码不输入默认设为123456 " autocomplete="off" class="layui-input" >
+    </div>
+    </div>
+
+    <div class="layui-form-item">
+    <label class="layui-form-label">账号到期日:</label>
+    <div class="layui-input-inline">
+        <input type="text" name="VidDate" id="VidDate" lay-verify="date" placeholder="YYYY-MM-DD" autocomplete="off" class="layui-input">
+    </div>
+    </div>
+    
+    
+    <div class="layui-form-item">
+    <label class="layui-form-label">备注信息:</label>
+    <div class="layui-input-block">
+        <input type="text" name="AddInfo" id="AddInfo"  placeholder="可记录该账号相关信息,可不填写 " autocomplete="off" class="layui-input" >
+    </div>
+    </div>
+
+    
+    <div class="layui-form-item">
+    <div class="layui-input-block">
+	<button type="button" class="layui-btn" name="AddUserDone" id="AddUserDone">确认添加账号</button>
+	</div>
+	</div>
+
+	
+	</form>
+	
+	
+
+	
+</div>
+<!------定义web显示内容---------------------------->
+
+
+
+<script type="text/javascript">
+
+    
+// 用Diffie-Hellman非对称算法解密
+   
+
+    var  processAID="MSInfo";
+    var  subProcessAID="addUsers";
+    var g_ScreenFlat=$(window).width()>1366?true:false;
+	
+    
+
+    
+    $(function(){
+    	
+        g_subProcesses.renderaddUsers=function(){
+        	
+//----检测账号有效性-----------------------
+        	
+        	function checkAccount(date){
+        		 Ndate=CurentTime();
+        		var VidDate="<%-locals.session.yjUser.VidDate%>";
+        		
+        		
+        		if(VidDate<Ndate){
+        			
+        			alert("该账号已过期,请及联系厂家!");
+        			window.location.href="/app/account/logout";
+        		}
+        	}
+        	checkAccount();
+        	
+        	
+        	
+ //------------定义表单--------------------       	
+        	layui.use(['form','layedit', 'laydate'], function(){
+        		  var form = layui.form
+  	            ,layer = layui.layer
+	            ,layedit = layui.layedit
+	            ,laydate = layui.laydate;
+
+	            //日期
+	           laydate.render({
+	             elem: '#VidDate',
+	             min:Ndate,
+	           });
+	           
+	           
+	           form.on('radio(aaa)', function (data) {        
+	               
+	                if ($("#UserType:checked").val() == "1") {
+	                	
+	                	$("#ACode").val("001");
+	                	$("#ACode").attr("disabled","disabled");
+
+	                }else {
+	                	
+	                	$("#ACode").removeAttr("disabled");//要变成Enable，JQuery只能这么写 
+	                	$("#ACode").val("");
+
+	                }
+	                form.render();
+	            });
+
+
+        		  
+        		  
+                 //加载工厂数据---------------------------------
+	           
+	           $("#UserFInfo").empty();
+	           
+	           $.ajax({
+                   method:'get',
+                   data:'',
+                   url:"/app/MSInfo/getFactory",
+                   success:function(data){
+                	   
+               	   $("#UserFInfo").append($('<option value='+""+'>'+"输入正确厂家编号或厂家名称可快速选择"+'</option>'));
+
+                       for(i=0;i<data.length;i++)
+                   	{
+                       	  $("#UserFInfo").append($('<option value='+data[i].FID+'>'+data[i].FID+data[i].FName+'</option>'));	
+                       	   
+                   	}
+                       form.render("select"); //不要放在for循环里否则会卡顿,最后一次性渲染即可
+
+                   },
+                   error:function(){}
+               })
+	           
+//        		  if($("select option").size()<5){//判断select 多项选项,过少者重新加载,会出现偶而不加载的情况
+//        			  
+//        		  }
+        		  
+        		  
+
+        		  
+        		  
+        		//-------------------------------------------      
+        		   
+
+        	    });
+//-----------------------------------------------------------
+        	
+        	
+        	
+        	
+ 	
+        	//设置起始分期日为默认当前日期
+        	function CurentTime()
+        	    { 
+        	        var now = new Date();
+        	        var year = now.getFullYear();       //年
+        	        var month = now.getMonth() + 1;     //月
+        	        var day = now.getDate();            //日   
+        	        var clock = year + "-";
+        	         if(month < 10)
+        	            clock += "0";
+        	        clock += month + "-";
+        	        if(day < 10)
+        	           clock += "0";
+        	        clock += day + "";
+        	        return clock; 
+        	    }
+        
+
+//---------------------------------- 	
+
+//----------定义输入信息检查模块---------------------------     	
+//定义日期合法性检查
+        	function checkDate(sDate){  
+        		var mp=/\d{4}-\d{2}-\d{2}/; 
+        		var matchArray = sDate.match(mp);     
+        		if (matchArray==null){
+        			layer.alert("日期不能为空!");
+        			return false;   
+        		}
+        		var Ndate=CurentTime();
+        		if (sDate<Ndate){
+        			layer.alert("不能小于今日日期,请检查!");
+        			return false;   
+        		}
+        			   
+        		var iaMonthDays = [31,28,31,30,31,30,31,31,30,31,30,31];     
+        		var iaDate = new Array(3);     
+        		var year, month, day;             
+        		iaDate = sDate.split("-");          
+        		year = parseFloat(iaDate[0])      
+        		month = parseFloat(iaDate[1])      
+        		day=parseFloat(iaDate[2])       
+        		if ( year > 2100) {
+        			layer.alert("存在输入日期或过大,请检查!");
+        			return false;    
+        		}
+        			   
+        		if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)) iaMonthDays[1]=29;       if (month < 1 || month > 12){
+        			layer.alert("存在不合规日期,请检查!");
+        			return false;  
+        		}
+        			     
+        		if (day < 1 || day > iaMonthDays[month - 1]) {
+        			layer.alert("存在不合规日期,请检查!");
+        			return false; 
+        		}
+        			 
+        		return true;   
+        		}  
+        	
+//-----------------------------------------------------  
+        	
+
+        	
+        	
+        	//-----检查为空----------
+        	function checkNotNull(Info){
+        		
+        		if(Info==""){
+        			return false
+        		}else{
+        			return true
+        		}
+        		
+        	}
+        	//-------------------
+        	
+        	
+        	//定义发送用户信息函数     	
+            function postUserInfo(data){
+                $.ajax({
+                    method:'post',
+                    url:'/app/MSInfo/addUsers',
+                    data:data,
+                    success:function(data,textStatus){
+	                    	if(data.affectedRows!=0){
+	                    		alert("添加成功!")
+	                    		
+//	                    		location.href="/app/MSInfo/users";
+
+	                    	}
+//                    	alert(JSON.stringify(data));
+	                    	
+	                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                    	
+                    	alert("已存在相同账号,添加失败!")
+                    	
+                    }
+                })
+            }
+    //-----------------------------        
+        	
+        	function authUser(data){
+        		$.ajax({
+	                    method:'post',
+	                    url:'/app/MSInfo/authUsers',
+	                    data:data,
+	                    success:function(data,textStatus){
+//	                    	if(data.affectedRows!=0){
+//	                    		alert("授权成功!")		
+//	                    	}
+	                    	alert(data);
+	                    	location.reload();
+	                    },
+	                    error:function(XMLHttpRequest, textStatus, errorThrown){
+	                    	
+	                    }
+	                })	
+        	}
+        	
+        	
+//--------------------------------------------------        	
+ 
+        	
+            $('#AddUserDone').off("click").on("click",function(){
+
+            	var FInfo=$('#UserFInfo option:selected').val();
+            	var FName=$('#UserFInfo option:selected').text().slice(3);
+            	var UserType=$("#UserType:checked").val();
+            	var IntPW=$("#IntPW").val(); 	
+            	var VidDate=$("#VidDate").val();
+            	var AddInfo=$("#AddInfo").val();
+            	
+            	if(UserType==2){
+            		var ACode=$("#ACode").val();
+            	}else{
+            		var ACode="001";
+            	}
+            	
+            	
+            	if(IntPW==""){
+            		var IntPW="123456";
+            	}
+            	
+            	if(checkNotNull(FInfo)&&checkNotNull(ACode)&&checkDate(VidDate)){
+            		
+            		
+            		
+            		 /**
+            	     * 生成一个用不重复的ID
+            	     */
+            	    Date.prototype.format = function(format)
+            		{
+            		 var o = {
+            		 "M+" : this.getMonth()+1, //month
+            		 "d+" : this.getDate(),    //day
+            		 "h+" : this.getHours(),   //hour
+            		 "m+" : this.getMinutes(), //minute
+            		 "s+" : this.getSeconds(), //second
+            		 "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+            		 "S" : this.getMilliseconds() //millisecond
+            		 }
+            		 if(/(y+)/.test(format)) format=format.replace(RegExp.$1,
+            		 (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+            		 for(var k in o)if(new RegExp("("+ k +")").test(format))
+            		 format = format.replace(RegExp.$1,
+            		 RegExp.$1.length==1 ? o[k] :
+            		 ("00"+ o[k]).substr((""+ o[k]).length));
+            		 return format;
+            		}
+            		
+            		
+            		var TEMPOID=new Date();
+//            		alert(test.format('yyyyMMddhhmmss'));
+
+            	    var UserOID=TEMPOID.format('MMddhhmmss');//定义随机ID
+            		
+            		
+            		var data={
+            				UserOID:UserOID,
+            				FInfo:FInfo,
+            				FName:FName,
+            				UserType:UserType,
+            				ACode:ACode,
+            				IntPW:IntPW,
+            				VidDate:VidDate,
+            				AddInfo:AddInfo,
+            				}
+            		
+       		
+            		postUserInfo(data);
+            		authUser(data);
+
+            	}else{
+            		layer.alert("存在未输入信息,请检查!")
+            	}
+
+            })
+            
+            
+    
+            
+
+        	
+            
+        }
+    }); 
+</script>
+
+
+
+

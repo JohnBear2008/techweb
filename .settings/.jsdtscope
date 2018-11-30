@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="bizServer/biz/analysis/|webServer/|webServer/app/|**/node_modules/*|webServer/app/sys/|bizServer/biz/sys/|webServer/system/release/data/|**/bower_components/*|webServer/client/js/|webServer/app/warning/|webServer/app/demand/|bizServer/biz/warning/|**/*.min.js|webServer/app/analysis/|bizServer/biz/demand/|bizServer/biz/" kind="src" path=""/>
+	<classpathentry excluding="**/bower_components/*|analysis/|**/node_modules/*|warning/|**/*.min.js|sys/|demand/" kind="src" path="bizServer/biz"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="bizServer/biz/analysis"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="bizServer/biz/demand"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="bizServer/biz/sys"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="bizServer/biz/warning"/>
+	<classpathentry excluding="**/bower_components/*|app/analysis/|**/node_modules/*|app/|system/release/data/|client/js/|app/warning/|**/*.min.js|app/sys/|app/demand/" kind="src" path="webServer"/>
+	<classpathentry excluding="**/bower_components/*|analysis/|**/node_modules/*|warning/|**/*.min.js|sys/|demand/" kind="src" path="webServer/app"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="webServer/app/analysis"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="webServer/app/demand"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="webServer/app/sys"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="webServer/app/warning"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="webServer/client/js"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="webServer/system/release/data"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path=""/>
+</classpath>

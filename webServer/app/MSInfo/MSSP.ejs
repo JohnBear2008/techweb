@@ -1,0 +1,165 @@
+<div class="contentDiv">
+
+<blockquote class="layui-elem-quote layui-text">
+使用注意事项:</br>
+	1.可通过该项功能查询已生成秘钥信息.</br>
+	2.批量生成秘钥会在此处生成多个秘钥.
+</blockquote>
+	<p>欢迎用户：<%-(locals.session==null)?"":locals.session.yjUser.AID%>  品牌名称:<%-locals.session.yjUser.name%>  代理编号:<%-locals.session.yjUser.AAID%> 用户简称:<%-locals.session.yjUser.AName%> 账号有效期至:<%-locals.session.yjUser.VidDate.substring(0,10)%></p>  
+	<HR></br>
+	
+	
+	<div class="demoTable">
+	  机台编码:
+	  <div class="layui-inline">
+	    <input class="layui-input" name="SInfo" id="SInfo" autocomplete="off">
+	  </div>
+	  <button class="layui-btn" id="SInfoButton">搜索</button>
+	</div>
+
+
+	<!-- 表格 -->
+	<table class="layui-hide" id="SPInfo" lay-filter="SPInfo"></table>
+	
+	
+	
+	
+</div>
+<!------定义web显示内容---------------------------->
+
+<!-- 表格操作按钮集 -->
+<script type="text/html" id="SPBar">
+<a class="layui-btn layui-btn-primary layui-btn-small" lay-event="detail">详情</a>
+<a class="layui-btn layui-btn-small" lay-event="download">下载</a>
+
+</script>
+
+
+<script type="text/javascript">
+    var  processAID="MSInfo";
+    var  subProcessAID="MSSP";
+    var g_ScreenFlat=$(window).width()>1366?true:false;
+   
+
+    
+    $(function(){
+        g_subProcesses.renderMSSP=function(){
+        	
+        	
+        	
+        	loadSPTable();
+        	
+//------------------定义搜索按钮------------------------------	
+        	$('#SInfoButton').off("click").on("click",function(){
+          	  
+
+          	  var SInfo=$('#SInfo').val();
+          	  
+          	  loadSPTable(SInfo);
+          
+            })
+//------------------定义搜索按钮------------------------------	 
+             		
+        	
+//--------------------定义加载密钥表单函数------------------------------	 
+            
+            function loadSPTable(SInfo){
+        		
+        		layui.use('table', function(){
+          		  var table = layui.table;
+          		  
+          		  table.render({
+          			    elem: '#SPInfo'
+          			    ,height: 515
+          			    ,url: '/app/MSInfo/getSPInfo' //数据接口
+          			    ,where: {token: 'sasasas', UID:"<%-locals.session.yjUser.AID%>",SInfo:SInfo}
+          			    ,page: true //开启分页
+          			    ,request: { pageName: 'curr',limitName: 'nums'}//页码的参数名称，默认：page
+          			    ,limit:10
+          			    ,limits:[10,20,30]
+//          		        ,text:{test:"111111111111111111"}
+//          		        ,data:datatest//直接赋值
+          		  
+          			    ,cols:[[
+          			    	//表头
+          			      {field: 'UID', title: '产生账户', width:100, fixed: 'left'}
+          			      ,{field: 'MKID', title: '厂商码', width:80}
+          			      ,{field: 'AGID', title: '代理码', width:80}
+          			      ,{field: 'MCID', title: '机台编号', width:300}
+//          			      ,{field: 'CreateDate', title: '密钥产生日期', width:150}
+          			      ,{field: 'EndDate', title: '密钥到期日期', width:150} 
+//          			      ,{field: 'SP', title: '密钥', width: 240}
+//          			      ,{field: 'PW', title: '密码', width: 240}
+          			      ,{field: 'downloadNum', title: '密钥下载次数', width: 120}
+          			      ,{field: 'Type', title: '永久密钥', width: 100}
+          			      ,{field: 'FQ', title: '分期密钥', width:100}
+          			      ,{fixed: 'right', width:200, align:'center', toolbar: '#SPBar'}
+          			   
+          			    ]]
+          			  });
+          		  
+          		  table.on('tool(SPInfo)', function(obj){
+          			    var data = obj.data;
+          			    if(obj.event === 'detail'){
+          			    	layer.alert('产生用户：'+ data.UID + ' </br>'+'生成具体时间：'+data.TimeStamp+ ' </br>'+'厂商编码：'+ data.MKID + ' </br>'+'代理商码：'+ data.AGID + ' </br>'+'机台编号：'+data.MCID+ ' </br>'+'密钥到期日：'+data.EndDate+ ' </br>'+'密钥：'+data.SP+ ' </br>'+'密码：'+data.PW+ ' </br>'+'密钥下载次数：'+ data.downloadNum + ' </br>'+'是否为永久密钥：'+data.Type+ ' </br>'+'是否为分期密钥：'+data.FQ);
+//          			    } else if(obj.event === 'del'){
+//          			      layer.confirm('真的删除行么', function(index){
+//          			        obj.del();
+//          			        layer.close(index);
+//          			      });
+          			    } else if(obj.event === 'download'){
+          			    	
+//          			    	layer.msg('编辑行：<br>'+ JSON.stringify(data)) // 弹出消息框 
+          			    	
+
+          			    	var postdata={
+          			    			SPID:data.SPID,
+          			    			downloadNum:data.downloadNum+1
+          			    	}
+          			    	
+          			    	updateSP(postdata);
+          			    	
+          			    	
+          			    	 var blob = new Blob([data.SP], {});//去除文件头参数
+                  	         saveAs(blob, data.MCID+"_"+moment(data.EndDate).format("YYMMDD")+".sp");//为保存的文件名
+          			      
+          			    }
+          			  });
+          		  
+          		  
+          		  
+          		});
+        		
+        	}
+      	
+//--------------------定义加载密钥表单函数------------------------------	
+        	
+        	
+        	
+        	
+//定义更新SP记录信息函数 ---------    	
+            function updateSP(data){
+                $.ajax({
+                    method:'post',
+                    url:'/app/MSInfo/updateSP',
+                    data:data,
+                    success:function(data,textStatus){                   
+                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                    }
+                })
+            }
+//定义更新SP记录信息函数 ---------    	
+        	
+        	
+        	
+        	
+        	
+            
+        }
+    }); 
+</script>
+
+
+
+

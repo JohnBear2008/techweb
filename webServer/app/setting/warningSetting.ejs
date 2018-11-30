@@ -1,0 +1,350 @@
+<div id="Warning" class="subModel" style="padding-top: 10px">
+    <div class="title">
+        <span class="warning-tab selected" id="rules"><%-locals.ml("Send Rules")%></span>
+        <span class="warning-tab" id="email"><%-locals.ml("Email Setting")%></span>
+        <span class="warning-tab" id="sms" style="display: none"><%-locals.ml("SMS Setting")%></span>
+    </div>
+    <div class="warning-tab-pannel">
+        <div class="page-content" id="rulesPage">
+            <div style="margin-left:20px;margin:10px 0;padding:10px">
+                <div id='category' style="height:30px"></div>
+                <span style="float: left;margin-left: 5px;color:#000;font-size:18px"><%-locals.ml("Category")%>：</span>
+                <div class="saveEmailAndSMS" style='float:right;margin-right:10%;display:none'>
+                    <a href="#"  class="easyui-linkbutton" style="width:100px;height:30px;" data-options="iconCls:'icon-search'"><%-locals.ml("Save")%></a>
+                </div>
+            </div>
+            <hr style="width:auto" />
+            <div style='margin-top:10px'>
+                <div class="grid" style="width:100%;height:700px;"></div>
+            </div>
+        </div>
+        <div class="page-content" id="emailPage">
+            <div class="left">
+                <div>
+                 <%-locals.ml("Email Server setting")%>
+                </div>
+                <div class="tr" >
+                    <img src="/images/server.png" width="36px"/ style=" display: inline; ">
+                    <span class="lb"> <%-locals.ml("Server")%></span>
+                    <input id="txtEmailServer"  class="easyui-textbox" required="true"  type="text" value=""></input>
+                </div>
+                <div class="tr">
+                    <img src="/images/email.png" width="36px"/ style=" display: inline; ">
+                    <span  class="lb"> <%-locals.ml("From")%></span>
+                    <input id="txtEmailFromAddr"  class="easyui-textbox" data-options="required:true,validType:'email'" value=""></input>
+                </div>
+                <div class="tr">
+                    <img src="/images/locker.png" width="36px"/ style=" display: inline; ">
+                    <span class="lb"> <%-locals.ml("Password")%></span>
+                    <input id="txtPwd"  class="easyui-textbox"  type="password" value="" required="true" ></input>
+                </div>
+                <div style="margin-top:30px;float:right; margin-right: 10px;">
+                   <a id="btnSaveEmailServer" href="#" class="easyui-linkbutton"  data-options="width:100"> <%-locals.ml("Save")%></a>  
+                </div>
+            </div>
+            <div class="left">
+                <div >
+                     <img src="/images/email.png" width="32px" style=" display: inline; vertical-align:middle;">
+                     <%-locals.ml("Email Reciver List")%>
+                </div>
+                <div class="tr">
+                    <input  id="newReciverAddr" type="text"   class="easyui-textbox" data-options="required:true,validType:'email'" style="margin-right: 20px;width: 250px"> </input>
+                    <a id="btnAddEmail" href="#" class="easyui-linkbutton" data-options="width:100"><%-locals.ml("Add")%></a>
+                </div>
+                <div class="tr">
+                    <div style="float:left;width:250px; height:200px;border: solid 2px #A9A9A9;margin-right: 20px;">
+                        <ul  id="ulEmailList" style="font-size: 14px;padding: 0">
+                        </ul>
+                    </div>
+                    <a id="delAddEmail" href="#" class="easyui-linkbutton" data-options="width:100"><%-locals.ml("Delete")%></a>
+                </div>
+            </div>
+        </div>
+        <div class="page-content" id="smsPage" >
+        sms
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        g_subProcesses.renderWarning_Setting=function(){
+            var alarmColumns=[{
+		        field:'WarningName',
+		        align:'left',
+		        title:'<%-locals.ml("Name")%>',
+		        width:800,
+		        height:100,
+		        sortable:true
+		        },{
+		            field:'Email',
+		            align:'center',
+		            title:'<%-locals.ml("Email")%>',
+		            width:200,
+		            height:100,
+		            sortable:true,
+		            formatter:function(value,rowData,index){
+		                if(value==1){
+		                    return '<input name="EmailCheckBox" type="checkbox" checked="checked"/> '
+		                }else{
+		                    return '<input name="EmailCheckBox" type="checkbox" /> '
+		                }
+		            }
+		        },{
+		            field:'SMS',
+		            align:'center',
+		            title:'<%-locals.ml("SMS")%>',
+		            width:200,
+		            height:100,
+		            sortable:true,
+		            formatter:function(value,rowData,index){
+		                if(value==1){
+		                    return '<input name="SMSCheckBox" type="checkbox" checked="checked" /> '
+		                }else{
+		                    return '<input name="SMSCheckBox" type="checkbox" /> '
+		                }
+		                
+		            }
+		  
+		        }
+		    ];
+		    var alarmChoose=[
+		        {'alarmTypeHidden':'EEIPCS_PCS_PLC_ALARMS_W1','alarmTypeDisplay':'<%-locals.ml("ALARMS_PLC_W1")%>'},
+		        {'alarmTypeHidden':'EEIPCS_PCS_PLC_ALARMS_W2','alarmTypeDisplay':'<%-locals.ml("ALARMS_PLC_W2")%>'},
+		        {'alarmTypeHidden':'EEIPCS_PCS_INV_ALARMS_W1','alarmTypeDisplay':'<%-locals.ml("INV_ALARMS_W1")%>'},
+		        {'alarmTypeHidden':'EEIPCS_PCS_INV_ALARMS_W2','alarmTypeDisplay':'<%-locals.ml("INV_ALARMS_W2")%>'},
+		        {'alarmTypeHidden':'EEIPCS_PCS_BOOST_ALARMS_W1','alarmTypeDisplay':'<%-locals.ml("BBS1_ALARMS_W1")%>'},
+		        {'alarmTypeHidden':'EEIPCS_PCS_BOOST_ALARMS_W2','alarmTypeDisplay':'<%-locals.ml("BBS2_ALARMS_W1")%>'},
+		        {'alarmTypeHidden':'EEIPCS_PCS_BATT_ALARMS','alarmTypeDisplay':'<%-locals.ml("BBS2_ALARMS_W2")%>'}
+		    ];
+		    function loadDatagrid(data,datagridDiv,columns){
+		        var editCheckBox=0;
+		        var EmailFlag=0;
+		        var SMSFlag=0;
+		        var keepAllCheckDataObj={};
+		        var EmailCheckFlag;
+		        var SMSCheckFlag;
+		        datagridDiv.datagrid({
+		            loadMsg:'数据加载中请稍后.....',
+		            nowarp : false,
+		            pageSize : 20,
+		            pageList:[20,25,30],
+		            striped: true,
+		            data:data,
+		            singleSelect:true,
+		            fitColumns:true,
+		            pagination:true,
+		            rownumbers:true,
+		            columns:[columns],
+		            onCheck: function (index, rowData){
+		                if(editCheckBox){
+		                    editCheckBox=0;
+		                    if(keepAllCheckDataObj[rowData.WarningAID]==undefined){
+		                        keepAllCheckDataObj[rowData.WarningAID]={};
+		                        if(EmailFlag){
+		                            EmailFlag=0;
+		                            keepAllCheckDataObj[rowData.WarningAID].Email=EmailCheckFlag;
+		                        }
+		                        if(SMSFlag){
+		                            SMSFlag=0;
+		                            keepAllCheckDataObj[rowData.WarningAID].SMS=SMSCheckFlag;
+		                        }
+		                        keepAllCheckDataObj[rowData.WarningAID].WarningOID=rowData.WarningOID;
+		                    }else{
+		                        if(EmailFlag){
+		                            EmailFlag=0;
+		                            keepAllCheckDataObj[rowData.WarningAID].Email=EmailCheckFlag;
+		                        }
+		                        if(SMSFlag){
+		                            SMSFlag=0;
+		                            keepAllCheckDataObj[rowData.WarningAID].SMS=SMSCheckFlag;
+		                        }
+		                        keepAllCheckDataObj[rowData.WarningAID].WarningOID=rowData.WarningOID;
+		                    }
+		                    $('.saveEmailAndSMS').click(function(){
+		                        $.ajax({
+		                            method:'get',
+		                            data:{
+		                                changeCheckData:keepAllCheckDataObj
+		                            },
+		                            url:'/app/setting/modifyWarningRules',
+		                            success:function(data,textStatus){
+		                                $.messager.show({
+		                                    title:'info',
+		                                    msg:data,
+		                                    timeout:3000,
+		                                    showType:'slide'
+		                                })
+		                            }
+		                        })
+		                    })
+		                }
+		            },
+		            onBeforeLoad:function(data){
+		                $('input[name=EmailCheckBox]').click(function(){
+		                    $('.saveEmailAndSMS').unbind('click');
+		                    editCheckBox=1;
+		                    EmailFlag=1;
+		                    if(this.checked==true){
+		                        EmailCheckFlag=1
+		                    }else{
+		                        EmailCheckFlag=0
+		                    }
+		                })
+		                $('input[name=SMSCheckBox]').click(function(){
+		                    $('.saveEmailAndSMS').unbind('click');
+		                    editCheckBox=1;
+		                    SMSFlag=1;
+		                    if(this.checked==true){
+		                        SMSCheckFlag=1
+		                    }else{
+		                        SMSCheckFlag=0
+		                    }
+		                })
+		            }
+		        })
+		    }
+		    function renderWarningPage(){
+		        $(".warning-tab").click(function(){
+		            $(".warning-tab").removeClass('selected');
+		            $(this).addClass('selected');
+		            $(".page-content").css("display","none");
+		            $("#"+$(this).attr("id")+"Page").css("display","block");
+		        });
+		        $("#ulEmailList").delegate("li", "click", function(){
+                    $("#ulEmailList li").css("background-color","#fff");
+		            $(this).css("background-color","#338FFF");  
+                    $("#ulEmailList li").attr("status","unselect");
+                    $(this).attr("status","selected"); 
+                   
+		        });
+		        $.ajax({
+		            url: '/app/setting/getEmailServerConfig',
+		            type: 'get',
+		            dataType: 'json',
+		            data: {},
+		        })
+		        .done(function(data) {
+
+		            $('#txtEmailServer').textbox("setValue",data[0].Server);
+		            $('#txtEmailFromAddr').textbox("setValue",data[0].FromAddr);
+		            $('#txtPwd').textbox("setValue",data[0].Password);
+		           
+		        })
+		        .fail(function() {
+		            console.log("error");
+		        })
+		        .always(function() {
+		            console.log("complete");
+		        });
+		        $.ajax({
+		            url: '/app/setting/getAllReciverAddr',
+		            type: 'get',
+		            dataType: 'json',
+		            data: {},
+		        })
+		        .done(function(data) {
+		            for(var i=0;i<data.length;i++){
+		                var temp=$("<li style='list-style-type:none;margin-top:5px;'>"+data[i].ReciverAddr+"</li >")
+		                $("#ulEmailList").append(temp);
+		            }
+		        })
+		        .fail(function() {
+		            console.log("error");
+		        })
+		        .always(function() {
+		            console.log("complete");
+		        });
+		        
+		        $("#btnSaveEmailServer").bind('click',function(){
+		            if( !$('#txtEmailFromAddr').textbox("isValid")){
+		               return;
+		            }
+		            $.ajax({
+		                url: '/app/setting/saveEmailServerConfig',
+		                type: 'get',
+		                dataType: 'json',
+		                data: {server: $("#txtEmailServer").val(),
+		                       fromAddr:$("#txtEmailFromAddr").val(),
+		                       pwd:$("#txtPwd").val().trim()},
+		            })
+		            .done(function() {
+		                console.log("success");
+		            })
+		            .fail(function() {
+		                console.log("error");
+		            })
+		            .always(function() {
+		                console.log("complete");
+		            });  
+		        })
+		        $("#btnAddEmail").bind('click',function(){
+		            if( !$('#newReciverAddr').textbox("isValid")){
+		               return;
+		            }
+		             $.ajax({
+		                url: '/app/setting/addNewReciverAddr',
+		                type: 'get',
+		                dataType: 'json',
+		                data: {reciverAddr:$('#newReciverAddr').val()},
+		            })
+		            .done(function() {
+		               var temp=$("<li style='list-style-type:none;margin-top:5px;'>"+ $('#newReciverAddr').textbox("getValue",'')+"</li >")
+		                $("#ulEmailList").append(temp);
+		                $('#newReciverAddr').textbox("setValue",'');
+		              
+		            })
+		            .fail(function() {
+		                console.log("error");
+		            })
+		            .always(function() {
+		                console.log("complete");
+		            });
+		        }) 
+                 $("#delAddEmail").bind('click',function(){
+                    var addr=$("#ulEmailList li[status=selected]").text();
+                    $.ajax({
+                        method:'get',
+                        data:{
+                            emailAddr:addr
+                        },
+                        url:'/app/setting/deleteReceiveEmailAddr',
+                        success:function(data,textStatus){
+                            $("#ulEmailList li[status=selected]").remove();
+                        },
+                        error:function(XMLHttpRequest, textStatus, errorThrown){
+
+                        }
+                    })
+                }) 
+		    }
+
+		    $('#category').combobox({
+		        valueField:'alarmTypeHidden',
+		        textField:'alarmTypeDisplay',
+		        onSelect:function(){
+		            var alarmTypeText=$('#category').combobox('getValue');
+                    // alert(alarmTypeText)
+		            $('.saveEmailAndSMS').css('display','block');
+		            $.ajax({
+		                method:'get',
+		                data:{
+		                    alarmTypeText:alarmTypeText
+		                },
+		                url:'/app/setting/getWarningRules',
+		                success:function(data,textStatus){
+
+		                    loadDatagrid(data,$('.grid'),alarmColumns);
+		                },
+                        error:function(XMLHttpRequest, textStatus, errorThrown){
+
+                        }
+		            })
+		        }
+
+		    }).combobox('loadData',alarmChoose);
+		    $('#category').combobox('select','EEIPCS_PCS_PLC_ALARMS_W1');
+		    renderWarningPage();
+    		$(window).resize();
+        }
+    })
+</script>

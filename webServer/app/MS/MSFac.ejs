@@ -1,0 +1,158 @@
+
+<div class="contentDiv">
+
+<blockquote class="layui-elem-quote layui-text">
+使用注意事项:</br>
+	1.该工具用于产生停机工具单机版的软件所需的厂商识别文件. </br>
+	2.选择厂商,输入软件使用权到期日,点击即可产生MK厂商识别文件,拷贝文件导入单机版软件中即可.</br>
+	3.输入厂家信息时注意完整输入,如7HD必须从7开始输入,如输入HD则无法查找.
+</blockquote>
+
+<p>欢迎用户：<%-(locals.session==null)?"":locals.session.yjUser.AID%><%-locals.session.yjUser.name%> 登录系统</p>  
+<HR>
+</br>
+
+<form class="layui-form" action="">
+
+<div class="layui-form-item">
+<label class="layui-form-label">选择厂家</label>
+ <div class="layui-input-block">
+   <select id="FInfo" name="FInfo"  lay-search="">
+   <option value="">输入正确厂家编号或厂家名称可快速选择</option>
+   </select>
+</div>
+</div>
+
+<div class="layui-form-item">
+<div class="layui-inline">
+<label class="layui-form-label">到期日:</label>
+<div class="layui-input-inline">
+    <input type="text" name="MKEndDay" id="MKEndDay" lay-verify="date" placeholder="YYYY-MM-DD" autocomplete="off" class="layui-input">
+</div>
+</div>
+</div>
+  
+<div class="layui-form-item">
+<div class="layui-input-block">
+<button type="button" class="layui-btn" name="MKCreate" id="MKCreate">点击生成厂商授权文件</button>
+</div>
+</div>
+
+</form>
+
+</div>
+<!------定义web显示内容---------------------------->
+
+
+
+
+<script type="text/javascript">
+    var  processAID="MS";
+    var  subProcessAID="MSFac";
+    var g_ScreenFlat=$(window).width()>1366?true:false;
+    
+    
+
+ 
+   
+    $(function(){
+    	
+    	
+	     
+        g_subProcesses.renderMSFac=function(){
+        	
+        	
+        	 //定义日期选择框      	
+        	layui.use(['form','layedit', 'laydate'], function(){
+        	    var form = layui.form
+        	            ,layer = layui.layer
+        	            ,layedit = layui.layedit
+        	            ,laydate = layui.laydate;
+
+        	    //日期
+        	    laydate.render({
+        	        elem: '#MKEndDay'
+        	    });
+        	    
+        	    
+        	    //加载工厂数据---------------------------------
+      		
+      			  
+      			$("#FInfo").empty();
+      			  
+      			  $.ajax({
+                        method:'get',
+                        data:'',
+                        url:"/app/MS/getFactory",
+                        success:function(data){
+                        	
+                        	 $("#FInfo").append($('<option value='+""+'>'+"输入正确厂家编号或厂家名称可快速选择"+'</option>'));
+
+                            for(i=0;i<data.length;i++)
+                        	{
+                            	  $("#FInfo").append($('<option value='+data[i].FID+'>'+data[i].FID+data[i].FName+'</option>'));	
+                            	   
+                        	}
+                            form.render("select"); //不要放在for循环里否则会卡顿,最后一次性渲染即可
+
+                        },
+                        error:function(){}
+                    })
+      			        			  
+      		
+      		//-------------------------------------------   
+        	    
+        	   
+
+        	 });
+
+
+        	
+//检查是否选择厂家        	
+        	function checkFInfo(){
+            	
+//        		FInfo=$('#FInfo').val();
+        		if($('#FInfo').val()==""){
+        			alert("请选择厂家！")
+        			return false 
+        		}
+        		else 
+                return true 
+        		
+            	} 
+
+//------------------------	
+          $('#BForever').off("click").on("click",function(){
+        	  
+        	  var endDay="2100-12-31";
+        	
+        		$("#endDay").val("2100-01-01 00:00");
+              })
+                      
+              
+              $('#MKCreate').off("click").on("click",function(){
+            	 
+            	
+            	if(checkFInfo()&&checkDate($("#MKEndDay").val())){
+            		        		
+            		MKInfo=$('#FInfo').val()+"001"+FMDate($('#MKEndDay').val())   ;
+            		FN=$('#FInfo option:selected').val();
+
+            		mssn=encryptFac(MKInfo);
+            		
+            		alert("生成单机版软件厂商授权文件成功,请下载后拷贝至单机软件根目录!");
+            			
+            		
+            		
+            		var blob = new Blob([mssn], {});//out_put_string为需要保存到文件的字符串内容
+                	saveAs(blob, "autorun.mk");//为保存的文件名
+                	
+                	
+            	}
+
+             })
+        	
+            
+        }
+    }); 
+</script>

@@ -1,0 +1,204 @@
+
+
+<link rel="stylesheet" type="text/css" href="/css/warning.css">
+<div id="BearSub" class="subModel">
+    <div id="stasticWarp1" style="width:100%" >
+        <img id="imgStastic" src="/images/title.jpg"/>
+        <span id="stastic-title"><%-locals.ml("BSearch")%></span>
+        <div style="background-color: #fff;height: 50px;margin-top:15px">
+            <span style="float: left;margin-left:50px;font-size:18px"><%-locals.ml("DeviceName")%>:</span>
+            <input id="combox_bear" class="easyui-combobox" data-options="panelWidth: 120" style="width: 120px;height:30px;font-size:18px">
+            </input>
+            <div style="float: right; padding-right: 100px">    
+                <span style="margin-left:50px;font-size:18px"><%-locals.ml("time")%>:</span>
+                <input id="dateBoxSTime" class="easyui-datetimebox" name="stime" data-options="showSeconds:false,formatter:ww4,parser:w4"  style="width:200px;height:30px;font-size:18px">
+                - 
+                <input  id="dateBoxETime" class="easyui-datetimebox" name="etime" data-options="showSeconds:false,formatter:ww4,parser:w4" style="width:200px;height:30px;font-size:18px">
+                <a id="btn" style="height:30px" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"><%-locals.ml("Query")%></a>  
+            </div>
+            <div id='datagridBox' style='margin-top:30px;margin-left:20px;color:red;height:100%'>
+                <table id="grid" style="width:96%;">
+               
+                </table>
+            </div>
+        </div>
+    </div>   
+</div>
+<!------定义web显示内容---------------------------->
+<script type="text/javascript">
+    var  processAID="Bear";
+    var  subProcessAID="BearSub";
+    var g_ScreenFlat=$(window).width()>1366?true:false;
+    function ww4(date){  
+                var y = date.getFullYear();  
+                var m = date.getMonth()+1;  
+                var d = date.getDate();  
+                var h = date.getHours();  
+                var min= date.getMinutes();
+                return  y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d)+' '+(h<10?('0'+h):h)+':'+(min<10?   ('0'+min):min);       
+    }
+    function loadDatagrid(data,datagridDiv,columns){
+        datagridDiv.datagrid({
+            loadMsg:'数据加载中请稍后.....',
+             rownumbers:true,
+            pagination: true,
+            pageSize: 20,
+            pageList: [20, 40, 60, 80],
+            striped: true,
+            nowap: false,
+            border: true,
+            pagination:true,
+            singleSelect:true,
+            data:data.slice(0,20),
+            columns:[columns],
+            rowStyler:function(index,row){
+                if(index%2===0){
+                    return 'background-color:#fff;';
+                }else{
+                    return 'background-color:#96D5E6;';
+                }
+            },
+            onLoadSuccess:function(data){
+                var panel = $(this).datagrid('getPanel');   
+                var tr = panel.find('.datagrid-btable tr');   
+                tr.each(function(){   
+                    var td = $(this).children('td');
+                    td.children("div").css({
+                        "height": "30px" 
+                    });   
+                });   
+            }
+        });
+        
+        
+        var pager = datagridDiv.datagrid("getPager");
+        pager.pagination({
+            total:data.length,
+            onSelectPage:function (pageNo, pageSize){
+                var start = (pageNo - 1) * pageSize;
+                var end = start + pageSize;
+                datagridDiv.datagrid("loadData", data.slice(start, end));
+                pager.pagination('refresh',{
+                  total:data.length,
+                  pageNumber:pageNo
+                });
+            }
+        })
+    }
+    //  
+    
+    function w4(s){
+        var date=Date.parse(s);
+        if(!isNaN(date)){
+            return new Date(date);
+        }else{
+            return new Date();
+        }
+    }
+    $(function(){
+        g_subProcesses.renderBearSub=function(){
+            var alarmColumns=[
+                {
+                    field:'ProductID', 
+                    align:"left",
+                    title:"<%-locals.ml('BProductID')%>",
+                    width:'15%',
+                    height:100
+                },{
+                    field:'MKOrdNO',
+                    align:"center",
+                    title:"<%-locals.ml('BMKord')%>",
+                    width:'10%',
+                    height:100
+                },{
+                    field:'ProdName',
+                    align:"center",
+                    title:"<%-locals.ml('BProdName')%>",
+                    width:'10%',
+                    height:100
+                },{
+                    field:'Price',
+                    align:"center",
+                    title:"<%-locals.ml('BPrice')%>",
+                    width:'10%',
+                    height:100
+                },{
+                    field:'SQuantity',
+                    align:"center",
+                    title:"<%-locals.ml('BBorrowQ')%>",
+                    width:'10%',
+                    height:100
+                },{
+                    field:'BorrowDate',
+                    align:"center",
+                    title:"<%-locals.ml('BBorrowD')%>",
+                    width:'10%',
+                    height:100
+                },{
+                    field:'Quantity',
+                    align:"center",
+                    title:"<%-locals.ml('BReturnQ')%>",
+                    width:'10%',
+                    height:100
+                },{
+                    field:'ReturnDate',
+                    align:"center",
+                    title:"<%-locals.ml('BReturnD')%>",
+                    width:'10%',
+                    height:100
+                }
+            ];
+            
+            
+            
+            $.ajax({
+                method:'get',
+                data:'',
+                url:"/app/bear/getDevices",
+                success:function(data,textStatus){
+                    $("#combox_bear").combobox({ 
+                        valueField: 'catid',
+                        textField: 'catName'
+                    });
+                    
+                    $("#combox_bear").combobox("loadData",data);
+                    $("#combox_bear").combobox("select",data[0].catid);
+                },
+                error:function(){
+    
+                }
+            })
+            $("#combox_bear").combobox({
+                    onSelect:function(item){
+                    console.log($('#dateBoxSTime').datetimebox('getValue'));
+                    console.log($('#dateBoxETime').datetimebox('getValue'));
+                    getBearInfo(item.catid);
+                }
+            })
+            function getBearInfo(catid){
+                $.ajax({
+                    method:'get',
+                    url:'/app/bear/getBearInfo',
+                    data:{
+                        catid:catid,
+                        startTime:$('#dateBoxSTime').datetimebox('getValue'),
+                        endTime:$('#dateBoxETime').datetimebox('getValue')
+                    },
+                    success:function(data,textStatus){
+                    	alert(data);
+                         loadDatagrid(data,$('#grid'),alarmColumns);
+                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                    }
+                })
+            }
+            $('#btn').click(function(){
+                var catid=$("#combox_bear").combobox('getValue');
+               alert('hello'+catid);
+                getBearInfo(catid);
+            })
+
+            
+        }
+    }); 
+</script>

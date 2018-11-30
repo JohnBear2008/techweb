@@ -1,0 +1,252 @@
+<div class="contentDiv">
+
+<blockquote class="layui-elem-quote layui-text">
+<p>欢迎用户：<%-(locals.session==null)?"":locals.session.yjUser.AID%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账号有效期至:<%-locals.session.yjUser.VidDate%></p>
+
+</blockquote>
+<HR></br>
+	
+	<div class="Agentsearch">
+	搜索信息:
+	  <div class="layui-inline">
+	    <input class="layui-input" name="SAgent" id="SAgent" placeholder="代理商名称" autocomplete="off">
+	  </div>
+	  <button class="layui-btn" id="SAgentButton">搜索</button>
+
+	  
+	  
+
+	</div>
+
+
+	<!-- 表格 -->
+	<table class="layui-hide" id="AgentsTable" lay-filter="AgentsTable"></table>
+	
+	
+	
+	
+</div>
+<!------定义web显示内容---------------------------->
+
+<!-- 表格操作按钮集 -->
+<script type="text/html" id="AgentBar">
+<a class="layui-btn layui-btn-primary layui-btn-small" lay-event="detail">查看详情</a>
+<a class="layui-btn layui-btn-danger layui-btn-small" lay-event="del">删除代理商</a>
+</script>
+
+
+<script type="text/javascript">
+    var  processAID="MSFactory";
+    var  subProcessAID="Agents";
+    var g_ScreenFlat=$(window).width()>1366?true:false;
+   
+
+    
+    $(function(){
+        g_subProcesses.renderAgentAdmin=function(){
+        	
+        	loadUsersTable();
+        	
+//---------------定义搜索按钮---------------      	
+        	$('#SAgentButton').off("click").on("click",function(){
+          	  
+
+          	  var SAgent=$('#SAgent').val();
+          	  
+          	loadUsersTable(SAgent);
+
+            })
+            
+            
+             $("#SAgent").keydown(function (e) {
+                if (e.keyCode == 13) {                	
+                	var SAgent=$('#SAgent').val();
+                  	loadUsersTable(SAgent);
+                }
+            })
+//---------------定义搜索按钮---------------     
+            
+            
+//---------------定义跳转按钮---------------      	
+        	$('#jump').off("click").on("click",function(){
+        		
+        
+        	            //要转为隐藏的
+        	            if(subProcessAID==$(".subNav").attr("ID")){
+        	                // 点击当subProcess的标签
+        	                return;
+        	            }else{
+
+        	                $("#"+subProcessAID).removeClass("active");
+        	                $("#"+subProcessAID+"-tab-content").removeClass("active");
+        	                subProcessAID="AgentAdd";
+        	  
+        	                $("#"+subProcessAID).addClass("active");
+        	                $("#"+subProcessAID+"-tab-content").addClass("active");
+        	                g_subProcesses["render"+subProcessAID]();
+        	            }
+
+            })
+//---------------定义跳转按钮---------------  
+        	
+//----------------定义加载用户表---------------------
+        	 
+            
+            function loadUsersTable(SAgent){
+        		
+        		
+        		layui.use('table', function(){
+          		  var table = layui.table;
+          		  
+          		  table.render({
+          			    elem: '#AgentsTable'
+          			    ,height: 515
+          			    ,url: '/app/MSFactory/getAgents' //数据接口
+          			    ,where: {token: 'sasasas', FID:"<%-locals.session.yjUser.FID%>",SAgent:SAgent}
+          			    ,page: true //开启分页
+          			    ,request: { pageName: 'curr',limitName: 'nums'}//页码的参数名称，默认：page
+          			    ,limit:10
+          			    ,limits:[10,20,30]
+          		  
+          			    ,cols:[[
+              			      {field: 'Account', title: '代理商ID', width:100, fixed: 'left'}
+              			      ,{field: 'AID', title: '代理商编号', width:100}
+              			      ,{field: 'AName', title: '代理商名称', width:300}
+              			      ,{field: 'OpenUserKey', title: '是否开通WEB账号', width:150}
+             			      ,{field: 'VidDate', title: '账号到期日', width:150}
+             			     ,{field: 'accoutKey', title: '账号状态', width:150}
+              			      ,{fixed: 'right', width:300, align:'center', toolbar: '#AgentBar'}     			   
+              			        ]]
+          			  });
+          		  
+          		//----------------------------------------------	  
+              		table.on('tool(AgentsTable)', function(obj){
+        			    var data = obj.data;
+        			    if(obj.event === 'detail'){
+        			    	layer.alert('系统内ID：'+ data.ID + ' </br>'+'添加日期：'+ data.CreateDate.substring(0,10) + ' </br>'+'代理商账号：'+ data.Account + ' </br>'+'厂商码：'+ data.FID + ' </br>'+'代理商码：'+ data.AID + ' </br>'+'厂商名称：'+ data.FName + ' </br>'+'代理商名称：'+ data.AName + ' </br>'+'联系方式：'+ data.Contact + ' </br>'+'地址：'+ data.Address + ' </br>'+'是否开通工具账号：'+ data.OpenUserKey + ' </br>'+'账号到期日：'+ data.VidDate + ' </br>'+'代理商信息：'+ data.AInfo + ' </br>');
+
+        			    }else if(obj.event === 'del'){     	   
+        			    	
+        			    	if(confirm("风险操作,请再次确认要删除?")){
+        			    		delAuth({Account:data.Account});        			    	
+            			    	delUser({UserAID:data.Account});      			    	
+            			    	delAgent({ID:data.ID});
+        			    	}
+        			    
+        			    	
+        			    	
+        			    	
+
+      			        }
+        			  });
+              		 //---------------------------------------------------- 
+          	
+          		});
+	
+        	}
+        	 
+        	
+        	
+        	
+//----------------定义加载用户表---------------------
+
+        	
+//------------定义页面跳转函数------------------
+        	
+        	
+        	function gotoUrl(Url){
+        		
+        		if(subProcessAID==$(".subNav").attr("ID")){
+	                // 点击当subProcess的标签
+	                return;
+	            }else{
+
+	                $("#"+subProcessAID).removeClass("active");
+	                $("#"+subProcessAID+"-tab-content").removeClass("active");
+	                subProcessAID=Url;
+	  
+	                $("#"+subProcessAID).addClass("active");
+	                $("#"+subProcessAID+"-tab-content").addClass("active");
+	                g_subProcesses["render"+subProcessAID]();
+	            }
+        		
+        	}
+        	
+        	
+        	
+        	
+    	
+        	
+//-----------定义删除代理商函数信息函数 -----------------    	
+            function delAgent(data){
+            	 $.ajax({
+	                    method:'post',
+	                    url:'/app/MSFactory/delAgent',
+	                    data:data,
+	                    success:function(data,textStatus){
+	                    	if(data.affectedRows!=0){
+	                    		alert("删除代理商成功!");
+	                    		location.reload();
+	        			    	gotoUrl("AgentAdmin");
+	        			    	
+	                    	}     		                    	
+	                    },
+	                    error:function(XMLHttpRequest, textStatus, errorThrown){   
+	                    	alert("删除代理商失败!");
+	                    }
+
+	                })
+              }
+//-----------定义删除代理商函数信息函数 -----------------  
+            
+            
+            
+//-----------定义删除用户函数信息函数 -----------------    	
+            function delUser(data){
+            	 $.ajax({
+	                    method:'post',
+	                    url:'/app/MSFactory/delUser',
+	                    data:data,
+	                    success:function(data,textStatus){
+	                    	if(data.affectedRows!=0){
+	                    		alert("删除用户成功!");
+	        			    	
+	                    	}     		                    	
+	                    },
+	                    error:function(XMLHttpRequest, textStatus, errorThrown){     	
+	                    	alert("删除用户失败!");
+	                    }
+
+	                })
+              }
+//-----------定义删除授权函数信息函数 -----------------  
+            function delAuth(data){
+           	 $.ajax({
+	                    method:'post',
+	                    url:'/app/MSFactory/delAuth',
+	                    data:data,
+	                    success:function(data,textStatus){
+	                    	if(data.affectedRows!=0){	    	
+	                    	}     		                    	
+	                    },
+	                    error:function(XMLHttpRequest, textStatus, errorThrown){     	
+	                    	alert("删除授权失败!");
+	                    }
+
+	                })
+             }
+        	
+        	
+        	
+        	
+        	
+        	
+
+            
+        }
+    }); 
+</script>
+
+
+
+

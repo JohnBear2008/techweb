@@ -1,0 +1,273 @@
+<div class="contentDiv">
+
+<blockquote class="layui-elem-quote layui-text">
+使用注意事项:</br>
+	1.所有系统内厂商账号,及代理商账号都会显示在此处.</br>
+	2.账号类型1代表厂商账号,2代表代理商账号.
+</blockquote>
+	<p>欢迎用户：<%-(locals.session==null)?"":locals.session.yjUser.AID%><%-locals.session.yjUser.name%> 登录系统</p>  
+	<HR></br>
+	
+	
+	<div class="UserSearch">
+	  厂商名称:
+	  <div class="layui-inline">
+	    <input class="layui-input" name="SUser" id="SUser" autocomplete="off">
+	  </div>
+	  <button class="layui-btn" id="SUserButton">搜索</button>
+<!----	不能直接跳转  <a href="/app/MSInfo/addUsers"><button class="layui-btn" id="AddUser" >添加账号</button></a>--->
+	</div>
+
+
+	<!-- 表格 -->
+	<table class="layui-hide" id="UsersTable" lay-filter="UsersTable"></table>
+	
+	
+	
+	
+</div>
+<!------定义web显示内容---------------------------->
+
+<!-- 表格操作按钮集 -->
+<script type="text/html" id="UserBar">
+<a class="layui-btn layui-btn-primary layui-btn-small" lay-event="detail">查看详情</a>
+<a class="layui-btn layui-btn-normal layui-btn-small" lay-event="auth">授权有效期</a>
+<a class="layui-btn layui-btn-small" lay-event="reset">重设密码</a>
+<!----暂不开放账号删除功能--
+<a class="layui-btn layui-btn-danger layui-btn-small" lay-event="del">删除账号</a>
+----->
+</script>
+
+
+<script type="text/javascript">
+    var  processAID="MSInfo";
+    var  subProcessAID="users";
+    var g_ScreenFlat=$(window).width()>1366?true:false;
+   
+
+    
+    $(function(){
+        g_subProcesses.renderusers=function(){
+        	
+        	
+        	loadUserTable();
+        	
+
+ 	 
+        	function loadUserTable(SUser){
+        		
+        		
+        		layui.use(['table', 'laydate'], function(){
+        			
+        			
+        			
+        			
+        			
+        			
+          		  var table = layui.table;
+          		  
+          		  
+          		  
+          		  table.render({
+          			    elem: '#UsersTable'
+          			    ,height: 515
+          			    ,url: '/app/MSInfo/getUsers' //数据接口
+          			    ,where: {token: 'sasasas', UID:"<%-locals.session.yjUser.AID%>",SUser:SUser}
+          			    ,page: true //开启分页
+          			    ,request: { pageName: 'curr',limitName: 'nums'}//页码的参数名称，默认：page
+          			    ,limit:10
+          			    ,limits:[10,20,30]
+          		  
+          			    ,cols:[[
+              			      {field: 'UserAID', title: '用户账号', width:100, fixed: 'left'}
+              			      ,{field: 'Name', title: '厂家名', width:150}
+              			      ,{field: 'OrgOID', title: '账号类型', width:150}
+              			      ,{field: 'UserFID', title: '厂商代码', width:150} 
+              			      ,{field: 'VidDate', title: '账号到期日', width: 300}
+              			      ,{fixed: 'right', width:360, align:'center', toolbar: '#UserBar'}     			   
+              			        ]]
+          			  });
+          		  
+          		//----------------------------------------------	  
+              		table.on('tool(UsersTable)', function(obj){
+        			    var data = obj.data;
+        			    
+        			//    alert(JSON.stringify(data));
+        			    if(obj.event === 'detail'){
+        			    	layer.alert('用户账号：'+ data.UserAID + ' </br>'+'是否授权：'+ data.auth + ' </br>'+'账号生成日期：'+ data.CreationDate + ' </br>'+'厂商代码：'+ data.UserFID + ' </br>'+'厂商名：'+ data.Name + ' </br>'+'代理商编号：'+ data.UserAID.substring(3,6) + ' </br>'+'账号到期日：'+ data.VidDate + ' </br>'+'账号备注信息：'+ data.Description + ' </br>');
+
+        			    }else if(obj.event === 'auth'){
+
+        			    	var htmlcontent=' <input type="text" name="EndDate" id="EndDate" lay-verify="date" placeholder="YYYY-MM-DD 必选" autocomplete="off" class="layui-input" ><button type="button" class="layui-btn" name="DateReset" id="DateReset">重置有效期</button>';
+        			    	
+        			    	
+        			    	layer.open({
+    			    		  type: 1,
+    			    		  skin: 'layui-layer-rim', //加上边框
+    			    		  area: ['286px', '420px'], //宽高
+    			    		  content: htmlcontent	  
+    			    			  
+    			    		});
+        			    	
+        			    	
+        			    	var laydate = layui.laydate;
+                	        var DivDate= laydate.render({
+                	            elem: '#EndDate',
+                	            type: 'date',
+
+
+                	        });
+                	        
+                	        
+                	        
+                	        $('#DateReset').off("click").on("click",function(){
+                          	  var EndDate=$('#EndDate').val();
+                          	  if(EndDate==""){
+                          		 alert("日期不能为空请选择!");
+                          	  }else{
+                          		$.ajax({
+     	   		                    method:'post',
+     	   		                    url:'/app/MSInfo/resetDate',
+     	   		                    data:{UserOID:data.UserOID,VidDate:EndDate},
+     	   		                    success:function(data,textStatus){
+     	   		                    	if(data.affectedRows!=0){
+     	   		                    		alert("到期日更新成功!")		
+     	   		                    	}
+//    	   		                    	alert(JSON.stringify(data));
+     	   		                    	location.reload();
+     	   		                    },
+     	   		                    error:function(XMLHttpRequest, textStatus, errorThrown){     	   		                    	
+     	   		                    }
+     	   		                })	  
+                          	  }
+                          	  
+          			    	if(data.auth==0){
+      			    		 $.ajax({
+      	   		                    method:'post',
+      	   		                    url:'/app/MSInfo/authUsers',
+      	   		                    data:{UserOID:data.UserOID,OrgOID:data.OrgOID},
+      	   		                    success:function(data,textStatus){
+//      	   		                    	if(data.affectedRows!=0){
+//      	   		                    		alert("授权成功!")		
+//      	   		                    	}
+      	   		                    	alert(data);
+      	   		                    	location.reload();
+      	   		                    },
+      	   		                    error:function(XMLHttpRequest, textStatus, errorThrown){
+      	   		                    	
+      	   		                    }
+      	   		                })	
+      			    	    }
+          			    	
+                            })
+
+        			    	
+  ////----------------------------    			    	
+//        			    	if(data.auth==0){
+//     			    		 $.ajax({
+//     	   		                    method:'post',
+//     	   		                    url:'/app/MSInfo/authUsers',
+//     	   		                    data:{UserOID:data.UserOID,OrgOID:data.OrgOID},
+//     	   		                    success:function(data,textStatus){
+////     	   		                    	if(data.affectedRows!=0){
+////     	   		                    		alert("授权成功!")		
+////     	   		                    	}
+//     	   		                    	alert(data);
+//     	   		                    	location.reload();
+//     	   		                    },
+//     	   		                    error:function(XMLHttpRequest, textStatus, errorThrown){
+//     	   		                    	
+//     	   		                    }
+//     	   		                })	
+//     			    	    }else{
+//     			    		layer.alert("已经授权无需再次授权!");
+//     			    	    }
+  ////-----------------------------
+        			    	
+        			    	
+       			    } else if(obj.event === 'reset'){
+        			    	
+        			    	
+        			    	 $.ajax({
+        		                    method:'post',
+        		                    url:'/app/MSInfo/resUsers',
+        		                    data:{UserOID:data.UserOID},
+        		                    success:function(data,textStatus){
+        		                    	
+//        		                    	alert(JSON.stringify(data));
+        		                    	alert("重置成功,该账号登陆密码已变为123456");
+        		                    	location.reload();
+        		                    },
+        		                    error:function(XMLHttpRequest, textStatus, errorThrown){
+        		                    	
+        		                    }
+        		                })
+
+        			    }else if(obj.event === 'del'){        			    	
+        			    	 $.ajax({
+     		                    method:'post',
+     		                    url:'/app/MSInfo/delUsers',
+     		                    data:{UserOID:data.UserOID},
+     		                    success:function(data,textStatus){
+     		                    	if(data.affectedRows!=0){
+     		                    		alert("删除成功!");
+     		                    		location.reload();
+     		                    	}     		                    	
+//     		                    	alert(JSON.stringify(data));
+     		                    },
+     		                    error:function(XMLHttpRequest, textStatus, errorThrown){     		                    	
+     		                    }
+     		                })
+        			    	
+      			        }
+        			  });
+              		 //---------------------------------------------------- 
+              		
+          		  
+          		  
+          		});
+          	//------------------------
+        		
+        		
+        		
+        	}
+        	 
+        	
+//        	 $("#AddUser").delegate("click", function(){
+//                 //要转为隐藏的
+//                
+//
+////                     $("#"+subProcessAID).removeClass("active");
+////                     $("#"+subProcessAID+"-tab-content").removeClass("active");
+////                     subProcessAID=$(this).attr("ID");
+////       
+////                     $("#"+subProcessAID).addClass("active");
+////                     $("#"+subProcessAID+"-tab-content").addClass("active");
+//                     g_subProcesses["render"+subProcessAID]();
+//                 
+//             });
+//        	 
+        	 
+        	 //---------------------------
+        	
+        	
+        	
+        	
+        	$('#SUserButton').off("click").on("click",function(){
+
+            	  var SUser=$('#SUser').val();
+  	 
+            	loadUserTable(SUser);
+            	 
+            })
+            
+            
+            
+            
+        }
+    }); 
+</script>
+
+
+
+

@@ -1,0 +1,81 @@
+<div class="contentDiv">
+
+<blockquote class="layui-elem-quote layui-text">
+使用注意事项:</br>
+	1.该工具用于解密弘讯停机密钥,解密密钥原文 </br>
+	2.手输密码无法用该工具解密,请通过密钥管理工具得到密码对应密钥后再解密.
+</blockquote>
+
+
+<p>欢迎用户：<%-(locals.session==null)?"":locals.session.yjUser.AID%><%-locals.session.yjUser.name%> 登录系统</p>  
+<HR>
+</br>
+
+<div class="layui-form-item">
+  <label class="layui-form-label">密钥密文:</label>
+  <div class="layui-input-block">
+      <input type="text" name="encInfo" id="encInfo"  placeholder="复制黏贴密钥密文至此处" autocomplete="off" class="layui-input">
+  </div>
+  </div>
+  
+  
+  <div class="layui-form-item">
+  <label class="layui-form-label">密钥原文:</label>
+  <div class="layui-input-block">
+      <input type="text" name="decInfo" id="decInfo"  placeholder="计算成功后密钥明文显示在此处" autocomplete="off" class="layui-input">
+  </div>
+  </div>
+  
+  <div class="layui-form-item">
+  <div class="layui-input-block">
+  <button type="button" class="layui-btn" name="decButton" id="decButton">计算密钥原文</button>
+  </div>
+  </div>
+
+  
+</div>  
+  
+<!------定义web显示内容---------------------------->
+
+<script type="text/javascript">
+    var  processAID="MSFactory";
+    var  subProcessAID="MSFMK";
+    var g_ScreenFlat=$(window).width()>1366?true:false;
+    
+    
+
+   
+    $(function(){
+        g_subProcesses.renderMSDecryptDo=function(){
+        	
+
+        
+            $('#decButton').off("click").on("click",function(){
+            	
+            	
+            	var encInfo=$("#encInfo").val();
+            	
+            	if(encInfo){
+            		
+            		var decInfo=decryptByTripleDESModeEBC(encInfo);
+            		
+            		if(decInfo){
+            			alert("计算成功");
+            			$("#decInfo").val(decInfo);
+            		}else{
+            			alert("无效密钥,计算失败,请重新核对密钥密文!");
+            		}
+            		
+            		
+            	}else{
+            		alert("密文不能为空!");
+            	}
+            	
+
+                    		
+            })
+            
+      
+        }
+    }); 
+</script>

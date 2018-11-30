@@ -1,0 +1,93 @@
+[2018-11-29 09:03:00.498] [ERROR] dateFileLog - Error: Error: The module &#39;\\?\D:\TECHWEB\node_modules\ccap\build\Release\hcaptha.node&#39;<br>was compiled against a different Node.js version using<br>NODE_MODULE_VERSION 46. This version of Node.js requires<br>NODE_MODULE_VERSION 57. Please try re-compiling or re-installing<br>the module (for instance, using `npm rebuild` or `npm install`).<br> &nbsp; &nbsp;at Object.Module._extensions..node (module.js:682:18)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)<br> &nbsp; &nbsp;at tryModuleLoad (module.js:506:12)<br> &nbsp; &nbsp;at Function.Module._load (module.js:498:3)<br> &nbsp; &nbsp;at Module.require (module.js:597:17)<br> &nbsp; &nbsp;at require (internal/module.js:11:18)<br> &nbsp; &nbsp;at Object.&lt;anonymous&gt; (D:\TECHWEB\node_modules\ccap\lib\hcap.js:4:13)<br> &nbsp; &nbsp;at Module._compile (module.js:653:30)<br> &nbsp; &nbsp;at Object.Module._extensions..js (module.js:664:10)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)
+
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at emitTwo (events.js:126:13)
+    at Request.emit (events.js:214:7)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:154:16
+    at Request._decode (D:\TECHWEB\node_modules\restler\lib\restler.js:170:7)
+    at IncomingMessage.<anonymous> (D:\TECHWEB\node_modules\restler\lib\restler.js:147:14)
+[2018-11-29 10:36:20.222] [ERROR] dateFileLog - { Error: ER_DUP_ENTRY: Duplicate entry '0CL001' for key 'UserAID'
+    at Query.Sequence._packetToError (D:\TECHWEB\node_modules\mysql\lib\protocol\sequences\Sequence.js:48:14)
+    at Query.ErrorPacket (D:\TECHWEB\node_modules\mysql\lib\protocol\sequences\Query.js:82:18)
+    at Protocol._parsePacket (D:\TECHWEB\node_modules\mysql\lib\protocol\Protocol.js:271:23)
+    at Parser.write (D:\TECHWEB\node_modules\mysql\lib\protocol\Parser.js:77:12)
+    at Protocol.write (D:\TECHWEB\node_modules\mysql\lib\protocol\Protocol.js:39:16)
+    at Socket.<anonymous> (D:\TECHWEB\node_modules\mysql\lib\Connection.js:82:28)
+    at emitOne (events.js:116:13)
+    at Socket.emit (events.js:211:7)
+    at addChunk (_stream_readable.js:263:12)
+    at readableAddChunk (_stream_readable.js:250:11)
+    --------------------
+    at Protocol._enqueue (D:\TECHWEB\node_modules\mysql\lib\protocol\Protocol.js:135:48)
+    at PoolConnection.Connection.query (D:\TECHWEB\node_modules\mysql\lib\Connection.js:185:25)
+    at doQuery (D:\TECHWEB\yujiang.Foil.Node\src\yjDBService.engine.mysql.js:128:25)
+    at success (D:\TECHWEB\yujiang.Foil.Node\src\yjDBService.engine.mysql.js:119:13)
+    at Object.exports.safeSuccess (D:\TECHWEB\yujiang.Foil.Node\src\yjError.js:98:13)
+    at Object.exports.handleResult (D:\TECHWEB\yujiang.Foil.Node\src\yjError.js:154:12)
+    at D:\TECHWEB\yujiang.Foil.Node\src\yjDBService.engine.mysql.js:57:11
+    at Ping.onPing (D:\TECHWEB\node_modules\mysql\lib\Pool.js:94:5)
+    at bound (domain.js:301:14)
+    at Ping.runBound [as _callback] (domain.js:314:12) code: 'ER_DUP_ENTRY', errno: 1062, sqlState: '23000', index: 0 }
+[2018-11-29 10:36:20.225] [ERROR] dateFileLog - Error: ER_DUP_ENTRY: Duplicate entry '0CL001' for key 'UserAID'
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at emitTwo (events.js:126:13)
+    at Request.emit (events.js:214:7)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:154:16
+    at Request._decode (D:\TECHWEB\node_modules\restler\lib\restler.js:170:7)
+    at IncomingMessage.<anonymous> (D:\TECHWEB\node_modules\restler\lib\restler.js:147:14)
+[2018-11-29 10:52:58.534] [ERROR] dateFileLog - Error: Error: The module &#39;\\?\D:\TECHWEB\node_modules\ccap\build\Release\hcaptha.node&#39;<br>was compiled against a different Node.js version using<br>NODE_MODULE_VERSION 46. This version of Node.js requires<br>NODE_MODULE_VERSION 57. Please try re-compiling or re-installing<br>the module (for instance, using `npm rebuild` or `npm install`).<br> &nbsp; &nbsp;at Object.Module._extensions..node (module.js:682:18)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)<br> &nbsp; &nbsp;at tryModuleLoad (module.js:506:12)<br> &nbsp; &nbsp;at Function.Module._load (module.js:498:3)<br> &nbsp; &nbsp;at Module.require (module.js:597:17)<br> &nbsp; &nbsp;at require (internal/module.js:11:18)<br> &nbsp; &nbsp;at Object.&lt;anonymous&gt; (D:\TECHWEB\node_modules\ccap\lib\hcap.js:4:13)<br> &nbsp; &nbsp;at Module._compile (module.js:653:30)<br> &nbsp; &nbsp;at Object.Module._extensions..js (module.js:664:10)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)
+
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at emitTwo (events.js:126:13)
+    at Request.emit (events.js:214:7)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:154:16
+    at Request._decode (D:\TECHWEB\node_modules\restler\lib\restler.js:170:7)
+    at IncomingMessage.<anonymous> (D:\TECHWEB\node_modules\restler\lib\restler.js:147:14)
+[2018-11-29 10:54:15.476] [ERROR] dateFileLog - Error: Error: The module &#39;\\?\D:\TECHWEB\node_modules\ccap\build\Release\hcaptha.node&#39;<br>was compiled against a different Node.js version using<br>NODE_MODULE_VERSION 46. This version of Node.js requires<br>NODE_MODULE_VERSION 57. Please try re-compiling or re-installing<br>the module (for instance, using `npm rebuild` or `npm install`).<br> &nbsp; &nbsp;at Object.Module._extensions..node (module.js:682:18)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)<br> &nbsp; &nbsp;at tryModuleLoad (module.js:506:12)<br> &nbsp; &nbsp;at Function.Module._load (module.js:498:3)<br> &nbsp; &nbsp;at Module.require (module.js:597:17)<br> &nbsp; &nbsp;at require (internal/module.js:11:18)<br> &nbsp; &nbsp;at Object.&lt;anonymous&gt; (D:\TECHWEB\node_modules\ccap\lib\hcap.js:4:13)<br> &nbsp; &nbsp;at Module._compile (module.js:653:30)<br> &nbsp; &nbsp;at Object.Module._extensions..js (module.js:664:10)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)
+
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at emitTwo (events.js:126:13)
+    at Request.emit (events.js:214:7)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:154:16
+    at Request._decode (D:\TECHWEB\node_modules\restler\lib\restler.js:170:7)
+    at IncomingMessage.<anonymous> (D:\TECHWEB\node_modules\restler\lib\restler.js:147:14)
+[2018-11-29 11:26:00.254] [ERROR] dateFileLog - Error: Error: The module &#39;\\?\D:\TECHWEB\node_modules\ccap\build\Release\hcaptha.node&#39;<br>was compiled against a different Node.js version using<br>NODE_MODULE_VERSION 46. This version of Node.js requires<br>NODE_MODULE_VERSION 57. Please try re-compiling or re-installing<br>the module (for instance, using `npm rebuild` or `npm install`).<br> &nbsp; &nbsp;at Object.Module._extensions..node (module.js:682:18)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)<br> &nbsp; &nbsp;at tryModuleLoad (module.js:506:12)<br> &nbsp; &nbsp;at Function.Module._load (module.js:498:3)<br> &nbsp; &nbsp;at Module.require (module.js:597:17)<br> &nbsp; &nbsp;at require (internal/module.js:11:18)<br> &nbsp; &nbsp;at Object.&lt;anonymous&gt; (D:\TECHWEB\node_modules\ccap\lib\hcap.js:4:13)<br> &nbsp; &nbsp;at Module._compile (module.js:653:30)<br> &nbsp; &nbsp;at Object.Module._extensions..js (module.js:664:10)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)
+
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at emitTwo (events.js:126:13)
+    at Request.emit (events.js:214:7)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:154:16
+    at Request._decode (D:\TECHWEB\node_modules\restler\lib\restler.js:170:7)
+    at IncomingMessage.<anonymous> (D:\TECHWEB\node_modules\restler\lib\restler.js:147:14)
+[2018-11-29 13:40:27.033] [ERROR] dateFileLog - Error: Error: The module &#39;\\?\D:\TECHWEB\node_modules\ccap\build\Release\hcaptha.node&#39;<br>was compiled against a different Node.js version using<br>NODE_MODULE_VERSION 46. This version of Node.js requires<br>NODE_MODULE_VERSION 57. Please try re-compiling or re-installing<br>the module (for instance, using `npm rebuild` or `npm install`).<br> &nbsp; &nbsp;at Object.Module._extensions..node (module.js:682:18)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)<br> &nbsp; &nbsp;at tryModuleLoad (module.js:506:12)<br> &nbsp; &nbsp;at Function.Module._load (module.js:498:3)<br> &nbsp; &nbsp;at Module.require (module.js:597:17)<br> &nbsp; &nbsp;at require (internal/module.js:11:18)<br> &nbsp; &nbsp;at Object.&lt;anonymous&gt; (D:\TECHWEB\node_modules\ccap\lib\hcap.js:4:13)<br> &nbsp; &nbsp;at Module._compile (module.js:653:30)<br> &nbsp; &nbsp;at Object.Module._extensions..js (module.js:664:10)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)
+
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at emitTwo (events.js:126:13)
+    at Request.emit (events.js:214:7)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:154:16
+    at Request._decode (D:\TECHWEB\node_modules\restler\lib\restler.js:170:7)
+    at IncomingMessage.<anonymous> (D:\TECHWEB\node_modules\restler\lib\restler.js:147:14)

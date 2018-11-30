@@ -1,0 +1,186 @@
+<div class="contentDiv">
+
+<blockquote class="layui-elem-quote layui-text">
+使用注意事项:</br>
+	1.统计面板用于汇总展示系统内所有重要信息</br>
+
+</blockquote>
+	<p>欢迎用户：<%-(locals.session==null)?"":locals.session.yjUser.AID%><%-locals.session.yjUser.name%> 登录系统</p>  
+	<HR></br>
+	
+	<div style="padding: 20px; background-color: #F2F2F2;">
+	
+	  <div class="layui-row layui-col-space15">
+	  
+	    <div class="layui-col-md6">	    
+	        <div class="layui-card">
+	        <div class="layui-card-header">账号统计</div>
+	        <div class="layui-card-body" id="UsersCount" >
+	        </div>
+	        </div>
+	    </div>
+	    	    
+	    <div class="layui-col-md6">	    
+	        <div class="layui-card">
+	        <div class="layui-card-header">密钥统计</div>
+	        <div class="layui-card-body" id="SPCount">
+	        </div>
+	        </div>	      
+	    </div>
+	       
+	  </div>
+	    
+    
+
+	  <div class="layui-row layui-col-space15">
+
+		    <div class="layui-col-md6">		    
+		        <div class="layui-card">
+		        <div class="layui-card-header">30天内即将到期账号</div>
+		        <div class="layui-card-body" id="expUsersCount" >		 
+		        </div>
+		        </div>			    
+		    </div>
+		        
+		    <div class="layui-col-md6">	    
+		        <div class="layui-card">
+		        <div class="layui-card-header">30天内即将到期密钥</div>
+		        <div class="layui-card-body" id="expSPCount">
+		        </div>
+		        </div>		            
+		    </div>
+		   
+		    
+	  </div>
+
+	    
+	    
+	    
+	</div>
+	
+	
+	
+	
+</div>
+<!------定义web显示内容---------------------------->
+
+
+
+<script type="text/javascript">
+    var  processAID="MSInfo";
+    var  subProcessAID="infoPanel";
+    var g_ScreenFlat=$(window).width()>1366?true:false;
+   
+
+    
+    $(function(){
+        g_subProcesses.renderinfoPanel=function(){
+//------定义用户统计---------------- 	
+        	
+        	
+        	
+        	$.ajax({
+                method:'get',
+                url:'/app/MSInfo/getUsersCount',
+                data:{},
+                success:function(data,textStatus){
+                	
+//               	alert(JSON.stringify(data));        	
+               	    $('#UsersCount').text("");
+                	for(i=0;i<data.length;i++){
+                		$('#UsersCount').append("厂商名称:"+data[i].Name+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;共有账号:"+data[i].CNT+"个"+"</br>");
+                	}
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown){
+                	
+                }
+            })       	
+ //------------------------     	
+            
+//------定义即将过期用户统计---------------- 	
+        	
+        	
+        	
+        	$.ajax({
+                method:'get',
+                url:'/app/MSInfo/expUsersCount',
+                data:{},
+                success:function(data,textStatus){
+                	
+//               	alert(JSON.stringify(data));        	
+               	    $('#expUsersCount').text("");
+                	for(i=0;i<data.length;i++){
+                		$('#expUsersCount').append("厂商名称:"+data[i].Name+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;共有账号:"+data[i].CNT+"个"+"</br>");
+                	}
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown){
+                	
+                }
+            })       	
+ //------------------------     	            
+            
+            
+            
+ //------定义密钥统计---------------- 	
+        	$.ajax({
+                method:'get',
+                url:'/app/MSInfo/getSPInfoCount',
+                data:{},
+                success:function(data,textStatus){
+                	      	
+               	    $('#SPCount').text("");
+                	for(i=0;i<data.length;i++){
+                		$('#SPCount').append("账号:"+data[i].UID+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;共产生密钥:"+data[i].CNT+"个"+"</br>");
+                	}
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown){
+                	
+                }
+            })       	
+ //------------------------             
+            
+        	
+ //------定义即将过期密钥统计---------------- 	
+        	$.ajax({
+                method:'get',
+                url:'/app/MSInfo/expSPInfoCount',
+                data:{},
+                success:function(data,textStatus){
+                	      	
+               	    $('#expSPCount').text("");
+                	for(i=0;i<data.length;i++){
+                		$('#expSPCount').append("账号:"+data[i].UID+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;共产生密钥:"+data[i].CNT+"个"+"</br>");
+                	}
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown){
+                	
+                }
+            })       	
+ //------------------------           	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        }
+    }); 
+</script>
+
+
+
+

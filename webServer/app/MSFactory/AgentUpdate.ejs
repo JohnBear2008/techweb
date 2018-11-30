@@ -1,0 +1,583 @@
+<div class="contentDiv">
+
+<blockquote class="layui-elem-quote layui-text">
+<p>欢迎用户：<%-(locals.session==null)?"":locals.session.yjUser.AID%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账号有效期至:<%-locals.session.yjUser.VidDate%></p>
+
+</blockquote>
+<HR></br>
+	
+	<form class="layui-form" id="AgentUpdateForm" action="">
+
+    
+	<div class="layui-form-item">
+	<label class="layui-form-label">选择代理商</label>
+	 <div class="layui-input-block">
+	   <select id="AIDUpdate" name="AIDUpdate"  lay-search=""  lay-filter="getAG">
+	  <!-- <option value="">输入代理商编号或简称可快速选择,未添加过的代理商请先添加,必选!</option>-->
+	   </select>
+	</div>
+	</div>
+    
+    
+    <div class="layui-form-item"  >
+    <label class="layui-form-label">代理商简称:</label>
+    <div class="layui-input-inline">
+        <input type="text" name="ANameUpdate" id="ANameUpdate"  placeholder="输入供应商简称,必填 " autocomplete="off" class="layui-input" >
+    </div>
+    </div>
+    
+    <div class="layui-form-item"  >
+    <label class="layui-form-label">联系方式:</label>
+    <div class="layui-input-block">
+        <input type="text" name="ContactUpdate" id="ContactUpdate"  placeholder="示例:张女士 18912340000,选填 " autocomplete="off" class="layui-input" >
+    </div>
+    </div>
+
+    <div class="layui-form-item"  >
+    <label class="layui-form-label">地址:</label>
+    <div class="layui-input-block">
+        <input type="text" name="AddressUpdate" id="AddressUpdate"  placeholder="代理商联系地址,选填 " autocomplete="off" class="layui-input" >
+    </div>
+    </div>
+    
+    
+    <div class="layui-form-item">
+    <label class="layui-form-label">备注信息:</label>
+    <div class="layui-input-block">
+        <input type="text" name="AgentInfoUpdate" id="AgentInfoUpdate"  placeholder="可记录该账号相关信息,选填 " autocomplete="off" class="layui-input" >
+    </div>
+    </div>
+    
+  
+    <div class="layui-form-item">
+    <label class="layui-form-label">工具账号</label>
+
+        <input type="radio" name="UserRadio" id="UserRadio" value="1" title="已开通" lay-filter="OpenUserCheckUpdate">
+
+        <input type="radio" name="UserRadio" id="UserRadio" value="0" title="未开通" lay-filter="OpenUserCheckUpdate"> 
+        
+
+
+
+    </div>
+    
+    
+    <div id="AccountInfoUpdate" style="display:none">
+    
+    <div class="layui-form-item" >
+    <div class="layui-inline">
+    <label class="layui-form-label">账号到期日:</label>
+    <div class="layui-input-inline">
+        <input type="text" name="VidDateAUpdate" id="VidDateAUpdate" lay-verify="date" placeholder="YYYY-MM-DD 必选" autocomplete="off" class="layui-input">
+    </div>
+    </div>
+    </div>
+    
+    
+    <div class="layui-form-item"  >
+    <label class="layui-form-label">密码:</label>
+    <div class="layui-input-inline">
+        <input type="text" name="IntPWUpdate" id="IntPWUpdate"  placeholder="不修改密码时,请勿填写! " autocomplete="off" class="layui-input" >
+    </div>
+    </div>
+    
+    
+    
+     
+    
+    </div>
+    
+    
+    
+    
+    
+    <div class="layui-form-item">
+    <div class="layui-input-block">
+	<button type="button" class="layui-btn" name="AgentUpdateDone" id="AgentUpdateDone">确认更新</button>
+
+	</div>
+	</div>
+
+	
+	</form>
+	
+	
+
+	
+</div>
+<!------定义web显示内容---------------------------->
+
+
+
+<script type="text/javascript">
+
+    
+// 用Diffie-Hellman非对称算法解密
+   
+
+    var  processAID="MSFactory";
+    var  subProcessAID="AgentUpdate";
+    var g_ScreenFlat=$(window).width()>1366?true:false;
+	
+    
+
+    
+    $(function(){
+    	
+        g_subProcesses.renderAgentUpdate=function(){
+        	
+        	
+        	var VidDate="<%-locals.session.yjUser.VidDate%>";
+        	
+//定义界面日期FORM界面-----------	
+        	layui.use(['form','layedit', 'laydate'], function(){
+        	    var form = layui.form
+        	            ,layer = layui.layer
+        	            ,layedit = layui.layedit
+        	            ,laydate = layui.laydate;
+
+
+        	    
+        	    var laydate = layui.laydate;
+    	           var DivDate= laydate.render({
+    	            elem: '#VidDateAUpdate',//选择器结束时间
+    	            type: 'date',
+    	            min:Ndate,//设置min默认最小值
+    	            max:VidDate,
+
+    	        });
+        	    
+        	    //加载代理商数据---------------------------------
+          		FID="<%-locals.session.yjUser.FID%>";
+			  
+      			$("#AIDUpdate").empty();
+      			
+
+      			
+
+      			
+		  
+      			  $.ajax({
+                        method:'get',
+                        data:{FID:FID},
+                        url:"/app/MSFactory/getAgentChoose",
+                        success:function(data){
+                        	
+                        	 $("#AIDUpdate").append($('<option value='+""+'>'+"输入代理商编号或简称可快速选择,未添加过的代理商请先添加,必选!"+'</option>'));
+
+                            for(i=0;i<data.length;i++)
+                        	{
+                            	  $("#AIDUpdate").append($('<option value='+data[i].AID+'>'+data[i].AID+data[i].AName+'</option>'));	                       	   
+                        	}
+                            form.render("select"); //不要放在for循环里否则会卡顿,最后一次性渲染即可
+
+                        },
+                        error:function(){}
+                    })
+      			        			  
+      		
+      		 //监听select 加载数据---------------------------------
+                   
+      			form.on('select(getAG)', function(data){
+
+
+      			  getAgentInfo({Account:FID+data.value},form);
+
+      			});
+      			  
+      			  
+      			  
+      			//监听指定开关
+   	           form.on('radio(OpenUserCheckUpdate)', function(data){
+
+   	        	   console.log(data.elem.checked); //是否被选中，true或者false
+
+   
+   	        	   if(data.value == 1){
+
+   	        		   $("#AccountInfoUpdate").show();     		 
+   	        	   }else{
+	    
+   	        		   $("#AccountInfoUpdate").hide();
+   	        	
+   	        	   }        	    	        	   
+   	        	 });        
+
+        	 });
+        	
+        	
+//定义界面日期FORM界面-----------	 	
+        	
+        	
+//定义获取代理商信息函数 -----------------    	
+            function getAgentInfo(data,form){
+                $.ajax({
+                    method:'get',
+                    url:'/app/MSFactory/getAgentInfo',
+                    data:data,
+                    success:function(data,textStatus){
+//                    	alert(JSON.stringify(data.rows[0]));
+                    	
+                    	$("#ANameUpdate").val(data.rows[0][0]);
+                    	$("#ContactUpdate").val(data.rows[0][1]);
+                    	$("#AddressUpdate").val(data.rows[0][2]);
+                    	$("#AgentInfoUpdate").val(data.rows[0][3]);
+
+                    	
+                    	if(data.rows[0][4]=="1"){
+                    		
+                    		AgentUserOpenValue="1";
+                    		$('input:radio[name=UserRadio]')[0].checked = true; 
+//                    		alert(data.rows[0][5])
+                    		getAgentUser({UserAID:data.rows[0][5]});
+                    		$("#AccountInfoUpdate").show();
+                    		
+                    	}else{
+                    		
+                    		AgentUserOpenValue="0";
+                    		$('input:radio[name=UserRadio]')[1].checked = true;   
+                    		$("#AccountInfoUpdate").hide();
+
+                    	}
+
+                    	form.render('radio');
+	                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                    	
+                    	alert("获取数据失败!")
+                    	
+                    }
+                })
+            }
+//定义获取代理商用户信息函数 ----------------- 
+        	
+            function getAgentUser(data){
+                $.ajax({
+                    method:'get',
+                    url:'/app/MSFactory/getAgentUser',
+                    data:data,
+                    success:function(data,textStatus){
+
+                    	
+                    	$("#VidDateAUpdate").val(moment(data.rows[0][0]).format("YYYY-MM-DD"));
+
+	                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                    	
+                    	alert("获取用户数据失败!")
+                    	
+                    }
+                })
+            }
+
+        	
+        	
+//检查代理商编号合法性-------------          	
+        	function checkAgentID(AgentID){
+            	
+        		if(AgentID>1&&AgentID<999&&AgentID.length==3){
+        			return true 
+        		}
+        		else 
+                
+                alert("代理商ID号输入不正确！")
+    			return false 
+        		
+            	} 
+//检查代理商编号合法性-------------     
+        	
+        	
+//-----检查信息是否为空----------
+        	function checkNotNull(Info){
+        		
+        		if(Info==""){
+        			return false
+        		}else{
+        			return true
+        		}
+        		
+        	}
+//-----检查信息是否为空----------
+        	
+        	
+
+//定义更新代理商信息函数 -----------------    	
+            function updateAgentInfo(data){
+                $.ajax({
+                    method:'post',
+                    url:'/app/MSFactory/updateAgent',
+                    data:data,
+                    success:function(data,textStatus){
+	                    	if(data.affectedRows!=0){
+	                    		alert("更新代理商信息成功!")
+	                    	}
+	                    	
+	                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                    	
+                    	alert("更新代理商信息失败!")
+                    	
+                    }
+                })
+            }
+//定义更新代理商信息函数 -----------------    		  
+            
+            
+            
+//定义更新代理商用户函数 -----------------    	
+            function updateAgentUser(data){
+                $.ajax({
+                    method:'post',
+                    url:'/app/MSFactory/updateAgentUser',
+                    data:data,
+                    success:function(data,textStatus){
+	                    	if(data.affectedRows!=0){
+	                    		alert("更新用户账号成功!")
+	                    	}
+	                    	
+	                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                    	
+                    	alert("更新用户账号失败!")
+                    	
+                    }
+                })
+            }
+            
+            
+//定义添加代理商用户函数 -----------------    	
+            function addAgentUser(data){
+                $.ajax({
+                    method:'post',
+                    url:'/app/MSFactory/addUser',
+                    data:data,
+                    success:function(data,textStatus){
+	                    	if(data.affectedRows!=0){
+	                    		alert("添加用户账号成功!")
+	                    	}
+	                    	
+	                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                    	
+                    	alert("添加用户账号失败!")
+                    	
+                    }
+                })  
+            }
+            
+            
+            function authAgentUser(data){
+            $.ajax({
+                method:'post',
+                url:'/app/MSFactory/authUser',
+                data:data,
+                success:function(data,textStatus){
+                    	if(data.affectedRows!=0){
+
+                    	}
+                    	
+                    },
+                error:function(XMLHttpRequest, textStatus, errorThrown){
+                	
+                	alert("授权失败!")
+                	
+                }
+            })
+            }
+//定义代理商用户删除函数 -----------------    	
+            function delAgentUser(data){
+                $.ajax({
+                    method:'post',
+                    url:'/app/MSFactory/delUser',
+                    data:data,
+                    success:function(data,textStatus){
+	                    	if(data.affectedRows!=0){
+	                    		alert("删除账号成功!")
+	                    	}	                    	
+	                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                    	
+                    	alert("删除账号失败!")
+                    	
+                    }
+                })
+                   
+                
+                $.ajax({
+                    method:'post',
+                    url:'/app/MSFactory/delAuth',
+                    data:data,
+                    success:function(data,textStatus){
+	                    	if(data.affectedRows!=0){
+	                    		
+//	                    		alert("删除授权成功!")
+
+	                    	}	                    	
+	                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                    	
+                    	alert("删除授权失败!")
+                    	
+                    }
+                })
+                
+                
+            }
+  
+//---------------定义随机ID-------------------
+            Date.prototype.format = function(format)
+        	{
+        	 var o = {
+        	 "M+" : this.getMonth()+1, //month
+        	 "d+" : this.getDate(),    //day
+        	 "h+" : this.getHours(),   //hour
+        	 "m+" : this.getMinutes(), //minute
+        	 "s+" : this.getSeconds(), //second
+        	 "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+        	 "S" : this.getMilliseconds() //millisecond
+        	 }
+        	 if(/(y+)/.test(format)) format=format.replace(RegExp.$1,
+        	 (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        	 for(var k in o)if(new RegExp("("+ k +")").test(format))
+        	 format = format.replace(RegExp.$1,
+        	 RegExp.$1.length==1 ? o[k] :
+        	 ("00"+ o[k]).substr((""+ o[k]).length));
+        	 return format;
+        	}
+
+        	
+        	
+//---定义更新按钮执行函数-----------------------        	
+ 
+        	
+            $('#AgentUpdateDone').off("click").on("click",function(){
+            
+
+            	var FID="<%-locals.session.yjUser.FID%>";
+            	var AID=$("#AIDUpdate").val();
+            	var Account=FID+AID;
+            	var FName="<%-locals.session.yjUser.name%>"; 
+            	var AName=$("#ANameUpdate").val(); 
+            	var Contact=$("#ContactUpdate").val(); 	
+            	var Address=$("#AddressUpdate").val(); 	
+            	var AInfo=$("#AgentInfoUpdate").val();
+            	var VidDateA=$("#VidDateAUpdate").val();
+            	var OpenUser=$("#UserRadio:checked").val();
+            	
+            	var IntPWUpdate=$("#IntPWUpdate").val();
+            	
+            	
+            	
+            	if(AID==""){
+            		alert("尚未选择代理商,请先选择!")
+            		
+            	}else{
+            		
+            		//--------------------定义四种情况------------------
+            		if(AgentUserOpenValue==1&&OpenUser==0){
+                		if(confirm("代理商用户账号从已开通变为未开通,代理商用户账号将备删除!")){
+                			delAgentUser({Account:Account,UserAID:Account});
+                			
+              			
+                			if(checkNotNull(AName)&&checkNotNull(AID)){
+                				updateAgentInfo({Account:Account,AName:AName,Contact:Contact,Address:Address,AInfo:AInfo,OpenUser:OpenUser});
+                			}
+                			
+                		}
+                	}
+                	
+                	
+                	if(AgentUserOpenValue==0&&OpenUser==1){
+                		if(confirm("代理商用户账号从未开通变为已开通,系统将新增代理商用户!")){
+                			
+                			
+                			if(checkNotNull(VidDateA)&&checkNotNull(Account)){
+                				
+                				if(IntPWUpdate==""){
+                					IntPWUpdate="123456";
+                				}
+    	
+                				var TEMPOID=new Date();
+                            	var UserOID=TEMPOID.format('MMddhhmmss');//定义随机ID
+                            	
+                            	
+                            	
+                			
+                		
+                			
+                			
+                			if(checkNotNull(AName)&&checkNotNull(AID)){
+                				
+                				if(VidDateContrast(VidDateA,VidDate)){
+                            		addAgentUser({UserOID:UserOID,Account:Account,IntPW:IntPWUpdate,Name:FName,FID:FID,VidDate:VidDateA});
+                            		updateAgentInfo({Account:Account,AName:AName,Contact:Contact,Address:Address,AInfo:AInfo,OpenUser:OpenUser});
+                            	}else{
+                    				alert("无法完成用户账号有效期更新!");
+                    			}
+                				
+                				
+                    			}
+                			
+                			
+                			
+                			}else{
+                				alert("新增用户账号,到期日不能为空,请检查!");
+                			}
+                			
+                			
+    	
+                			
+                		}
+                	}
+                	
+                	
+                	if(AgentUserOpenValue==1&&OpenUser==1){
+                		
+                		if(checkNotNull(AName)&&checkNotNull(AID)){
+                	
+            				updateAgentInfo({Account:Account,AName:AName,Contact:Contact,Address:Address,AInfo:AInfo,OpenUser:OpenUser});
+                			}
+                		
+                		
+                		
+                			
+                			if(VidDateContrast(VidDateA,VidDate)){
+                			updateAgentUser({VidDate:VidDateA,resetPW:IntPWUpdate,UserAID:Account});
+                			}else{
+                				alert("无法完成用户账号有效期更新!");
+                			}
+                		
+                		
+                		
+                	}
+                	
+                     
+                	if(AgentUserOpenValue==0&&OpenUser==0){
+                		
+                		if(checkNotNull(AName)&&checkNotNull(AID)){
+            				updateAgentInfo({Account:Account,AName:AName,Contact:Contact,Address:Address,AInfo:AInfo,OpenUser:OpenUser});
+                			}
+    		
+                	}
+            		
+                	//--------------------定义四种情况------------------
+                	
+                	
+                	
+            		
+            	}
+
+     
+            	
+
+            })
+            
+ 
+            
+        }
+    }); 
+</script>
+
+
+
+

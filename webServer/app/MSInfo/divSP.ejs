@@ -1,0 +1,359 @@
+<div class="contentDiv">
+
+<blockquote class="layui-elem-quote layui-text">
+<p>该功能用于,生成任意厂家,任意代理商产生的密钥</p>
+	
+</blockquote>
+
+
+ 
+<HR></br>
+<form class="layui-form" action="">
+
+<div class="layui-form-item">
+<label class="layui-form-label">厂商账号:</label>
+<div class="layui-input-block">
+    <input type="text" name="FCode" id="FCode"  placeholder="输入需要产生密钥的帐号,示例:7HT001  最长6位,必填" autocomplete="off" class="layui-input" value="" maxlength="6">
+</div>
+</div>
+
+
+<div class="layui-form-item">
+<label class="layui-form-label">机台编号:</label>
+<div class="layui-input-block">
+    <input type="text" name="MCode" id="MCode"  placeholder="示例:MA1234567891000  最长16位,必填" autocomplete="off" class="layui-input" value="" maxlength="16">
+</div>
+</div>
+
+<div class="layui-form-item">
+<label class="layui-form-label">备注信息:</label>
+<div class="layui-input-block">
+    <input type="text" name="Customer" id="Customer"  placeholder="可输入备注信息,如最终用户简称方便查找,选填 " autocomplete="off" class="layui-input" value="" maxlength="16">
+</div>
+</div>
+
+
+
+<div class="layui-form-item">
+<div class="layui-inline">
+<label class="layui-form-label">到期日期:</label>
+<div class="layui-input-inline">
+    <input type="text" name="ASEndDay" id="ASEndDay" lay-verify="date" placeholder="YYYY-MM-DD 必选" autocomplete="off" class="layui-input" >
+</div>
+</div>
+</div>
+
+<div class="layui-form-item">
+<label class="layui-form-label">到期后:</label>
+
+    <input type="radio" name="MRadio" id="MRadio" value="1" title="继续加密" checked="checked">
+
+    <input type="radio" name="MRadio" id="MRadio" value="2" title="永久解密"> 
+
+
+</div>
+
+
+
+
+<div class="layui-form-item">
+<div class="layui-input-block">
+<button type="button" class="layui-btn" name="ASSN" id="ASSN">点击生成密钥文件</button>
+<button type="button" class="layui-btn" name="ASPW" id="ASPW">计算手输密码</button>
+<!---button type设定为button  不要设定为submit,设置成submit 点击按钮后会自动刷新页面---------------------------->
+</div>
+</div>
+
+  
+<div class="layui-form-item">
+<label class="layui-form-label">手输密码:</label>
+<div class="layui-input-block">
+    <input type="text" name="PWResult" id="PWResult"  placeholder="计算成功后此处显示解锁密码,在面板界面输入解锁,与SP密钥文件有同等效果" autocomplete="off" class="layui-input">
+</div>
+</div> 
+
+
+</form>
+
+
+
+
+</div>
+
+
+
+<!----------定义web显示内容---------------------------->
+
+
+
+
+<script type="text/javascript">
+    var  processAID="MSInfo";
+    var  subProcessAID="divSP";
+    var g_ScreenFlat=$(window).width()>1366?true:false;
+    
+  
+    $(function(){
+        g_subProcesses.renderdivSP=function(){
+        	
+        	
+        	var VidDate="<%-locals.session.yjUser.VidDate%>";
+        	
+        	
+        	
+//----检测账号有效性-----------------------
+        	
+        	function checkAccount(date){
+        		var Ndate=CurentTime();
+        		var VidDate="<%-locals.session.yjUser.VidDate%>";
+        		
+        		
+        		if(VidDate<Ndate){
+        			
+        			alert("该账号已过期,请及联系厂家!");
+        			window.location.href="/app/account/logout";
+        		}
+        	}
+        	checkAccount();
+
+
+        	
+
+        	
+        	
+ //定义日期选择框      	
+        	layui.use(['form','layedit', 'laydate'], function(){
+        	    var form = layui.form
+        	            ,layer = layui.layer
+        	            ,layedit = layui.layedit
+        	            ,laydate = layui.laydate;
+
+
+        	        var laydate = layui.laydate;
+        	        var DivDate= laydate.render({
+        	            elem: '#ASEndDay',
+        	            type: 'date',
+
+        	        });
+ 
+        	   
+        	   
+
+       	 });
+        	
+//----检查机台编号------------------
+        	//自动修改为大写------------
+            $("#MCode").blur(function(){   
+        		
+        		var MCode=$("#MCode").val();
+            	
+        		$("#MCode").val(MCode.toUpperCase());
+    			
+        	});
+   	
+        	function checkMCode(){
+            	
+
+        		if($('#MCode').val()==""){
+        			layer.alert("请输入机台编号！")
+        			return false 
+        		}
+        		else 
+                return true 
+        		
+            	} 
+        	
+        	
+        	function checkFCode(){
+            	
+
+        		if($('#FCode').val()==""){
+        			layer.alert("请输入对应账号！")
+        			return false 
+        		}
+        		else 
+                return true 
+        		
+            	} 
+        	
+        	
+            function checkEndDay(){
+            	
+
+        		if($('#ASEndDay').val()==""){
+        			layer.alert("到期日期不能为空！")
+        			return false 
+        		}
+        		else 
+                return true 
+        		
+            	} 
+        	
+
+
+//加密单一参数      
+        function encryptS(){
+        	
+        	 MCode=$("#MCode").val();
+        	 
+        	 FCode=$("#FCode").val();
+        	
+        	 Len=MCodeLen(MCode.length);
+
+    		 ASEndDay=$("#ASEndDay").val();
+    		
+
+    	     FASEndDay= moment(ASEndDay).format("YYMMDD");//格式化日期
+    		
+    		 MRadio=$("#MRadio:checked").val();
+
+
+    		
+    		source =FCode+Len+MCode+FASEndDay+MRadio;
+
+        	var cc = encryptByDESModeEBC(CryptoJS.enc.Utf8.parse(source)).toUpperCase();
+
+        	return cc;
+        	}
+        	
+
+//------------------获取手输密码-----------------------------
+        function getPW(){
+
+            MCode=$("#MCode").val(); 
+            
+            FCode=$("#FCode").val();
+        	Len=MCodeLen(MCode.length);
+    		 ASEndDay=$("#ASEndDay").val();
+    	     FASEndDay= moment(ASEndDay).format("YYMMDD");//格式化日期    		
+    		 MRadio=$("#MRadio:checked").val();
+
+    		 partA=FCode+Len+MCode;
+    		 Alen=partA.length;
+    		 
+    		 partB=FASEndDay+MRadio;
+    		
+    		PW=PWenc(partA,partB).toUpperCase();
+    		layer.alert("计算密码成功!");
+    		$("#PWResult").val(PW);
+    		return PW;
+      	
+        }
+        	
+//定义记录信息函数     	
+        function logInfo(data){
+            $.ajax({
+                method:'post',
+                url:'/app/MSAgent/logInfo',
+                data:data,
+                success:function(data,textStatus){              
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown){
+
+                }
+            })
+        }
+//-----------------------------        
+          
+           //定义按下生成平均密钥时运行函数
+             $('#ASSN').off("click").on("click",function(){
+            	 
+            	 
+            	 if(checkFCode()&&checkMCode()&&checkEndDay()){
+         			
+         			var ssp=encryptS();
+         			
+         			if($("#MRadio:checked").val()==2){
+         				var Ptype="YES"    				
+         			}else{
+         				var Ptype="NO"
+         			}
+
+         			var data={
+         					 UID:$("#FCode").val(),
+         					 MKID:"<%-locals.session.yjUser.FID%>",
+         					 Customer:$("#Customer").val(),
+                             AGID:"<%-locals.session.yjUser.AAID%>",
+                             MCID:$("#MCode").val().toUpperCase(),
+                             EndDate:$("#ASEndDay").val(),
+                             CreateDate:Ndate,
+                             SP:ssp,
+                             PW:"",
+                             Type:Ptype,
+                             FQ:"NO",
+                             downloadNum:"1"
+         			}
+
+         			layer.confirm("请将生成的密钥放置于U盘对应目录"+$("#FCode").val().substring(0,3)+"Newstop", {
+              		    btn: ['确认','取消'], //按钮
+              		    shade: false //不显示遮罩
+              		}, function(){
+	
+              			var blob = new Blob([ssp], {});//去除文件头参数
+                    	saveAs(blob, data.MCID+"_"+moment(data.EndDate).format("YYMMDD")+".sp");//为保存的文件名
+                    	logInfo(data);
+
+              		    layer.msg('生成密钥成功', {icon: 1});
+              		}, function(){
+//              		    layer.msg('奇葩么么哒', {icon: 2});
+              		});
+
+                	 
+         			
+         		}
+
+                    		
+             })
+             
+             
+             
+             
+//定义 按下计算密码按钮时函数        
+             $('#ASPW').off("click").on("click",function(){
+
+            	 
+            	 if(checkFCode()&&checkMCode()&&checkEndDay()){
+        	  
+            	 
+            	 
+            	 var ssp=encryptS();
+            	 var spw=getPW();
+            	 
+            	 if($("#MRadio:checked").val()==2){
+      				var Ptype="YES"    				
+      			}else{
+      				var Ptype="NO"
+      			}
+            	 
+      			 var data={
+      					  UID:$("#FCode").val(),
+      					  MKID:"<%-locals.session.yjUser.FID%>",
+      					  Customer:$("#Customer").val(),
+                          AGID:"<%-locals.session.yjUser.AAID%>",
+                          MCID:$("#MCode").val().toUpperCase(),
+                          EndDate:$("#ASEndDay").val(),
+                          CreateDate:Ndate,
+                          SP:ssp,
+                          PW:spw,
+                          Type:Ptype,
+                          FQ:"NO",
+                          downloadNum:"0"
+      			 }
+      		
+ 
+
+      			logInfo(data);
+            	  
+            	 
+            	 }
+              })
+        	
+              
+              
+              
+              
+
+            
+        }
+    }); 
+</script>

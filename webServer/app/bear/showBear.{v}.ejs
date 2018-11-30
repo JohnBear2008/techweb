@@ -1,0 +1,18 @@
+<% layout('./bear.ejs') -%> 
+<% block('BearSub',partial("./BearSub.ejs")) -%> 
+<% block('BearPic',partial("./BearPic.ejs")) -%> 
+<% block('BearAdd',partial("./BearAdd.ejs")) -%> 
+<script type="text/javascript" src="/js/highcharts.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/divContent.css">
+<% script("/socket.io/socket.io.js") -%>
+
+
+
+<script type="text/javascript">
+    var  processAID="Bear";
+    var  subProcessAID="BearAdd";
+    var socket = io.connect();
+    $(function(){
+        g_subProcesses["render"+subProcessAID]();
+    });
+</script>

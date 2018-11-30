@@ -1,0 +1,357 @@
+<div id="Authority" class="subModel" style="background-color: #fff;padding-top: 40px" >
+    <div id="a_content">
+	    <div id="toolbar">
+	        <a href="#" id="btnAdd" class="myButton"><%-locals.ml('New')%></a>
+	        <a href="#" id="btnEdit" class="myButton btnDisable"><%-locals.ml('Edit record')%></a>
+	        <a href="#" id="btnDel" class="myButton btnDisable"><%-locals.ml('deletes')%></a>
+	        <a href="#" id="btnSave" class="myButton btnDisable"><%-locals.ml('Post edit')%></a>
+	        <a href="#" id="btnCancel" class="myButton btnDisable"><%-locals.ml('Cancle')%></a>
+	        <a href="#" id="btnEditPasswd" class="myButton btnDisable"><%-locals.ml('Setup Password')%></a>
+	    </div>
+	    <hr style="width:auto" />
+	    <table id="tb_user" >
+	    </table>
+		<form id="editDialog" method='get' style="width:250px;">
+			<div style="width:250px;margin-left:20px;margin-top:40px;font-size:20px" id='oldPassword' ><%-locals.ml('Old Password')%>:<input style="margin-left:4px;height:25px;width:160px;font-size:18px" value='' /></div>
+			<div style="width:250px;margin-left:20px;margin-top:15px;font-size:20px"  id='newPassword'><%-locals.ml('New Password')%>:<input style="margin-left:4px;height:25px;font-size:18px;width:160px;" value='' /></div>
+			<div id="editPasswdConfirm" style="margin-left:60px;height:32px;font-size:20px;margin-top:40px;width:65px"  class="easyui-linkbutton">
+		    <%-locals.ml("OK")%>
+		    </div>  
+		    <div id="editPasswdClose" style="margin-left:40px;margin-top:40px;font-size:20px;height:32px;width:65px"  class="easyui-linkbutton">
+		    <%-locals.ml("Close")%>
+		    </div>    
+		</form>	   
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        g_subProcesses.renderAuthority=function(){
+        	function editPasswdClose(){
+		    	$("#editDialog").dialog("close");
+		    }
+		    function setUserPasswdDialog(){
+		    	$("#editDialog").dialog({
+					height : 250,
+					width : 300,
+					modal : true,
+					title : '<%-locals.ml("Setup Password")%>',
+					closed : true,
+					onClose : function(event, ui) {				
+						 },
+					onOpen : function(){				
+						}		  
+			 	}); 
+		    }
+		    function editPasswdConfirm(){
+				var newPasswd=$("#newPassword input")[0].value;
+				var oldPasswd=$("#oldPassword input")[0].value;
+				if(newPasswd==""||newPasswd==null||oldPasswd==""||oldPasswd==null){
+					yjMessager.showDialog("error",'<%-locals.ml("Password can not be empty")%>',"");
+					return;
+				}else{                        
+					var rowData = $("#tb_user").datagrid("getChecked");  
+					rowData[0].newUserPassword=newPasswd;	
+					rowData[0].oldUserPassword=oldPasswd;					
+					$.ajax({
+			    		method : "get",
+					   	data:rowData[0],
+					    url : "/app/updateUserInfo",
+					    success :function(data, textStatus){	
+						    if(data=="fail"){
+							    yjMessager.showDialog("error",'<%-locals.ml("The original password is incorrect, modify the password failed")%>',"");
+								$("#editDialog").form('reset');	 
+						    }else{	
+						     	$('#tb_user').datagrid('reload',data[0]);				    	 								    	
+					    		$("#editDialog").dialog("close"); 
+					    	} 						      						    		  			           			       					        										        
+					    },
+					    error:function(XMLHttpRequest, textStatus, errorThrown){
+					    }
+					});
+				} 													     
+		    }
+		    var editRow = undefined;
+		    $("#tb_user").datagrid({
+		        pagination:true,
+			   	pagePosition:'bottom',			
+		        width:'100%',
+		        sortOrder:'asc',
+		        sortName:'id',
+		        nowarp : false,
+		        idField : "id",
+		        singleSelect : true,
+		        striped:true,
+		        pageSize : 10,	      
+		        checkbox:true,
+		        columns : [[
+		            {
+		            	field:'ck',
+		            	checkbox:true
+		            },{
+		                title : '<%-locals.ml("NO.")%>',
+		                field : "id",
+		                width : '18%',
+		                align:'center',
+		                sortable: true,
+		                formatter : function(value,row,rowIndex){  		                              	              
+		                	return rowIndex+1;
+		                }	                
+		            },{
+		                title : '<%-locals.ml("Account name")%>',
+		                field : "name",
+		                width : '20%',
+		                align:'center',
+		                sortable: true,
+		                editor: { 
+		                	type: 'textbox',
+		                	 options: {
+			                    required: true
+			                }		                 	
+		                }
+		            },{
+		                title : '<%-locals.ml("Registered person")%>',
+		                field : "regName",
+		                width :'20%',
+		                align:'center',
+		                sortable: true,
+		                editor: { 
+		                	type: 'textbox',	                	
+			                options: {
+			                    required: true
+			                }	                 	
+		                }
+		            },{
+		                title : '<%-locals.ml("Password")%>',
+		                field : "UserPassword",
+		                width : '20%',
+		                align:'center',
+		                sortable: true,
+		                editor: { 
+		                	type: 'text',	                	
+			                options: {
+			                    required: true
+			                }	                 	
+		                },
+		                formatter:function(value){
+		                	return '<div>*******</div>';
+		                }
+		            },{
+		                title : '<%-locals.ml("Authority level")%>',
+		                field : "BuildingName",
+		                width : '20%',
+		                align : "center",
+		                sortable: true,
+		                formatter : function(value,row){                    	              
+		                	if(row.name=="Admin"){
+		                		return '<div><%-locals.ml("Super user")%></div>';
+		                	}else{
+		                		return '<div><%-locals.ml("Ordinary users")%></div>';
+		                	}
+		                }
+		            }]
+				],
+	            onBeforeLoad:function(param){
+					$.ajax({
+					    method : "get",
+					   	data:param,
+					    url : "/app/getUser",
+					    success :function(data, textStatus){		      
+				            var pageData=yjDB.dataSet2ObjectList(data.meta,data.rows);
+							$("#tb_user").datagrid("loadData",{rows:pageData,total:data.total});	
+										       					        										        
+					    },
+					    error:function(XMLHttpRequest, textStatus, errorThrown){
+					    }
+					});		   		
+	   		    },
+	   		    onCheck: function (index, row){
+		   		    if((row.id!=undefined)&&(row.id!=3)){
+		   		    	$("#btnAdd").removeClass("btnDisable");
+		   		    	$("#btnEdit").removeClass("btnDisable");
+		   		    	$("#btnDel").removeClass("btnDisable");
+		   		    	$("#btnEditPasswd").removeClass("btnDisable");
+		   		    }else{
+		   		    	$("#btnEdit").addClass("btnDisable");
+		   		    	$("#btnDel").addClass("btnDisable");
+		   		    	$("#btnEditPasswd").addClass("btnDisable");
+		   		    }		   	
+	   		    }, 
+	   		    onAfterEdit: function (rowIndex, rowData, changes) {
+	   		   		if((rowData.id!=undefined)&&(rowData.id!=3)){
+	   		   			$.ajax({
+				    		method : "get",
+						   	data:rowData,
+						    url : "/app/updateUserInfo",
+						    success :function(data, textStatus){
+						    	  editRow = undefined;
+						    	  $('#tb_user').datagrid('reload',rowData);						        
+						    },
+						    error:function(XMLHttpRequest, textStatus, errorThrown){
+						    }
+						});  
+					}  
+					if(rowData.id==undefined){
+	                	$.ajax({
+						    method : "get",
+						   	data:rowData,
+						    url : "/app/insertUserInfo",
+						    success :function(data, textStatus){
+						    	editRow=undefined;						    			    			           			       					        										        
+						    },
+						    error:function(XMLHttpRequest, textStatus, errorThrown){
+						    }
+						});	
+						$('#tb_user').datagrid('reload',rowData);	
+	                
+	                }                 
+	            }                	   		             
+	        });  
+            $("#btnAdd").click(function(){
+				$("#btnEdit").addClass("btnDisable");
+				$("#btnDel").addClass("btnDisable");
+			    $("#btnEditPasswd").addClass("btnDisable");
+				$("#btnSave").removeClass("btnDisable");
+				$("#btnCancel").removeClass("btnDisable");
+				if(editRow != undefined) {
+		        	$("#tb_user").datagrid("endEdit", editRow);
+		        }
+		        //添加时如果没有正在编辑的行，则在datagrid的第一行插入一行
+		        if(editRow == undefined) {
+		            $("#tb_user").datagrid("insertRow", {
+		                index: 0, // index start with 0
+		                row: {
+		                }
+		            });
+		            //将新插入的那一行开户编辑状态
+		            $("#tb_user").datagrid("beginEdit", 0);
+		            //给当前编辑的行赋值
+		            editRow = 0;
+		        }                 	     
+			});
+			$("#btnEdit").click(function(){  	   
+				var rows =  $("#tb_user").datagrid("getChecked");
+				if ($(this).hasClass("btnDisable"))
+		        {
+		            return ;
+		        }
+				if((rows.length > 0)&&(rows[0].id!=3)) {
+					$("#btnSave").removeClass("btnDisable");
+					$("#btnCancel").removeClass("btnDisable"); 
+					$("#btnDel").addClass("btnDisable");
+				    $("#btnEditPasswd").addClass("btnDisable");		
+			        //如果只选择了一行则可以进行修改，否则不操作
+			        if(rows.length == 1) {
+			        	//修改之前先关闭已经开启的编辑行，当调用endEdit该方法时会触发onAfterEdit事件
+			            if(editRow != undefined) {
+			            	$("#tb_user").datagrid("endEdit", editRow);                 
+			            }
+			            //当无编辑行时
+			            if(editRow == undefined) {
+			            	//获取到当前选择行的下标
+			                var index =  $("#tb_user").datagrid("getRowIndex", rows[0]);
+			                //开启编辑
+			                $("#tb_user").datagrid("beginEdit", index);
+			                //把当前开启编辑的行赋值给全局变量editRow
+			                editRow = index;
+			                var cellEdit=$('#tb_user').datagrid('getEditor', { index: index, field: 'UserPassword'});	
+			                cellEdit.target.hide();	                         	                            
+		   		   			//var $input = cellEdit.target; // 得到文本框对象
+							//$input.prop('readonly',true); // 设值只读	                
+			                //当开启了当前选择行的编辑状态之后，
+			                //应该取消当前列表的所有选择行，要不然双击之后无法再选择其他行进行编辑
+			                 $("#tb_user").datagrid("unselectAll");                  	
+			             }
+			         }
+			         
+			     }else{	     			      
+			     	 //yjMessager.showDialog("error",'超級用戶不能編輯，請選擇普通用戶要編輯的行',"");
+			     }       	
+			}); 
+			$("#btnSave").click(function(){ 		
+		        if ($(this).hasClass("btnDisable"))
+		        {	
+		            return ;
+		        }
+		        $("#btnEdit").addClass("btnDisable");
+				$("#btnSave").addClass("btnDisable");
+				$("#btnCancel").addClass("btnDisable");
+				$("#btnDel").addClass("btnDisable");
+			    $("#btnEditPasswd").addClass("btnDisable");
+		    	$("#tb_user").datagrid("endEdit", editRow);             
+		    });
+		 	$("#btnCancel").click(function(){		
+		        if ($(this).hasClass("btnDisable"))
+		        {      	
+		            return ;
+		        }
+		        $("#btnEdit").addClass("btnDisable");
+				$("#btnSave").addClass("btnDisable");
+				$("#btnCancel").addClass("btnDisable");
+				$("#btnDel").addClass("btnDisable");
+			    $("#btnEditPasswd").addClass("btnDisable");
+		    	editRow = undefined;
+		    	$("#tb_user").datagrid("rejectChanges");
+		    	$("#tb_user").datagrid("unselectAll");        		       		
+		   	});   
+		    $("#btnDel").click(function(){  	  
+		        if ($(this).hasClass("btnDisable"))
+		        {
+		            return ;
+		        }
+		    	var rows = $("#tb_user").datagrid("getChecked");        
+		    	//选择要删除的行
+		    	if((rows.length > 0)&&(rows[0].id!=3)) {   
+		    		$("#btnEdit").addClass("btnDisable");
+			    	$("#btnEditPasswd").addClass("btnDisable");        
+		         	yjMessager.showConfirmDialog(
+						"Confirm!",
+						'<%-locals.ml("Are you sure you want to delete it?")%>',
+						{	
+							onOK : function(){
+								$.ajax({
+								    method : "get",
+								   	data:rows[0],
+								    url : "/app/deleteUserInfo",
+								    success :function(data, textStatus){
+				    			           $('#tb_user').datagrid('reload',rows[0]);			       					        										        
+								    },
+								    error:function(XMLHttpRequest, textStatus, errorThrown){
+								    }
+								});	
+								$("#btnEdit").addClass("btnDisable");
+				   		    	$("#btnDel").addClass("btnDisable");
+				   		    	$("#btnEditPasswd").addClass("btnDisable");					
+							},
+							onCancel : function(){						
+							}
+						}
+					);              
+		        }
+		        else {
+		         	yjMessager.showDialog("error",'<%-locals.ml("Please select the line you want to delete")%>',"");
+		        }                     	      		                                            		
+		    });
+		    $("#btnEditPasswd").click(function(){
+		        if ($(this).hasClass("btnDisable"))
+		        {
+		            return ;
+		        }
+		    	var rows = $("#tb_user").datagrid("getChecked"); 
+			    if(rows.length >0){
+			    	setUserPasswdDialog();
+				 	$("#editDialog").form('reset');	 	      
+			    	$("#editDialog").dialog("open");
+		    	}else{
+		    		yjMessager.showDialog("error",'<%-locals.ml("Please select a row to modify the password")%>',"");
+		    	}
+		    });
+		    $('#editPasswdConfirm').click(function(){
+		    	editPasswdConfirm();
+		    });
+		    $('#editPasswdClose').click(function(){
+		    	editPasswdClose();
+		    })
+		    setUserPasswdDialog();
+        }
+    })
+</script>

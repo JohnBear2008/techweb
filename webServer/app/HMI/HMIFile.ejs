@@ -1,0 +1,179 @@
+<div class="contentHMI">
+  <h1>HMI机器编码工具</h1>
+  <p>出厂年份:
+    <label for="textfield"></label>
+    <label for="select"></label>
+    <select name="selectYear" id="selectYear">
+ 
+    </select>
+  </p>
+  <p>分厂编号:  
+    <select name="selectID" id="selectID">
+      
+    </select>
+    
+  </p>
+  <p>机器吨位:  
+    <input type="text" name="textMt" id="textMt"  />
+  </p>
+  <p>序列号:
+    <input type="text" name="textCode" id="textCode" />
+  </p>
+  <p>生成文件名称:</p>
+  <p>
+    <input type="button" name="buttonReadDefault" id="buttonReadDefault" value="读取默认值" />
+    <input type="button" name="buttonSaveDefault" id="buttonSaveDefault" value="保存默认值" />
+    <input type="button" name="buttonOpenFolder" id="buttonOpenFolder" value="打文件夹" />
+    <input type="button" name="buttonCreate" id="buttonCreate" value="生成" />
+    <input type="button" name="buttonBatchCreate" id="buttonBatchCreate" value="批次生成" />
+  </p>
+</div>
+<!------定义web显示内容---------------------------->
+
+<script type="text/javascript">
+    var  processAID="HMI";
+    var  subProcessAID="HMIFile";
+    var g_ScreenFlat=$(window).width()>1366?true:false;
+   
+    $(function(){
+        g_subProcesses.renderHMIFile=function(){
+        	
+        	
+//        	alert(data);
+        	
+        	
+        	$.ajax({
+                method:'get',
+                data:"",
+                url:"/app/HMI/HMISetGet",
+                success:function(data){
+//                	alert(data[0].newMT+data[0].maxID);
+                	$("#textMt").val(data[0].newMT);
+                	$("#textCode").val(data[0].codeOne);
+                	$("#selectID").val(data[0].maxID);
+                	
+                	
+                	//定义年份
+                	$("#selectYear").empty();//加载前清空防止无限叠加bug
+                	var yearNumArray= new Array();
+                	for(yearNum=data[0].yearStart;yearNum<data[0].yearEnd;yearNum++){
+                		yearNumArray[yearNum]=yearNum+1;
+                	$("#selectYear").append("<option value='"+yearNumArray[yearNum]+"'>"+yearNumArray[yearNum]+"</option>");         		
+                	}
+
+
+                	
+                	//定义机台号
+                	$("#selectID").empty();//加载前清空防止无限叠加bug
+                	var IDNumArray= new Array();
+                	for(IDNum=0;IDNum<data[0].maxID;IDNum++){
+                		IDNumArray[IDNum]=IDNum+1;
+                	$("#selectID").append("<option value='"+IDNumArray[IDNum]+"'>"+IDNumArray[IDNum]+"</option>");         		
+                	}
+
+                	
+                	
+                	
+                },
+                error:function(){
+    
+                }
+            })
+            
+            
+            
+                     
+            
+          
+//            function getAddInfo(bName,bRadio,bCheckBox){
+//                $.ajax({
+//                    method:'post',
+//                    url:'/app/bear/getAddInfo',
+//                    data:{
+//                        bName:bName,
+//                        bRadio:bRadio,
+//                        bCheckBox:bCheckBox
+//                    },
+//                    success : function(data){
+//                        sender.success(data);
+//                        alert(data+"22222");
+//                    },
+//                    error:function(XMLHttpRequest, textStatus, errorThrown){
+//                    }
+//                })
+//            }
+//            
+//            
+            $('#buttonCreate').off("click").on("click",function(){
+            	
+            	var blob = new Blob(['ttttttttstt'], {type: "text/plain;charset=utf-8"});//out_put_string为需要保存到文件的字符串内容
+            	saveAs(blob, "SN.msn");//为保存的文件名
+                    		
+            })
+            
+            
+            $('#buttonBatchCreate').off("click").on("click",function(){
+            	
+//            	zip.useWebWorkers = false;
+//            	var z = new ZipArchive;
+//            	for(var i=1;i<6;i++){
+//            		z.addFile(i+".msn", i);
+//            	}
+//                
+////                z.addFile("aaaa.msn", "aaaaaaaccccc");  测试js插件ZipArchive文件覆盖bug
+//                z.export("snpatch");
+            	
+            	
+            	var zip = new JSZip();
+            	for(var i=1;i<6;i++){
+            		zip.file(i+".txt", i+"Hello World\n");
+            	}
+            	
+//            	zip.file("Hello.txt", "Hello World\n");
+//            	var img = zip.folder("images");
+//            	img.file("smile.gif", imgData, {base64: true});
+            	zip.generateAsync({type:"blob"})
+            	.then(function(content) {
+            	    // see FileSaver.js
+            	    saveAs(content, "example.zip");
+            	});
+                    		
+            })
+            
+             $('#buttonOpenFolder').off("click").on("click",function(){
+            	 
+            	 try {
+            		 var Message = "Please select the folder path."; //选择框提示信息
+            		 var Shell = new ActiveXObject("Shell.Application");
+            		 var Folder = Shell.BrowseForFolder(0, Message, 0x0040, 0x11); //起始目录为：我的电脑
+            		 //var Folder = Shell.BrowseForFolder(0,Message,0); //起始目录为：桌面
+            		 if (Folder != null) {
+            		 Folder = Folder.items(); // 返回 FolderItems 对象
+            		 Folder = Folder.item(); // 返回 Folderitem 对象
+            		 Folder = Folder.Path; // 返回路径
+            		 if (Folder.charAt(Folder.length - 1) != "\\") {
+            		 Folder = Folder + "\\";
+            		 }
+            		 return Folder;
+            		 }
+            		 } catch (e) {
+            		 alert(e.message);
+            		 }
+            		
+            })
+            
+//            function addClick(){    
+//                $("#cli").one("click",function(){
+//                    alert(count++);
+//                });
+//            } 解决点击一次按钮 执行多次bug,此方法只执行一次 会有另外问题
+            
+//            $("#cli").off("click").on("click",function(){
+//                alert(count++);
+//            });此方法处理bug效果较好 
+
+       
+            
+        }
+    }); 
+</script>

@@ -1,0 +1,174 @@
+[2018-10-25 15:45:54.668] [ERROR] dateFileLog - Error: Error: The module &#39;\\?\D:\TECHWEB\node_modules\ccap\build\Release\hcaptha.node&#39;<br>was compiled against a different Node.js version using<br>NODE_MODULE_VERSION 46. This version of Node.js requires<br>NODE_MODULE_VERSION 57. Please try re-compiling or re-installing<br>the module (for instance, using `npm rebuild` or `npm install`).<br> &nbsp; &nbsp;at Object.Module._extensions..node (module.js:682:18)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)<br> &nbsp; &nbsp;at tryModuleLoad (module.js:506:12)<br> &nbsp; &nbsp;at Function.Module._load (module.js:498:3)<br> &nbsp; &nbsp;at Module.require (module.js:597:17)<br> &nbsp; &nbsp;at require (internal/module.js:11:18)<br> &nbsp; &nbsp;at Object.&lt;anonymous&gt; (D:\TECHWEB\node_modules\ccap\lib\hcap.js:4:13)<br> &nbsp; &nbsp;at Module._compile (module.js:653:30)<br> &nbsp; &nbsp;at Object.Module._extensions..js (module.js:664:10)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)
+
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at emitTwo (events.js:126:13)
+    at Request.emit (events.js:214:7)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:154:16
+    at Request._decode (D:\TECHWEB\node_modules\restler\lib\restler.js:170:7)
+    at IncomingMessage.<anonymous> (D:\TECHWEB\node_modules\restler\lib\restler.js:147:14)
+[2018-10-25 15:47:37.225] [ERROR] dateFileLog - Error: Error: The module &#39;\\?\D:\TECHWEB\node_modules\ccap\build\Release\hcaptha.node&#39;<br>was compiled against a different Node.js version using<br>NODE_MODULE_VERSION 46. This version of Node.js requires<br>NODE_MODULE_VERSION 57. Please try re-compiling or re-installing<br>the module (for instance, using `npm rebuild` or `npm install`).<br> &nbsp; &nbsp;at Object.Module._extensions..node (module.js:682:18)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)<br> &nbsp; &nbsp;at tryModuleLoad (module.js:506:12)<br> &nbsp; &nbsp;at Function.Module._load (module.js:498:3)<br> &nbsp; &nbsp;at Module.require (module.js:597:17)<br> &nbsp; &nbsp;at require (internal/module.js:11:18)<br> &nbsp; &nbsp;at Object.&lt;anonymous&gt; (D:\TECHWEB\node_modules\ccap\lib\hcap.js:4:13)<br> &nbsp; &nbsp;at Module._compile (module.js:653:30)<br> &nbsp; &nbsp;at Object.Module._extensions..js (module.js:664:10)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)
+
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at emitTwo (events.js:126:13)
+    at Request.emit (events.js:214:7)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:154:16
+    at Request._decode (D:\TECHWEB\node_modules\restler\lib\restler.js:170:7)
+    at IncomingMessage.<anonymous> (D:\TECHWEB\node_modules\restler\lib\restler.js:147:14)
+[2018-10-25 15:47:44.664] [ERROR] dateFileLog - Error: Error: The module &#39;\\?\D:\TECHWEB\node_modules\ccap\build\Release\hcaptha.node&#39;<br>was compiled against a different Node.js version using<br>NODE_MODULE_VERSION 46. This version of Node.js requires<br>NODE_MODULE_VERSION 57. Please try re-compiling or re-installing<br>the module (for instance, using `npm rebuild` or `npm install`).<br> &nbsp; &nbsp;at Object.Module._extensions..node (module.js:682:18)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)<br> &nbsp; &nbsp;at tryModuleLoad (module.js:506:12)<br> &nbsp; &nbsp;at Function.Module._load (module.js:498:3)<br> &nbsp; &nbsp;at Module.require (module.js:597:17)<br> &nbsp; &nbsp;at require (internal/module.js:11:18)<br> &nbsp; &nbsp;at Object.&lt;anonymous&gt; (D:\TECHWEB\node_modules\ccap\lib\hcap.js:4:13)<br> &nbsp; &nbsp;at Module._compile (module.js:653:30)<br> &nbsp; &nbsp;at Object.Module._extensions..js (module.js:664:10)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)
+
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at emitTwo (events.js:126:13)
+    at Request.emit (events.js:214:7)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:154:16
+    at Request._decode (D:\TECHWEB\node_modules\restler\lib\restler.js:170:7)
+    at IncomingMessage.<anonymous> (D:\TECHWEB\node_modules\restler\lib\restler.js:147:14)
+[2018-10-25 15:49:37.965] [ERROR] dateFileLog - Error: Error: The module &#39;\\?\D:\TECHWEB\node_modules\ccap\build\Release\hcaptha.node&#39;<br>was compiled against a different Node.js version using<br>NODE_MODULE_VERSION 46. This version of Node.js requires<br>NODE_MODULE_VERSION 57. Please try re-compiling or re-installing<br>the module (for instance, using `npm rebuild` or `npm install`).<br> &nbsp; &nbsp;at Object.Module._extensions..node (module.js:682:18)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)<br> &nbsp; &nbsp;at tryModuleLoad (module.js:506:12)<br> &nbsp; &nbsp;at Function.Module._load (module.js:498:3)<br> &nbsp; &nbsp;at Module.require (module.js:597:17)<br> &nbsp; &nbsp;at require (internal/module.js:11:18)<br> &nbsp; &nbsp;at Object.&lt;anonymous&gt; (D:\TECHWEB\node_modules\ccap\lib\hcap.js:4:13)<br> &nbsp; &nbsp;at Module._compile (module.js:653:30)<br> &nbsp; &nbsp;at Object.Module._extensions..js (module.js:664:10)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)
+
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at emitTwo (events.js:126:13)
+    at Request.emit (events.js:214:7)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:154:16
+    at Request._decode (D:\TECHWEB\node_modules\restler\lib\restler.js:170:7)
+    at IncomingMessage.<anonymous> (D:\TECHWEB\node_modules\restler\lib\restler.js:147:14)
+[2018-10-25 15:54:06.520] [ERROR] dateFileLog - { ReferenceError: D:\TECHWEB\tm.TECHWEB\webServer\app\MSUser\showMSUser.{v}.ejs:1
+ >> 1| <% layout('./MSUser.ejs') -%> 
+    2| <% block('userInfo',partial("./userInfo.ejs")) -%> 
+    3| <% block('userPW',partial("./userPW.ejs")) -%> 
+    4| 
+
+D:\TECHWEB\tm.TECHWEB\webServer\app\MSUser\userInfo.ejs:52
+    50| 	    <tr>
+    51| 	      <td>其他信息</td>     
+ >> 52| 	      <td><%-yjCookie.IDs.isLoggedIn-%></td>
+    53| 	    </tr>
+    54| 	    
+    55| 	    
+
+yjCookie is not defined
+    at eval (eval at exports.compile (D:\TECHWEB\node_modules\ejs-locals\node_modules\ejs\lib\ejs.js:237:14), <anonymous>:30:1271)
+    at eval (eval at exports.compile (D:\TECHWEB\node_modules\ejs-locals\node_modules\ejs\lib\ejs.js:237:14), <anonymous>:30:4125)
+    at D:\TECHWEB\node_modules\ejs-locals\node_modules\ejs\lib\ejs.js:250:15
+    at Object.exports.render (D:\TECHWEB\node_modules\ejs-locals\node_modules\ejs\lib\ejs.js:288:13)
+    at render (D:\TECHWEB\node_modules\ejs-locals\index.js:334:20)
+    at Object.partial (D:\TECHWEB\node_modules\ejs-locals\index.js:376:12)
+    at eval (eval at exports.compile (D:\TECHWEB\node_modules\ejs-locals\node_modules\ejs\lib\ejs.js:237:14), <anonymous>:30:106)
+    at eval (eval at exports.compile (D:\TECHWEB\node_modules\ejs-locals\node_modules\ejs\lib\ejs.js:237:14), <anonymous>:30:712)
+    at D:\TECHWEB\node_modules\ejs-locals\node_modules\ejs\lib\ejs.js:250:15
+    at Object.exports.render (D:\TECHWEB\node_modules\ejs-locals\node_modules\ejs\lib\ejs.js:288:13)
+  path: 'D:\\TECHWEB\\tm.TECHWEB\\webServer\\app\\MSUser\\showMSUser.{v}.ejs' }
+[2018-10-25 15:54:28.444] [ERROR] dateFileLog - { ReferenceError: D:\TECHWEB\tm.TECHWEB\webServer\app\MSUser\showMSUser.{v}.ejs:1
+ >> 1| <% layout('./MSUser.ejs') -%> 
+    2| <% block('userInfo',partial("./userInfo.ejs")) -%> 
+    3| <% block('userPW',partial("./userPW.ejs")) -%> 
+    4| 
+
+D:\TECHWEB\tm.TECHWEB\webServer\app\MSUser\userInfo.ejs:52
+    50| 	    <tr>
+    51| 	      <td>其他信息</td>     
+ >> 52| 	      <td><%yjCookie.IDs.isLoggedIn%></td>
+    53| 	    </tr>
+    54| 	    
+    55| 	    
+
+yjCookie is not defined
+    at eval (eval at exports.compile (D:\TECHWEB\node_modules\ejs-locals\node_modules\ejs\lib\ejs.js:237:14), <anonymous>:30:1269)
+    at eval (eval at exports.compile (D:\TECHWEB\node_modules\ejs-locals\node_modules\ejs\lib\ejs.js:237:14), <anonymous>:30:4134)
+    at D:\TECHWEB\node_modules\ejs-locals\node_modules\ejs\lib\ejs.js:250:15
+    at Object.exports.render (D:\TECHWEB\node_modules\ejs-locals\node_modules\ejs\lib\ejs.js:288:13)
+    at render (D:\TECHWEB\node_modules\ejs-locals\index.js:334:20)
+    at Object.partial (D:\TECHWEB\node_modules\ejs-locals\index.js:376:12)
+    at eval (eval at exports.compile (D:\TECHWEB\node_modules\ejs-locals\node_modules\ejs\lib\ejs.js:237:14), <anonymous>:30:106)
+    at eval (eval at exports.compile (D:\TECHWEB\node_modules\ejs-locals\node_modules\ejs\lib\ejs.js:237:14), <anonymous>:30:712)
+    at D:\TECHWEB\node_modules\ejs-locals\node_modules\ejs\lib\ejs.js:250:15
+    at Object.exports.render (D:\TECHWEB\node_modules\ejs-locals\node_modules\ejs\lib\ejs.js:288:13)
+  path: 'D:\\TECHWEB\\tm.TECHWEB\\webServer\\app\\MSUser\\showMSUser.{v}.ejs' }
+[2018-10-25 15:54:29.217] [ERROR] dateFileLog - { ReferenceError: D:\TECHWEB\tm.TECHWEB\webServer\app\MSUser\showMSUser.{v}.ejs:1
+ >> 1| <% layout('./MSUser.ejs') -%> 
+    2| <% block('userInfo',partial("./userInfo.ejs")) -%> 
+    3| <% block('userPW',partial("./userPW.ejs")) -%> 
+    4| 
+
+D:\TECHWEB\tm.TECHWEB\webServer\app\MSUser\userInfo.ejs:52
+    50| 	    <tr>
+    51| 	      <td>其他信息</td>     
+ >> 52| 	      <td><%yjCookie.IDs.isLoggedIn%></td>
+    53| 	    </tr>
+    54| 	    
+    55| 	    
+
+yjCookie is not defined
+    at eval (eval at exports.compile (D:\TECHWEB\node_modules\ejs-locals\node_modules\ejs\lib\ejs.js:237:14), <anonymous>:30:1269)
+    at eval (eval at exports.compile (D:\TECHWEB\node_modules\ejs-locals\node_modules\ejs\lib\ejs.js:237:14), <anonymous>:30:4134)
+    at D:\TECHWEB\node_modules\ejs-locals\node_modules\ejs\lib\ejs.js:250:15
+    at Object.exports.render (D:\TECHWEB\node_modules\ejs-locals\node_modules\ejs\lib\ejs.js:288:13)
+    at render (D:\TECHWEB\node_modules\ejs-locals\index.js:334:20)
+    at Object.partial (D:\TECHWEB\node_modules\ejs-locals\index.js:376:12)
+    at eval (eval at exports.compile (D:\TECHWEB\node_modules\ejs-locals\node_modules\ejs\lib\ejs.js:237:14), <anonymous>:30:106)
+    at eval (eval at exports.compile (D:\TECHWEB\node_modules\ejs-locals\node_modules\ejs\lib\ejs.js:237:14), <anonymous>:30:712)
+    at D:\TECHWEB\node_modules\ejs-locals\node_modules\ejs\lib\ejs.js:250:15
+    at Object.exports.render (D:\TECHWEB\node_modules\ejs-locals\node_modules\ejs\lib\ejs.js:288:13)
+  path: 'D:\\TECHWEB\\tm.TECHWEB\\webServer\\app\\MSUser\\showMSUser.{v}.ejs' }
+[2018-10-25 15:58:17.194] [ERROR] dateFileLog - Error: Error: The module &#39;\\?\D:\TECHWEB\node_modules\ccap\build\Release\hcaptha.node&#39;<br>was compiled against a different Node.js version using<br>NODE_MODULE_VERSION 46. This version of Node.js requires<br>NODE_MODULE_VERSION 57. Please try re-compiling or re-installing<br>the module (for instance, using `npm rebuild` or `npm install`).<br> &nbsp; &nbsp;at Object.Module._extensions..node (module.js:682:18)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)<br> &nbsp; &nbsp;at tryModuleLoad (module.js:506:12)<br> &nbsp; &nbsp;at Function.Module._load (module.js:498:3)<br> &nbsp; &nbsp;at Module.require (module.js:597:17)<br> &nbsp; &nbsp;at require (internal/module.js:11:18)<br> &nbsp; &nbsp;at Object.&lt;anonymous&gt; (D:\TECHWEB\node_modules\ccap\lib\hcap.js:4:13)<br> &nbsp; &nbsp;at Module._compile (module.js:653:30)<br> &nbsp; &nbsp;at Object.Module._extensions..js (module.js:664:10)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)
+
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at emitTwo (events.js:126:13)
+    at Request.emit (events.js:214:7)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:154:16
+    at Request._decode (D:\TECHWEB\node_modules\restler\lib\restler.js:170:7)
+    at IncomingMessage.<anonymous> (D:\TECHWEB\node_modules\restler\lib\restler.js:147:14)
+[2018-10-25 15:58:27.204] [ERROR] dateFileLog - Error: Error: The module &#39;\\?\D:\TECHWEB\node_modules\ccap\build\Release\hcaptha.node&#39;<br>was compiled against a different Node.js version using<br>NODE_MODULE_VERSION 46. This version of Node.js requires<br>NODE_MODULE_VERSION 57. Please try re-compiling or re-installing<br>the module (for instance, using `npm rebuild` or `npm install`).<br> &nbsp; &nbsp;at Object.Module._extensions..node (module.js:682:18)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)<br> &nbsp; &nbsp;at tryModuleLoad (module.js:506:12)<br> &nbsp; &nbsp;at Function.Module._load (module.js:498:3)<br> &nbsp; &nbsp;at Module.require (module.js:597:17)<br> &nbsp; &nbsp;at require (internal/module.js:11:18)<br> &nbsp; &nbsp;at Object.&lt;anonymous&gt; (D:\TECHWEB\node_modules\ccap\lib\hcap.js:4:13)<br> &nbsp; &nbsp;at Module._compile (module.js:653:30)<br> &nbsp; &nbsp;at Object.Module._extensions..js (module.js:664:10)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)
+
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at emitTwo (events.js:126:13)
+    at Request.emit (events.js:214:7)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:154:16
+    at Request._decode (D:\TECHWEB\node_modules\restler\lib\restler.js:170:7)
+    at IncomingMessage.<anonymous> (D:\TECHWEB\node_modules\restler\lib\restler.js:147:14)
+[2018-10-25 15:58:28.372] [ERROR] dateFileLog - Error: Error: The module &#39;\\?\D:\TECHWEB\node_modules\ccap\build\Release\hcaptha.node&#39;<br>was compiled against a different Node.js version using<br>NODE_MODULE_VERSION 46. This version of Node.js requires<br>NODE_MODULE_VERSION 57. Please try re-compiling or re-installing<br>the module (for instance, using `npm rebuild` or `npm install`).<br> &nbsp; &nbsp;at Object.Module._extensions..node (module.js:682:18)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)<br> &nbsp; &nbsp;at tryModuleLoad (module.js:506:12)<br> &nbsp; &nbsp;at Function.Module._load (module.js:498:3)<br> &nbsp; &nbsp;at Module.require (module.js:597:17)<br> &nbsp; &nbsp;at require (internal/module.js:11:18)<br> &nbsp; &nbsp;at Object.&lt;anonymous&gt; (D:\TECHWEB\node_modules\ccap\lib\hcap.js:4:13)<br> &nbsp; &nbsp;at Module._compile (module.js:653:30)<br> &nbsp; &nbsp;at Object.Module._extensions..js (module.js:664:10)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)
+
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at emitTwo (events.js:126:13)
+    at Request.emit (events.js:214:7)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:154:16
+    at Request._decode (D:\TECHWEB\node_modules\restler\lib\restler.js:170:7)
+    at IncomingMessage.<anonymous> (D:\TECHWEB\node_modules\restler\lib\restler.js:147:14)
+[2018-10-25 16:46:23.683] [ERROR] dateFileLog - Error: Error: The module &#39;\\?\D:\TECHWEB\node_modules\ccap\build\Release\hcaptha.node&#39;<br>was compiled against a different Node.js version using<br>NODE_MODULE_VERSION 46. This version of Node.js requires<br>NODE_MODULE_VERSION 57. Please try re-compiling or re-installing<br>the module (for instance, using `npm rebuild` or `npm install`).<br> &nbsp; &nbsp;at Object.Module._extensions..node (module.js:682:18)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)<br> &nbsp; &nbsp;at tryModuleLoad (module.js:506:12)<br> &nbsp; &nbsp;at Function.Module._load (module.js:498:3)<br> &nbsp; &nbsp;at Module.require (module.js:597:17)<br> &nbsp; &nbsp;at require (internal/module.js:11:18)<br> &nbsp; &nbsp;at Object.&lt;anonymous&gt; (D:\TECHWEB\node_modules\ccap\lib\hcap.js:4:13)<br> &nbsp; &nbsp;at Module._compile (module.js:653:30)<br> &nbsp; &nbsp;at Object.Module._extensions..js (module.js:664:10)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)
+
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at emitTwo (events.js:126:13)
+    at Request.emit (events.js:214:7)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:154:16
+    at Request._decode (D:\TECHWEB\node_modules\restler\lib\restler.js:170:7)
+    at IncomingMessage.<anonymous> (D:\TECHWEB\node_modules\restler\lib\restler.js:147:14)

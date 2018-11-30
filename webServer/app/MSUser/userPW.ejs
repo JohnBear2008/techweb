@@ -1,0 +1,131 @@
+
+
+<div class="contentDiv">
+
+
+<blockquote class="layui-elem-quote layui-text">
+<p>欢迎用户：<%-(locals.session==null)?"":locals.session.yjUser.AID%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账号有效期至:<%-locals.session.yjUser.VidDate%></p>
+
+</blockquote>
+<HR></br>
+	
+	<div class="layui-form-item">
+	
+	<table class="layui-table" lay-size="lg" id="UserInfo" width="600">
+	  <colgroup>
+	    
+	    <col width="200">
+	    <col>
+	  </colgroup>
+	  <thead>
+	    <tr>
+	      <th>项目</th>
+	      <th></th>
+	    </tr> 
+	  </thead>
+	  <tbody>
+	    <tr>
+	      <td>帐号</td> 
+	      <td ><%-locals.session.yjUser.AID%> </td>
+	    </tr>
+	    <tr>
+	      <td>输入密码</td> 
+	      <td ><input type="password" id="password" placeholder="请输入密码" autocomplete="off" class="layui-input"></td>
+	    </tr>
+	    <tr>
+	      <td>再次输入</td> 
+	      <td ><input type="password" id="password2" placeholder="再次输入确认" autocomplete="off" class="layui-input"></td>
+	    </tr>
+	    <tr>
+	      <td>提交</td> 
+	      <td ><button type="button" class="layui-btn" name="ChangePW" id="ChangePW">确认修改密码</button></td>
+	    </tr>
+	  
+	    
+	  </tbody>
+	</table>
+	
+	</div>
+	
+
+	
+	
+</div>
+<!------定义web显示内容---------------------------->
+
+<!-- 表格操作按钮集 -->
+<script type="text/html" id="barDemo">
+<a class="layui-btn layui-btn-primary layui-btn-small" lay-event="detail">查看</a>
+<a class="layui-btn layui-btn-small" lay-event="download">重新下载</a>
+
+</script>
+
+
+<script type="text/javascript">
+
+    
+// 用Diffie-Hellman非对称算法解密
+   
+
+    var  processAID="MSUser";
+    var  subProcessAID="userPW";
+    var g_ScreenFlat=$(window).width()>1366?true:false;
+	
+    
+
+    
+    $(function(){
+    	
+        g_subProcesses.renderuserPW=function(){
+        	
+        	
+        	
+        	
+        	
+            $('#ChangePW').off("click").on("click",function(){
+            	
+            	var PW=$("#password").val();
+            	var PW2=$("#password2").val();
+            	
+            	if(PW==""){
+            		alert("密码不能为空!");
+            	}else{
+            		if(PW!=PW2){
+            			alert("两次密码输入不一致!");
+            		}else{
+            			
+            			 $.ajax({
+                             method:'post',
+                             url:'/app/MSUser/changePW',
+                             data:{
+                                 UID:"<%-locals.session.yjUser.AID%>",
+                                 PW:PW,
+
+                             },
+                             success : function(){
+
+                             },
+                             error:function(XMLHttpRequest, textStatus, errorThrown){
+                             }
+                         })
+                         
+                         alert("修改成功,需要重新登陆!");
+                         window.location.href="/app/account/logout";
+
+            			
+            		}	
+            	}
+
+
+            })
+            
+
+        	
+            
+        }
+    }); 
+</script>
+
+
+
+

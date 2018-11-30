@@ -1,0 +1,392 @@
+<div class="contentDiv">
+
+<blockquote class="layui-elem-quote layui-text">
+<p>欢迎用户：<%-(locals.session==null)?"":locals.session.yjUser.AID%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账号有效期至:<%-locals.session.yjUser.VidDate%></p>
+
+</blockquote>
+<HR></br>
+	
+	
+	<form class="layui-form" id="AgentAddForm" action="">
+
+    
+    <div class="layui-form-item">
+    <label class="layui-form-label">代理商编号:</label>
+    <div class="layui-input-inline">
+        <input type="text" name="AgentID" id="AgentID"  placeholder="可输002-998,必填 "  autocomplete="off" class="layui-input" maxlength="3" >
+    </div>
+    </div>
+    
+    
+    <div class="layui-form-item"  >
+    <label class="layui-form-label">代理商简称:</label>
+    <div class="layui-input-inline">
+        <input type="text" name="AName" id="AName"  placeholder="输入供应商简称,必填 " autocomplete="off" class="layui-input" >
+    </div>
+    </div>
+    
+    <div class="layui-form-item"  >
+    <label class="layui-form-label">联系方式:</label>
+    <div class="layui-input-block">
+        <input type="text" name="Contact" id="Contact"  placeholder="示例:张女士 18912340000,选填 " autocomplete="off" class="layui-input" >
+    </div>
+    </div>
+
+    <div class="layui-form-item"  >
+    <label class="layui-form-label">地址:</label>
+    <div class="layui-input-block">
+        <input type="text" name="Address" id="Address"  placeholder="代理商联系地址,选填 " autocomplete="off" class="layui-input" >
+    </div>
+    </div>
+    
+    
+    <div class="layui-form-item">
+    <label class="layui-form-label">备注信息:</label>
+    <div class="layui-input-block">
+        <input type="text" name="AgentInfo" id="AgentInfo"  placeholder="可记录该账号相关信息,选填 " autocomplete="off" class="layui-input" >
+    </div>
+    </div>
+    
+    <div class="layui-form-item">
+    <label class="layui-form-label">是否开通:</label>
+    <div class="layui-input-block">
+      
+      <input type="checkbox" name="OpenUser" id="OpenUser"  lay-filter="OpenUserCheck" title="工具账号" >
+      <input type="hidden" name="OpenUserValue" id="OpenUserValue" value="0" >
+    </div>
+  </div>
+  
+  <div id="AccountInfo" style="display:none">
+  
+  <div class="layui-form-item">
+  <div class="layui-inline">
+  <label class="layui-form-label">账号到期日:</label>
+  <div class="layui-input-inline">
+      <input type="text" name="VidDateA" id="VidDateA" lay-verify="date" placeholder="YYYY-MM-DD ,必选" autocomplete="off" class="layui-input">
+  </div>
+  </div>
+  </div>
+  
+  
+  <div class="layui-form-item"  >
+  <label class="layui-form-label">初始密码:</label>
+  <div class="layui-input-inline">
+      <input type="text" name="IntPW" id="IntPW"  placeholder="不输入默认为123456,选填" autocomplete="off" class="layui-input" >
+  </div>
+  </div>
+   
+  
+  </div>
+
+    
+    <div class="layui-form-item">
+    <div class="layui-input-block">
+	<button type="button" class="layui-btn" name="AgentAddDone" id="AgentAddDone">确认添加</button>
+	</div>
+	</div>
+
+	
+	</form>
+	
+	
+
+	
+</div>
+<!------定义web显示内容---------------------------->
+
+
+
+<script type="text/javascript">
+
+    
+// 用Diffie-Hellman非对称算法解密
+   
+
+    var  processAID="MSFactory";
+    var  subProcessAID="AgentAdd";
+    var g_ScreenFlat=$(window).width()>1366?true:false;
+	
+    
+
+    
+    $(function(){
+    	
+    	var VidDate="<%-locals.session.yjUser.VidDate%>";
+    	
+        g_subProcesses.renderAgentAdd=function(){
+        	
+        	
+//---------定义表单组件-----------  	
+        	layui.use(['form','layedit', 'laydate'], function(){
+      		  var form = layui.form
+	            ,layer = layui.layer
+	            ,layedit = layui.layedit
+	            ,laydate = layui.laydate;
+
+	            //日期
+
+	           
+	           var laydate = layui.laydate;
+   	           var DivDate= laydate.render({
+   	            elem: '#VidDateA',//选择器结束时间
+   	            type: 'date',
+   	            min:Ndate,//设置min默认最小值
+   	            max:VidDate,
+
+   	        });
+	           
+
+	           //监听指定开关
+	           form.on('checkbox(OpenUserCheck)', function(data){
+
+	        	   
+	        	   
+	        	   
+	        	   if(data.elem.checked){
+	        		   $("#OpenUserValue").val("1");
+
+	        		   $("#AccountInfo").show();
+	        		 
+	        	   }else{
+	        		   
+	        		   $("#OpenUserValue").val("0");
+	        		    
+	        		   $("#AccountInfo").hide();
+	        	
+	        	   }
+	        	   
+	        	   
+	        	 });        
+	           
+	           
+	           
+	           
+        	 });
+//---------定义表单组件-----------    
+	           
+	           
+	           
+//检查代理商编号合法性-------------       	
+        	function checkAgentID(){
+        		var AgentID=$("#AgentID").val();
+            	
+        		if(AgentID>1&&AgentID<999&&AgentID.length==3){
+        			return true 
+        		}
+        		else 
+                
+                alert("代理商ID号输入不正确！")
+    			return false 
+        		
+            	} 
+        	
+        	$('#AgentID').one('blur',function(){
+        	
+//        	$("#AgentID").blur(function(){   
+        		
+        		var AgentID=$("#AgentID").val();
+            	
+        		if(AgentID>1&&AgentID<999&&AgentID.length==3){
+        			return true 
+        		}
+        		else {
+                  alert("代理商ID号输入不正确,请检查！")
+        			return false 
+        			
+        		}
+                
+
+    			
+        	});
+//检查代理商编号合法性-------------     
+        	
+        	
+//-----检查信息是否为空----------
+        	function checkNotNull(Info){
+        		
+        		if(Info==""){
+        			return false
+        		}else{
+        			return true
+        		}
+        		
+        	}
+//-----检查信息是否为空----------
+        	
+        	
+//---------------定义随机ID-------------------
+            Date.prototype.format = function(format)
+        	{
+        	 var o = {
+        	 "M+" : this.getMonth()+1, //month
+        	 "d+" : this.getDate(),    //day
+        	 "h+" : this.getHours(),   //hour
+        	 "m+" : this.getMinutes(), //minute
+        	 "s+" : this.getSeconds(), //second
+        	 "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+        	 "S" : this.getMilliseconds() //millisecond
+        	 }
+        	 if(/(y+)/.test(format)) format=format.replace(RegExp.$1,
+        	 (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        	 for(var k in o)if(new RegExp("("+ k +")").test(format))
+        	 format = format.replace(RegExp.$1,
+        	 RegExp.$1.length==1 ? o[k] :
+        	 ("00"+ o[k]).substr((""+ o[k]).length));
+        	 return format;
+        	}
+        	
+        	
+        	
+
+        	
+//---------------定义随机ID------------------- 	
+        	
+        	
+
+//定义发送代理商信息函数 -----------------    	
+            function postAgentInfo(data){
+                $.ajax({
+                    method:'post',
+                    url:'/app/MSFactory/addAgent',
+                    data:data,
+                    success:function(data,textStatus){
+	                    	if(data.affectedRows!=0){
+//	                    		alert("添加代理商成功!");
+	                    		
+	                    		if(confirm("添加代理商成功,点击确认跳转至代理商管理页面查看,点击取消继续添加!")){
+	                    			location.reload();
+		        			    	gotoUrl("AgentAdmin");	                    			
+	                    		}else{
+
+
+		        			    	gotoUrl("AgentAdd");
+	                    		}
+	                    		
+
+	                    	}
+
+	                    	
+	                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                    	
+                    	alert("添加代理商失败,请检查输入信息,是否存在重复添加!")
+                    	
+                    }
+                })
+            }
+//定义发送代理商信息函数 -----------------    	
+            
+            
+            
+//定义发送账号信息函数 -----------------    	
+            function postUserInfo(data){
+                $.ajax({
+                    method:'post',
+                    url:'/app/MSFactory/addUser',
+                    data:data,
+                    success:function(data,textStatus){
+	                    	if(data.affectedRows!=0){
+
+	                    	}
+
+	                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                    	
+                    	alert("添加账号失败!")
+                    	
+                    }
+                })
+            }
+//定义发送代理商信息函数 -----------------    
+            
+//定义授权信息函数 -----------------    	
+          function authUser(data){
+                $.ajax({
+                    method:'post',
+                    url:'/app/MSFactory/authUser',
+                    data:data,
+                    success:function(data,textStatus){
+	                    	if(data.affectedRows!=0){
+
+	                    	}
+	                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                    	
+                    	alert("授权失败!")
+                    	
+                    }
+                })
+            }
+//定义发送代理商信息函数 -----------------  
+      	
+//--------------------------------------------------        	
+ 
+        	
+            $('#AgentAddDone').off("click").on("click",function(OpenUserValue){
+            	
+            	var TEMPOID=new Date();
+            	var UserOID=TEMPOID.format('MMddhhmmss');//定义随机ID
+
+            	var FID="<%-locals.session.yjUser.FID%>";
+            	var AID=$("#AgentID").val();
+            	var Account=FID+AID;
+            	var FName="<%-locals.session.yjUser.name%>"; 
+            	var AName=$("#AName").val(); 
+            	var Contact=$("#Contact").val(); 	
+            	var Address=$("#Address").val(); 	
+            	var AInfo=$("#AgentInfo").val();
+            	var OpenUserValue=$("#OpenUserValue").val();
+            	var VidDateA=$("#VidDateA").val();
+            	var IntPW=$("#IntPW").val();
+            	
+            	if(IntPW==""){
+            		var IntPW="123456";
+            	}
+
+
+
+            	if(checkNotNull(AName)&&checkNotNull(Account)&&checkAgentID()){
+            		
+            		var data={
+            				UserOID:UserOID,
+            				FID:FID,
+            				AID:AID,
+            				Account:Account,
+            				FName:FName,
+            				AName:AName,
+            				Contact:Contact,
+            				Address:Address,
+            				AInfo:AInfo,
+            				OpenUser:OpenUserValue,
+            				VidDate:VidDateA,
+            				IntPW:IntPW
+            				}
+            		
+            		if(OpenUserValue=="1"){            			
+            			if(VidDateContrast(VidDateA,VidDate)){
+            				postAgentInfo(data);
+            				postUserInfo(data);
+            				authUser(data);
+            				
+            				
+            			}else{
+            				alert("开通账号,必须输入账号有效期!");
+            			}            			
+            		}else{
+
+            			postAgentInfo(data);
+            		}
+
+            	}else{
+            		alert("存在未输入信息,请检查!")
+            	}
+
+            })
+
+        }
+    }); 
+</script>
+
+
+
+

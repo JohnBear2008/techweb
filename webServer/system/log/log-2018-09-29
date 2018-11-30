@@ -1,0 +1,12 @@
+[2018-09-29 16:43:22.061] [ERROR] dateFileLog - Error: Error: The module &#39;\\?\D:\NB\node_modules\ccap\build\Release\hcaptha.node&#39;<br>was compiled against a different Node.js version using<br>NODE_MODULE_VERSION 46. This version of Node.js requires<br>NODE_MODULE_VERSION 64. Please try re-compiling or re-installing<br>the module (for instance, using `npm rebuild` or `npm install`).<br> &nbsp; &nbsp;at Object.Module._extensions..node (internal/modules/cjs/loader.js:718:18)<br> &nbsp; &nbsp;at Module.load (internal/modules/cjs/loader.js:599:32)<br> &nbsp; &nbsp;at tryModuleLoad (internal/modules/cjs/loader.js:538:12)<br> &nbsp; &nbsp;at Function.Module._load (internal/modules/cjs/loader.js:530:3)<br> &nbsp; &nbsp;at Module.require (internal/modules/cjs/loader.js:637:17)<br> &nbsp; &nbsp;at require (internal/modules/cjs/helpers.js:20:18)<br> &nbsp; &nbsp;at Object.&lt;anonymous&gt; (D:\NB\node_modules\ccap\lib\hcap.js:4:13)<br> &nbsp; &nbsp;at Module._compile (internal/modules/cjs/loader.js:689:30)<br> &nbsp; &nbsp;at Object.Module._extensions..js (internal/modules/cjs/loader.js:700:10)<br> &nbsp; &nbsp;at Module.load (internal/modules/cjs/loader.js:599:32)
+
+    at Request.<anonymous> (D:\NB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at Request.emit (events.js:182:13)
+    at Request.EventEmitter.emit (domain.js:460:23)
+    at Request._fireSuccess (D:\NB\node_modules\restler\lib\restler.js:220:12)
+    at D:\NB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\NB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\NB\node_modules\restler\lib\restler.js:195:29)
+    at Gunzip.cb (D:\NB\node_modules\restler\lib\restler.js:154:16)
+    at Gunzip.zlibBufferOnEnd (zlib.js:122:10)
+    at Gunzip.emit (events.js:187:15)

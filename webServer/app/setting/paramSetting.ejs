@@ -1,0 +1,145 @@
+<div id="Params" class="subModel" style="padding-top: 10px;">
+    <div class="title">
+        <span class="warning-tab selected" id="phase"><%-locals.ml("Reference phase")%></span>
+        <span class="warning-tab" id="limit"  style="display: none"><%-locals.ml("Set limit")%></span>
+        <span class="warning-tab" id="others"  style="display: none"><%-locals.ml("Others")%></span>
+    </div>
+    <div class="warning-tab-pannel">
+        <div class="page-content" id="phasePage">
+            <div style="padding:10px;margin-bottom:20px">
+                <div id="toolbar_params" style="margin-right:10%;margin-bottom:10px;float:right">
+                    <a href="#" id="btnSave_params" class="myButton btnDisable_params"><%-locals.ml('Save')%></a>
+                </div>
+                <table id="tb_params" style="width:100%">
+                </table>
+            </div>
+        </div>
+        <div class="page-content" id="limitPage" >
+        limitPage
+        </div>
+        <div class="page-content" id="othersPage" >
+        othersPage
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        g_subProcesses.renderParams_Setting=function(){
+            function renderParamsPage(){
+		        var paramsRow = undefined;
+		        $(".warning-tab").click(function(){
+		            $(".warning-tab").removeClass('selected');
+		            $(this).addClass('selected');
+		            $(".page-content").css("display","none");
+		            $("#"+$(this).attr("id")+"Page").css("display","block");
+		        });  
+		        // load params  
+		        $("#tb_params").datagrid({
+		            pagination:true,
+		            pagePosition:'bottom',          
+		            width:'100%',
+		            sortOrder:'asc',
+		            sortName:'ParamOID',
+		            nowarp: false,
+		            idField:"ParamOID",
+		            singleSelect : true,
+		            striped:true,
+		            pageSize : 10,        
+		            checkbox:true,
+		            frozenColumns : [[
+		                {
+		                    title : 'ParamOID',
+		                    field : 'ParamOID',
+		                    hidden:true,
+		                    sortable: true
+		                    
+		                },{
+		                    title : '<%-locals.ml("Name")%>',
+		                    field : "ParamName",
+		                    width:'30%',
+    
+		                    align:'left',
+		                    sortable: true       
+		                },{
+		                    title : '<%-locals.ml("Value")%>',
+		                    field : "Value",
+		                    width:'25%',
+		                    align:'center',
+		                    sortable: true,
+		                    editor: { 
+		                        type: 'text',
+		                         options: {
+		                            required: true
+		                        }                           
+		                    }
+		                },{
+		                    title : '<%-locals.ml("Unit")%>',
+		                    field : "Abbreviation",
+		                    width:'20%',
+		                    align:'center',
+		                    sortable: true,
+		                },{
+                            title : '<%-locals.ml("User")%>',
+                            field : "User",
+                            width:'20%',
+                            align:'center',
+                            sortable: true,
+                        }]
+		            ],onBeforeLoad:function(param){
+		                $.ajax({
+		                    method : "get",
+		                    data:param,
+		                    url : "/app/setting/getPhases",
+		                    success :function(data, textStatus){ 
+		                        var pageData=yjDB.dataSet2ObjectList(data.meta,data.rows);
+		                        $("#tb_params").datagrid("loadData",{rows:pageData,total:data.total});
+		                        $(window).resize();
+		                                                                                                                    
+		                    },
+		                    error:function(XMLHttpRequest, textStatus, errorThrown){
+		                    }
+		                });             
+		            },onDblClickCell: function(index,field,value){
+		                    if(endEditing()){
+		                        $(this).datagrid('selectRow',index).datagrid('beginEdit',index);
+		                        paramsRow=index;
+		                    }else{
+		                        $(this).datagrid('selectRow',paramsRow);
+		                    }
+		            },                      
+		        });
+		        function endEditing(){
+		           if(paramsRow == undefined) {
+		           return true;
+		           }
+		           //如果为undefined的话，为真，说明可以编辑
+		           if($('#tb_params').datagrid('validateRow',paramsRow)) {
+		              $('#tb_params').datagrid('endEdit',paramsRow);
+		              //当前行编辑事件取消
+		               paramsRow = undefined; 
+		               return true;
+		               //重置编辑行索引对象，返回真，允许编辑
+		            }else{
+		            return false;}
+		            //否则，为假，返回假，不允许编辑
+		        }
+		        $("#btnSave_params").click(function(){
+		            if(paramsRow!=undefined){
+		                $("#tb_params").datagrid("endEdit",paramsRow);
+		                var rowData=$('#tb_params').datagrid('getData'); 
+		                $.ajax({
+		                    method : "get",
+		                    data:rowData.rows[paramsRow],
+		                    url : "/app/setting/updataPhases",
+		                    success :function(data, textStatus){                           
+		                    },
+		                    error:function(XMLHttpRequest, textStatus, errorThrown){
+		                    }
+		                });  
+		            }
+		        });
+		    }
+		    renderParamsPage();
+        }
+    })
+</script>

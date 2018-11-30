@@ -1,0 +1,86 @@
+
+<div class="contentHMI">
+  <h1>HMI机器编码工具参数设置</h1>
+  <p>起始年份: 
+    <input name="textYearStart" type="text" id="textYearStart" value="2018" size="10" />
+  结束年份:
+  <input name="textYearEnd" type="text" id="textYearEnd" value="2028" size="10" />
+  </p>
+  <p>分厂最大编号:
+    <input name="textMaxID" type="text" id="textMaxID" value="10" size="20" />
+  </p>
+  <p>新增机器吨位:
+    <input name="textNewMT" type="text" id="textNewMT" value="0050" size="20" />
+  </p>
+  <p>序列号:
+    <input name="textCodeOne" type="text" id="textCodeOne" value="0001" size="20" />
+  </p>
+  <p>起始序列号:
+    <input name="textCodeStart" type="text" id="textCodeStart" value="0001" size="20" /> 
+    结束序列号:
+    <input name="textCodeEnd" type="text" id="textCodeEnd" value="0010" size="20" />
+  </p>
+  <p>            
+    <input type="button" name="buttonSetSave" id="buttonSetSave" value="保存参数" />
+  </p>
+</div>
+
+
+
+
+<!------定义web显示内容---------------------------->
+<script type="text/javascript">
+    var  processAID="HMI";
+    var  subProcessAID="HMISet";
+    var g_ScreenFlat=$(window).width()>1366?true:false;
+   
+    $(function(){
+        g_subProcesses.renderHMISet=function(){
+            
+            
+            
+          
+            function funSetAdd(textYearStart,textYearEnd,textMaxID,textNewMT,textCodeOne,textCodeStart,textCodeEnd){
+                $.ajax({
+                    method:'post',
+                    url:'/app/HMI/HMISetAdd',
+                    data:{
+                    	textYearStart:textYearStart,
+                    	textYearEnd:textYearEnd,
+                    	textMaxID:textMaxID,
+                    	textNewMT:textNewMT,
+                    	textCodeOne:textCodeOne,
+                    	textCodeStart:textCodeStart,
+                    	textCodeEnd:textCodeEnd
+                    },
+                    success : function(data){
+                        sender.success(data);
+                        
+                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                    }
+                })
+            }
+            
+            
+            $('#buttonSetSave').off("click").on("click",function(){
+            	
+                var textYearStart=$("#textYearStart").val();
+                var textYearEnd=$("#textYearEnd").val();
+                var textMaxID=$("#textMaxID").val();
+                var textNewMT=$("#textNewMT").val();
+                var textCodeOne=$("#textCodeOne").val();
+                var textCodeStart=$("#textCodeStart").val();
+                var textCodeEnd=$("#textCodeEnd").val();
+                
+                
+                funSetAdd(textYearStart,textYearEnd,textMaxID,textNewMT,textCodeOne,textCodeStart,textCodeEnd);
+                alert("保存参数成功!");
+                location.href='/app/HMI/showHMI'
+            })
+
+            
+            
+        }
+    }); 
+</script>

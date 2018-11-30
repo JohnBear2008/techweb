@@ -1,0 +1,13 @@
+<% layout('./setting.ejs') -%>
+<% block('paramSetting',partial("./paramSetting.ejs")) -%>
+<% block('warningSetting',partial("./warningSetting.ejs")) -%>
+<% block('authoritySetting',partial("./authoritySetting.ejs")) -%>
+<% block('about',partial("./about.ejs")) -%>
+<link rel="stylesheet" type="text/css" href="/css/setting.css">
+<script type="text/javascript">
+	var  processAID="Setting";
+    var  subProcessAID="Params_Setting";
+	$(function(){
+		g_subProcesses['render'+subProcessAID]();
+	})
+</script>

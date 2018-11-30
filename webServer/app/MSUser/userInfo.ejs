@@ -1,0 +1,177 @@
+
+
+<div class="contentDiv">
+
+
+<blockquote class="layui-elem-quote layui-text">
+<p>欢迎用户：<%-(locals.session==null)?"":locals.session.yjUser.AID%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账号有效期至:<%-locals.session.yjUser.VidDate%></p>
+
+</blockquote>
+<HR></br>
+	
+	
+	<div class="layui-form-item">
+	<table class="layui-table" lay-size="lg" id="UserInfo">
+	  <colgroup>
+	    
+	    <col width="200">
+	    <col>
+	  </colgroup>
+	  <thead>
+	    <tr>
+	      <th>项目</th>
+	      <th></th>
+	    </tr> 
+	  </thead>
+	  <tbody>
+	    <tr>
+	      <td>帐号</td> 
+	      <td id="UID"></td>
+	    </tr>
+	    <tr>
+	      <td>名称</td> 
+	      <td id="Name"></td>
+	    </tr>
+	    <tr>
+	      <td>帐号类型</td> 
+	      <td id="OrgOID"></td>
+	    </tr>
+	    <tr>
+	      <td>厂商编号</td>   
+	      <td id="UserFID"></td>
+	    </tr>
+	    <tr>
+	      <td>ID</td>     
+	      <td id="AGID"></td>
+	    </tr>
+	    <tr>
+	      <td>帐号有效期</td>     
+	      <td id="VidDate"></td>
+	    </tr>
+	    <tr>
+	      <td>账号功能</td>     
+	      <td><a href="/app/account/logout"><button > 安全退出 </button></a></td>
+	    </tr>
+	    
+	    
+	    
+	    
+	  </tbody>
+	</table>
+	
+	</div>
+	
+	
+</div>
+<!------定义web显示内容---------------------------->
+
+
+
+
+<script type="text/javascript">
+    var  processAID="MSUser";
+    var  subProcessAID="userInfo";
+    var g_ScreenFlat=$(window).width()>1366?true:false;
+   
+
+    
+    $(function(){
+        g_subProcesses.renderuserInfo=function(){
+        	
+        	
+            
+            
+            
+            //设置起始分期日为默认当前日期
+        	function CurentTime()
+        	    { 
+        	        var now = new Date();
+        	        var year = now.getFullYear();       //年
+        	        var month = now.getMonth() + 1;     //月
+        	        var day = now.getDate();            //日   
+        	        var clock = year + "-";
+        	         if(month < 10)
+        	            clock += "0";
+        	        clock += month + "-";
+        	        if(day < 10)
+        	           clock += "0";
+        	        clock += day + "";
+        	        return clock; 
+        	    }
+        
+        	
+        	
+//-----------------------
+        	
+//----检测账号有效性-----------------------
+        	
+        	function checkAccount(date){
+        		var Ndate=CurentTime();
+        		var VidDate="<%-locals.session.yjUser.VidDate%>";
+        		
+        		
+        		if(VidDate<Ndate){
+        			
+        			alert("该账号已过期,请及联系厂家!");
+        			window.location.href="/app/account/logout";
+        		}
+	
+        	}
+        	
+//----------------------------      	
+        	
+        	
+        	
+        	
+            
+//-------获取账号数据-----------------   
+        	
+        	$.ajax({
+                method:'get',
+                data:{
+                    UID:"<%-locals.session.yjUser.AID%>"
+                },
+                url:"/app/MSUser/getUserInfo",
+               
+                success:function(data,textStatus){//ajax获取到的数据,必须通过函数的方式传递给变量,不能直接赋值	
+                	
+                	
+                	checkAccount();
+                	 	
+                	showData(data);
+              
+                
+                },
+                error:function(){
+    
+                }
+            })
+            
+        	
+//定义数据显示函数,td赋值避免用appand 避免无限叠加
+            function showData(data){
+        	   		
+        			$("#UID").html(data[0].UserAID);
+            		$("#Name").html(data[0].Name);
+            		$("#OrgOID").html(data[0].OrgOID);
+            		$("#UserFID").html(data[0].UserFID);
+            		$("#AGID").html(data[0].AAID);
+            		$("#VidDate").html(data[0].VidDate);
+            		
+
+        	}
+        	
+       
+
+       
+        	
+
+        	
+            
+        }
+    }); 
+</script>
+
+
+
+

@@ -1,0 +1,17 @@
+<% layout('./HMI.ejs') -%> 
+<% block('HMIFile',partial("./HMIFile.ejs")) -%> 
+<% block('HMISet',partial("./HMISet.ejs")) -%> 
+<script type="text/javascript" src="/js/fileSaver.min.js"></script>
+<script type="text/javascript" src="/js/jszip.js"></script>
+
+<script type="text/javascript" src="/js/deflate.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="/css/divContent.css">
+<script type="text/javascript">
+    var  processAID="HMI";
+    var  subProcessAID="HMIFile";
+    $(function(){
+        g_subProcesses["render"+subProcessAID]();
+    });
+</script>

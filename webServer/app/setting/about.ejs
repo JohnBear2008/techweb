@@ -1,0 +1,28 @@
+<div id="About" class="subModel" style="padding-top: 10px">
+    <div class="title">
+        <span class="warning-tab selected" id="phase"><%-locals.ml("Copyright Information")%></span>
+    </div>
+    <div class="warning-tab-pannel">
+        <div class="divCopyInfo" >   
+            <%-locals.config.product.name%>:<%-locals.config.product.version%></br>
+            <%-locals.ml("Copyright © 2017 TECHMATION CO., LTD. All rights reserved")%> </br>
+            <%-locals.ml("9F,No.529,Chung Chen Road,Hsin-Tien")%>  </br>
+            <%-locals.ml("TEL：886-2-2218-1686")%> </br>
+            <%-locals.ml("FAX：886-2-2218-1766")%> </br>
+            <%-locals.ml("E-mail：techmation@techmation.com.tw")%> </br>
+            <%-locals.ml("Universal email： sales@techmation.com.tw")%>  </br>
+            <%-locals.ml("Email of foreign sales section：")%> </br>
+            <%-locals.ml("Ms. Yvonne :  yvonne@techmation.com.tw")%> </br>
+            <%-locals.ml("Taiwanese service section：")%></br>
+            <%-locals.ml("Email：service1@techmation.com.tw")%> </br>
+            <%-locals.ml("Extension of service section：351")%>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        g_subProcesses.renderAbout=function(){
+            console.log("about");
+        }
+    })
+</script>

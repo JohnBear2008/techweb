@@ -1,0 +1,188 @@
+<div class="contentDiv">
+
+<blockquote class="layui-elem-quote layui-text">
+使用注意事项:</br>
+	1.该工具用于厂家授权给其他代理商，产生停机工具单机版的软件所需的厂商识别文件. </br>
+	2.输入代理商编号,输入软件使用权到期日,点击即可产生MK厂商识别文件,拷贝文件导入单机版软件中即可.
+</blockquote>
+
+
+	<p>欢迎用户：<%-(locals.session==null)?"":locals.session.yjUser.AID%>  品牌名称:<%-locals.session.yjUser.name%>  代理编号:<%-locals.session.yjUser.AAID%> 用户简称:<%-locals.session.yjUser.AName%> 账号有效期至:<%-locals.session.yjUser.VidDate.substring(0,10)%></p>  
+	<HR></br>
+</br>
+
+
+<form class="layui-form" id="MKForm" action="">
+
+  
+  <div class="layui-form-item">
+	<label class="layui-form-label">选择代理商</label>
+	 <div class="layui-input-block">
+	   <select id="MKID" name="MKID"  lay-search=""  lay-filter="getAG">
+	  <!-- <option value="">输入代理商编号或简称可快速选择,未添加过的代理商请先添加,必选!</option>-->
+	   </select>
+	</div>
+	</div>
+  
+  
+  
+  <div class="layui-form-item">
+  <div class="layui-inline">
+  <label class="layui-form-label">到期日期:</label>
+  <div class="layui-input-inline">
+      <input type="text" name="MKEndDay" id="MKEndDay" lay-verify="date" placeholder="YYYY-MM-DD,必选" autocomplete="off" class="layui-input">
+  </div>
+  </div>
+  </div>
+  
+  
+  <div class="layui-form-item">
+  <div class="layui-input-block">
+  <button type="button" class="layui-btn" name="MKFCreate" id="MKFCreate">点击生成厂商授权文件</button>
+  </div>
+  </div>
+
+</form>
+  
+</div>  
+  
+<!------定义web显示内容---------------------------->
+
+<script type="text/javascript">
+    var  processAID="MSFactory";
+    var  subProcessAID="MSFMK";
+    var g_ScreenFlat=$(window).width()>1366?true:false;
+    
+    
+
+   
+    $(function(){
+        g_subProcesses.renderMSFMK=function(){
+        	
+        	
+        	var VidDate="<%-locals.session.yjUser.VidDate%>";
+        	
+        	//定义日期选择框      	
+        	layui.use(['form','layedit', 'laydate'], function(){
+        	    var form = layui.form
+        	            ,layer = layui.layer
+        	            ,layedit = layui.layedit
+        	            ,laydate = layui.laydate;
+
+        	    //日期
+//        	    laydate.render({
+//        	        elem: '#MKEndDay'
+//        	    });
+        	    
+        	    var laydate = layui.laydate;
+ 	            var DivDate= laydate.render({
+ 	            elem: '#MKEndDay',//选择器结束时间
+ 	            type: 'date',
+ 	            min:Ndate,//设置min默认最小值
+ 	            max:VidDate,
+// 	            done: function(value,date){
+// 	            	DivDate.config.max={
+// 	                    year:date.year,
+// 	                    month:date.month-1,//关键
+// 	                    date: date.date,
+//// 	                    hours: 0,
+//// 	                    minutes: 0,
+//// 	                    seconds : 0
+// 	                }
+// 	            }
+ 	             });
+ 	            
+ 	            
+ 	           //定义加载数据select
+ 	           FID="<%-locals.session.yjUser.FID%>";
+ 	           $("#MKID").empty();
+ 	            
+ 	           $.ajax({
+                   method:'get',
+                   data:{FID:FID},
+                   url:"/app/MSFactory/getAgentChoose",
+                   success:function(data){
+                   	
+                   	 $("#MKID").append($('<option value='+""+'>'+"输入代理商编号或简称可快速选择,未添加过的代理商请先添加,必选!"+'</option>'));
+
+                       for(i=0;i<data.length;i++)
+                   	{
+                       	  $("#MKID").append($('<option value='+data[i].AID+'>'+data[i].AID+data[i].AName+'</option>'));	                       	   
+                   	}
+                       form.render("select"); //不要放在for循环里否则会卡顿,最后一次性渲染即可
+
+                   },
+                   error:function(){}
+               })
+        	    
+        	    
+        	   
+
+        	 });
+        	
+          	
+        	$('#MKID').one('blur',function(){
+//	        $("#MKID").blur(function(){   
+        		
+        		var MKID=$("#MKID").val();
+            	
+        		if(MKID>1&&MKID<999&&MKID.length==3){
+        			return true 
+        		}
+        		else 
+                
+                alert("代理商ID号输入不正确,请检查！")
+    			return false 
+    			
+        	});
+            
+        	
+        	function checkMKID(){
+                	
+//            		FInfo=$('#FInfo').val();
+            		if($('#MKID').val()>1&&$('#MKID').val()<999&&$('#MKID').val().length==3){
+            			return true 
+            		}
+            		else 
+                    
+                    alert("代理商ID号输入不正确！")
+        			return false 
+            		
+                	} 
+        	
+        	
+
+            $('#MKFCreate').off("click").on("click",function(){
+            	
+            	
+            	var MKID=$("#MKID").val();
+
+            	var MKEndDay=$("#MKEndDay").val();
+            	
+            	if(checkMKID()&&VidDateContrast(MKEndDay,VidDate)){
+            		
+           		MKInfo="<%-locals.session.yjUser.FID%>" +$('#MKID').val()+FMDate($('#MKEndDay').val());
+
+
+           		    var Fac = "<%-locals.session.yjUser.FID%>" +$('#MKID').val()+FMDate($('#MKEndDay').val());
+            		msmk=encryptFac(Fac);
+            		
+            		var blob = new Blob([msmk], {});//out_put_string为需要保存到文件的字符串内容
+//                	saveAs(blob, "<%-locals.session.yjUser.FID%>"+$('#MKID').val()+".mk");//为保存的文件名
+            		saveAs(blob, "autorun.mk");
+            		
+            	}
+              		
+            })
+            
+            
+            
+           
+            
+            
+
+       
+            
+        }
+    }); 
+</script>

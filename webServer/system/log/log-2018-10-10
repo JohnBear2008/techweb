@@ -1,0 +1,36 @@
+[2018-10-10 08:28:38.026] [ERROR] dateFileLog - Error: Error: Module version mismatch. Expected 48, got 46.<br> &nbsp; &nbsp;at Error (native)<br> &nbsp; &nbsp;at Object.Module._extensions..node (module.js:597:18)<br> &nbsp; &nbsp;at Module.load (module.js:487:32)<br> &nbsp; &nbsp;at tryModuleLoad (module.js:446:12)<br> &nbsp; &nbsp;at Function.Module._load (module.js:438:3)<br> &nbsp; &nbsp;at Module.require (module.js:497:17)<br> &nbsp; &nbsp;at require (internal/module.js:20:19)<br> &nbsp; &nbsp;at Object.&lt;anonymous&gt; (D:\TECHWEB\node_modules\ccap\lib\hcap.js:4:13)<br> &nbsp; &nbsp;at Module._compile (module.js:570:32)<br> &nbsp; &nbsp;at Object.Module._extensions..js (module.js:579:10)
+
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:154:16
+    at Request._decode (D:\TECHWEB\node_modules\restler\lib\restler.js:170:7)
+    at IncomingMessage.<anonymous> (D:\TECHWEB\node_modules\restler\lib\restler.js:147:14)
+[2018-10-10 08:34:33.128] [ERROR] dateFileLog - Error: Error: The module &#39;\\?\D:\TECHWEB\node_modules\ccap\build\Release\hcaptha.node&#39;<br>was compiled against a different Node.js version using<br>NODE_MODULE_VERSION 46. This version of Node.js requires<br>NODE_MODULE_VERSION 57. Please try re-compiling or re-installing<br>the module (for instance, using `npm rebuild` or `npm install`).<br> &nbsp; &nbsp;at Object.Module._extensions..node (module.js:682:18)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)<br> &nbsp; &nbsp;at tryModuleLoad (module.js:506:12)<br> &nbsp; &nbsp;at Function.Module._load (module.js:498:3)<br> &nbsp; &nbsp;at Module.require (module.js:597:17)<br> &nbsp; &nbsp;at require (internal/module.js:11:18)<br> &nbsp; &nbsp;at Object.&lt;anonymous&gt; (D:\TECHWEB\node_modules\ccap\lib\hcap.js:4:13)<br> &nbsp; &nbsp;at Module._compile (module.js:653:30)<br> &nbsp; &nbsp;at Object.Module._extensions..js (module.js:664:10)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)
+
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at emitTwo (events.js:126:13)
+    at Request.emit (events.js:214:7)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:154:16
+    at Request._decode (D:\TECHWEB\node_modules\restler\lib\restler.js:170:7)
+    at IncomingMessage.<anonymous> (D:\TECHWEB\node_modules\restler\lib\restler.js:147:14)
+[2018-10-10 08:41:16.509] [ERROR] dateFileLog - Error: Error: Cannot find module &#39;../build/Release/hcaptha.node&#39;<br> &nbsp; &nbsp;at Function.Module._resolveFilename (module.js:548:15)<br> &nbsp; &nbsp;at Function.Module._load (module.js:475:25)<br> &nbsp; &nbsp;at Module.require (module.js:597:17)<br> &nbsp; &nbsp;at require (internal/module.js:11:18)<br> &nbsp; &nbsp;at Object.&lt;anonymous&gt; (D:\TECHWEB\node_modules\ccap\lib\hcap.js:4:13)<br> &nbsp; &nbsp;at Module._compile (module.js:653:30)<br> &nbsp; &nbsp;at Object.Module._extensions..js (module.js:664:10)<br> &nbsp; &nbsp;at Module.load (module.js:566:32)<br> &nbsp; &nbsp;at tryModuleLoad (module.js:506:12)<br> &nbsp; &nbsp;at Function.Module._load (module.js:498:3)
+
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at emitTwo (events.js:126:13)
+    at Request.emit (events.js:214:7)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:154:16
+    at Request._decode (D:\TECHWEB\node_modules\restler\lib\restler.js:170:7)
+    at IncomingMessage.<anonymous> (D:\TECHWEB\node_modules\restler\lib\restler.js:147:14)

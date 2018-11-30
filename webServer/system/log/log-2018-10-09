@@ -1,0 +1,116 @@
+[2018-10-09 08:21:28.161] [ERROR] dateFileLog - Error: Error: The module &#39;\\?\D:\TECHWEB\node_modules\ccap\build\Release\hcaptha.node&#39;<br>was compiled against a different Node.js version using<br>NODE_MODULE_VERSION 46. This version of Node.js requires<br>NODE_MODULE_VERSION 64. Please try re-compiling or re-installing<br>the module (for instance, using `npm rebuild` or `npm install`).<br> &nbsp; &nbsp;at Object.Module._extensions..node (internal/modules/cjs/loader.js:718:18)<br> &nbsp; &nbsp;at Module.load (internal/modules/cjs/loader.js:599:32)<br> &nbsp; &nbsp;at tryModuleLoad (internal/modules/cjs/loader.js:538:12)<br> &nbsp; &nbsp;at Function.Module._load (internal/modules/cjs/loader.js:530:3)<br> &nbsp; &nbsp;at Module.require (internal/modules/cjs/loader.js:637:17)<br> &nbsp; &nbsp;at require (internal/modules/cjs/helpers.js:20:18)<br> &nbsp; &nbsp;at Object.&lt;anonymous&gt; (D:\TECHWEB\node_modules\ccap\lib\hcap.js:4:13)<br> &nbsp; &nbsp;at Module._compile (internal/modules/cjs/loader.js:689:30)<br> &nbsp; &nbsp;at Object.Module._extensions..js (internal/modules/cjs/loader.js:700:10)<br> &nbsp; &nbsp;at Module.load (internal/modules/cjs/loader.js:599:32)
+
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at Request.emit (events.js:182:13)
+    at Request.EventEmitter.emit (domain.js:460:23)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at Gunzip.cb (D:\TECHWEB\node_modules\restler\lib\restler.js:154:16)
+    at Gunzip.zlibBufferOnEnd (zlib.js:122:10)
+    at Gunzip.emit (events.js:187:15)
+[2018-10-09 08:21:40.849] [ERROR] dateFileLog - Error: Password is not correct.
+    at callback_getUser (D:\TECHWEB\yujiang.Foil.Node.BizServer\biz\account\checkLogin.js:155:17)
+    at D:\TECHWEB\yujiang.Foil.Node\src\yjError.js:134:4
+    at Object.exports.safeSuccess (D:\TECHWEB\yujiang.Foil.Node\src\yjError.js:98:13)
+    at Object.exports.safeCallback (D:\TECHWEB\yujiang.Foil.Node\src\yjError.js:133:11)
+    at Object.exports.handleResult (D:\TECHWEB\yujiang.Foil.Node\src\yjError.js:148:11)
+    at Query.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjDBService.engine.mysql.js:202:38)
+    at bound (domain.js:396:14)
+    at Query.runBound [as _callback] (domain.js:409:12)
+    at Query.Sequence.end (D:\TECHWEB\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (D:\TECHWEB\node_modules\mysql\lib\protocol\sequences\Query.js:143:8)
+[2018-10-09 08:21:40.852] [ERROR] dateFileLog - Error: 密码不对。
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at Request.emit (events.js:182:13)
+    at Request.EventEmitter.emit (domain.js:460:23)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:154:16
+    at Request._decode (D:\TECHWEB\node_modules\restler\lib\restler.js:170:7)
+    at IncomingMessage.<anonymous> (D:\TECHWEB\node_modules\restler\lib\restler.js:147:14)
+[2018-10-09 09:27:32.416] [ERROR] dateFileLog - Error: Error: The module &#39;\\?\D:\TECHWEB\node_modules\ccap\build\Release\hcaptha.node&#39;<br>was compiled against a different Node.js version using<br>NODE_MODULE_VERSION 46. This version of Node.js requires<br>NODE_MODULE_VERSION 64. Please try re-compiling or re-installing<br>the module (for instance, using `npm rebuild` or `npm install`).<br> &nbsp; &nbsp;at Object.Module._extensions..node (internal/modules/cjs/loader.js:718:18)<br> &nbsp; &nbsp;at Module.load (internal/modules/cjs/loader.js:599:32)<br> &nbsp; &nbsp;at tryModuleLoad (internal/modules/cjs/loader.js:538:12)<br> &nbsp; &nbsp;at Function.Module._load (internal/modules/cjs/loader.js:530:3)<br> &nbsp; &nbsp;at Module.require (internal/modules/cjs/loader.js:637:17)<br> &nbsp; &nbsp;at require (internal/modules/cjs/helpers.js:20:18)<br> &nbsp; &nbsp;at Object.&lt;anonymous&gt; (D:\TECHWEB\node_modules\ccap\lib\hcap.js:4:13)<br> &nbsp; &nbsp;at Module._compile (internal/modules/cjs/loader.js:689:30)<br> &nbsp; &nbsp;at Object.Module._extensions..js (internal/modules/cjs/loader.js:700:10)<br> &nbsp; &nbsp;at Module.load (internal/modules/cjs/loader.js:599:32)
+
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at Request.emit (events.js:182:13)
+    at Request.EventEmitter.emit (domain.js:460:23)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at Gunzip.cb (D:\TECHWEB\node_modules\restler\lib\restler.js:154:16)
+    at Gunzip.zlibBufferOnEnd (zlib.js:122:10)
+    at Gunzip.emit (events.js:187:15)
+[2018-10-09 09:27:44.177] [ERROR] dateFileLog - Error: Error: The module &#39;\\?\D:\TECHWEB\node_modules\ccap\build\Release\hcaptha.node&#39;<br>was compiled against a different Node.js version using<br>NODE_MODULE_VERSION 46. This version of Node.js requires<br>NODE_MODULE_VERSION 64. Please try re-compiling or re-installing<br>the module (for instance, using `npm rebuild` or `npm install`).<br> &nbsp; &nbsp;at Object.Module._extensions..node (internal/modules/cjs/loader.js:718:18)<br> &nbsp; &nbsp;at Module.load (internal/modules/cjs/loader.js:599:32)<br> &nbsp; &nbsp;at tryModuleLoad (internal/modules/cjs/loader.js:538:12)<br> &nbsp; &nbsp;at Function.Module._load (internal/modules/cjs/loader.js:530:3)<br> &nbsp; &nbsp;at Module.require (internal/modules/cjs/loader.js:637:17)<br> &nbsp; &nbsp;at require (internal/modules/cjs/helpers.js:20:18)<br> &nbsp; &nbsp;at Object.&lt;anonymous&gt; (D:\TECHWEB\node_modules\ccap\lib\hcap.js:4:13)<br> &nbsp; &nbsp;at Module._compile (internal/modules/cjs/loader.js:689:30)<br> &nbsp; &nbsp;at Object.Module._extensions..js (internal/modules/cjs/loader.js:700:10)<br> &nbsp; &nbsp;at Module.load (internal/modules/cjs/loader.js:599:32)
+
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at Request.emit (events.js:182:13)
+    at Request.EventEmitter.emit (domain.js:460:23)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at Gunzip.cb (D:\TECHWEB\node_modules\restler\lib\restler.js:154:16)
+    at Gunzip.zlibBufferOnEnd (zlib.js:122:10)
+    at Gunzip.emit (events.js:187:15)
+[2018-10-09 09:56:09.985] [ERROR] dateFileLog - Error: Error: The module &#39;\\?\D:\TECHWEB\node_modules\ccap\build\Release\hcaptha.node&#39;<br>was compiled against a different Node.js version using<br>NODE_MODULE_VERSION 46. This version of Node.js requires<br>NODE_MODULE_VERSION 64. Please try re-compiling or re-installing<br>the module (for instance, using `npm rebuild` or `npm install`).<br> &nbsp; &nbsp;at Object.Module._extensions..node (internal/modules/cjs/loader.js:718:18)<br> &nbsp; &nbsp;at Module.load (internal/modules/cjs/loader.js:599:32)<br> &nbsp; &nbsp;at tryModuleLoad (internal/modules/cjs/loader.js:538:12)<br> &nbsp; &nbsp;at Function.Module._load (internal/modules/cjs/loader.js:530:3)<br> &nbsp; &nbsp;at Module.require (internal/modules/cjs/loader.js:637:17)<br> &nbsp; &nbsp;at require (internal/modules/cjs/helpers.js:20:18)<br> &nbsp; &nbsp;at Object.&lt;anonymous&gt; (D:\TECHWEB\node_modules\ccap\lib\hcap.js:4:13)<br> &nbsp; &nbsp;at Module._compile (internal/modules/cjs/loader.js:689:30)<br> &nbsp; &nbsp;at Object.Module._extensions..js (internal/modules/cjs/loader.js:700:10)<br> &nbsp; &nbsp;at Module.load (internal/modules/cjs/loader.js:599:32)
+
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at Request.emit (events.js:182:13)
+    at Request.EventEmitter.emit (domain.js:460:23)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at Gunzip.cb (D:\TECHWEB\node_modules\restler\lib\restler.js:154:16)
+    at Gunzip.zlibBufferOnEnd (zlib.js:122:10)
+    at Gunzip.emit (events.js:187:15)
+[2018-10-09 09:56:42.334] [ERROR] dateFileLog - Error: Error: The module &#39;\\?\D:\TECHWEB\node_modules\ccap\build\Release\hcaptha.node&#39;<br>was compiled against a different Node.js version using<br>NODE_MODULE_VERSION 46. This version of Node.js requires<br>NODE_MODULE_VERSION 64. Please try re-compiling or re-installing<br>the module (for instance, using `npm rebuild` or `npm install`).<br> &nbsp; &nbsp;at Object.Module._extensions..node (internal/modules/cjs/loader.js:718:18)<br> &nbsp; &nbsp;at Module.load (internal/modules/cjs/loader.js:599:32)<br> &nbsp; &nbsp;at tryModuleLoad (internal/modules/cjs/loader.js:538:12)<br> &nbsp; &nbsp;at Function.Module._load (internal/modules/cjs/loader.js:530:3)<br> &nbsp; &nbsp;at Module.require (internal/modules/cjs/loader.js:637:17)<br> &nbsp; &nbsp;at require (internal/modules/cjs/helpers.js:20:18)<br> &nbsp; &nbsp;at Object.&lt;anonymous&gt; (D:\TECHWEB\node_modules\ccap\lib\hcap.js:4:13)<br> &nbsp; &nbsp;at Module._compile (internal/modules/cjs/loader.js:689:30)<br> &nbsp; &nbsp;at Object.Module._extensions..js (internal/modules/cjs/loader.js:700:10)<br> &nbsp; &nbsp;at Module.load (internal/modules/cjs/loader.js:599:32)
+
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at Request.emit (events.js:182:13)
+    at Request.EventEmitter.emit (domain.js:460:23)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at Gunzip.cb (D:\TECHWEB\node_modules\restler\lib\restler.js:154:16)
+    at Gunzip.zlibBufferOnEnd (zlib.js:122:10)
+    at Gunzip.emit (events.js:187:15)
+[2018-10-09 09:56:50.599] [ERROR] dateFileLog - Error: Password is not correct.
+    at callback_getUser (D:\TECHWEB\yujiang.Foil.Node.BizServer\biz\account\checkLogin.js:155:17)
+    at D:\TECHWEB\yujiang.Foil.Node\src\yjError.js:134:4
+    at Object.exports.safeSuccess (D:\TECHWEB\yujiang.Foil.Node\src\yjError.js:98:13)
+    at Object.exports.safeCallback (D:\TECHWEB\yujiang.Foil.Node\src\yjError.js:133:11)
+    at Object.exports.handleResult (D:\TECHWEB\yujiang.Foil.Node\src\yjError.js:148:11)
+    at Query.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjDBService.engine.mysql.js:202:38)
+    at bound (domain.js:396:14)
+    at Query.runBound [as _callback] (domain.js:409:12)
+    at Query.Sequence.end (D:\TECHWEB\node_modules\mysql\lib\protocol\sequences\Sequence.js:96:24)
+    at Query._handleFinalResultPacket (D:\TECHWEB\node_modules\mysql\lib\protocol\sequences\Query.js:143:8)
+[2018-10-09 09:56:50.601] [ERROR] dateFileLog - Error: 密码不对。
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at Request.emit (events.js:182:13)
+    at Request.EventEmitter.emit (domain.js:460:23)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:154:16
+    at Request._decode (D:\TECHWEB\node_modules\restler\lib\restler.js:170:7)
+    at IncomingMessage.<anonymous> (D:\TECHWEB\node_modules\restler\lib\restler.js:147:14)
+[2018-10-09 09:57:05.136] [ERROR] dateFileLog - Error: Error: The module &#39;\\?\D:\TECHWEB\node_modules\ccap\build\Release\hcaptha.node&#39;<br>was compiled against a different Node.js version using<br>NODE_MODULE_VERSION 46. This version of Node.js requires<br>NODE_MODULE_VERSION 64. Please try re-compiling or re-installing<br>the module (for instance, using `npm rebuild` or `npm install`).<br> &nbsp; &nbsp;at Object.Module._extensions..node (internal/modules/cjs/loader.js:718:18)<br> &nbsp; &nbsp;at Module.load (internal/modules/cjs/loader.js:599:32)<br> &nbsp; &nbsp;at tryModuleLoad (internal/modules/cjs/loader.js:538:12)<br> &nbsp; &nbsp;at Function.Module._load (internal/modules/cjs/loader.js:530:3)<br> &nbsp; &nbsp;at Module.require (internal/modules/cjs/loader.js:637:17)<br> &nbsp; &nbsp;at require (internal/modules/cjs/helpers.js:20:18)<br> &nbsp; &nbsp;at Object.&lt;anonymous&gt; (D:\TECHWEB\node_modules\ccap\lib\hcap.js:4:13)<br> &nbsp; &nbsp;at Module._compile (internal/modules/cjs/loader.js:689:30)<br> &nbsp; &nbsp;at Object.Module._extensions..js (internal/modules/cjs/loader.js:700:10)<br> &nbsp; &nbsp;at Module.load (internal/modules/cjs/loader.js:599:32)
+
+    at Request.<anonymous> (D:\TECHWEB\yujiang.Foil.Node\src\yjREST.engine.remote.restler.js:43:33)
+    at Request.emit (events.js:182:13)
+    at Request.EventEmitter.emit (domain.js:460:23)
+    at Request._fireSuccess (D:\TECHWEB\node_modules\restler\lib\restler.js:220:12)
+    at D:\TECHWEB\node_modules\restler\lib\restler.js:158:20
+    at IncomingMessage.auto (D:\TECHWEB\node_modules\restler\lib\restler.js:394:7)
+    at Request._encode (D:\TECHWEB\node_modules\restler\lib\restler.js:195:29)
+    at Gunzip.cb (D:\TECHWEB\node_modules\restler\lib\restler.js:154:16)
+    at Gunzip.zlibBufferOnEnd (zlib.js:122:10)
+    at Gunzip.emit (events.js:187:15)
