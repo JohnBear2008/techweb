@@ -21,6 +21,20 @@ module.exports = function(sender) {
         }
         
         
+//---定义显示时间函数-------------------------   
+    	
+    	
+    	function getDateShow(date){
+    		  var date= new Date(Date.parse(date));
+    	    	var y = date.getFullYear();
+    	    	var m = date.getMonth()+1;//月份以数组形式存储 0-11 因此会少1
+    	    	if(m<10){m="0"+m}
+    	    	var d = date.getDate();
+    	    	if(d<10){d="0"+d}
+    	    	return y+'-'+m+'-'+d;
+    	}
+        
+        
 //    select count(1) from spinfo 查询数量 执行效率高
 //    select * from table limit (start-1)*limit,limit; 其中start是页码，limit是每页显示的条数。
 //        var sqlcount="select count(*) from spinfo"
@@ -39,6 +53,11 @@ module.exports = function(sender) {
                 }
                 for(var i=0;i<limit;i++){
                 	datasend[i]=data[start+i];
+                	datasend[i].CreationDate=getDateShow(datasend[i].CreationDate);
+                	datasend[i].VidDate=getDateShow(datasend[i].VidDate);
+                	
+                	
+//                	console.log(datasend[i].VidDate);
 
                 }
                 

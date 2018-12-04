@@ -1,8 +1,7 @@
 <div class="contentDiv">
 
 <blockquote class="layui-elem-quote layui-text">
-<p>欢迎用户：<%-(locals.session==null)?"":locals.session.yjUser.AID%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账号有效期至:<%-locals.session.yjUser.VidDate%></p>
-
+<p>欢迎用户：<%-(locals.session==null)?"":locals.session.yjUser.AID%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账号有效期至:<span id="VidDateShow4"></span></p>
 </blockquote>
 <HR></br>
 <form class="layui-form" action="">
@@ -87,6 +86,10 @@
         g_subProcesses.renderAgentSP=function(){
         	
         	var VidDate="<%-locals.session.yjUser.VidDate%>";
+
+        	var VidDateShow=getDateShow(VidDate);
+        	
+        	$("#VidDateShow4").html(VidDateShow);
         	
         	var maxDate=getMaxDate(VidDate);
 //定义界面日期FORM界面-----------	

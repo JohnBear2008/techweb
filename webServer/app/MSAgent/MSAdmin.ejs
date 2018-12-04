@@ -1,8 +1,7 @@
 <div class="contentDiv">
 
 <blockquote class="layui-elem-quote layui-text">
-<p>欢迎用户：<%-(locals.session==null)?"":locals.session.yjUser.AID%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账号有效期至:<%-locals.session.yjUser.VidDate%></p>
-
+<p>欢迎用户：<%-(locals.session==null)?"":locals.session.yjUser.AID%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账号有效期至:<span id="VidDateShow3"></span></p>
 </blockquote>
 <HR></br>
 	
@@ -39,12 +38,20 @@
     var  processAID="MSAgent";
     var  subProcessAID="MSAdmin";
     var g_ScreenFlat=$(window).width()>1366?true:false;
+    
+   
    
 
     
     $(function(){
         g_subProcesses.renderMSAdmin=function(){
         	
+        	
+        	 var VidDate="<%-locals.session.yjUser.VidDate%>";
+        	    
+        	    var VidDateShow=getDateShow(VidDate);
+        		
+        		$("#VidDateShow3").html(VidDateShow);
         	
         	loadSPTable();//加载表格,默认加载全部数据
         	

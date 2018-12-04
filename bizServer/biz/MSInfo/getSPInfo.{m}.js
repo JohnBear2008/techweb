@@ -26,7 +26,18 @@ module.exports = function(sender) {
         	 var sql="SELECT * FROM spinfo WHERE MCID like ? ORDER BY TimeStamp Desc ";
         }
         
-
+//---定义显示时间函数-------------------------   
+    	
+    	
+    	function getDateShow(date){
+    		  var date= new Date(Date.parse(date));
+    	    	var y = date.getFullYear();
+    	    	var m = date.getMonth()+1;//月份以数组形式存储 0-11 因此会少1
+    	    	if(m<10){m="0"+m}
+    	    	var d = date.getDate();
+    	    	if(d<10){d="0"+d}
+    	    	return y+'-'+m+'-'+d;
+    	}
 
         
 //      console.log(limit+page+id);
@@ -52,8 +63,8 @@ module.exports = function(sender) {
 
                 }
                 for(var i=0;i<limit;i++){
-                	datasend[i]=data[start+i];
-
+                	datasend[i]=data[start+i];                	
+                	datasend[i].TimeStamp=getDateShow(datasend[i].TimeStamp);
                 }
         
                 var resulttest={"code":0,"msg":"","count":data.length,"data":datasend}

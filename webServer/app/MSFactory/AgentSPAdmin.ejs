@@ -1,8 +1,7 @@
 <div class="contentDiv">
 
 <blockquote class="layui-elem-quote layui-text">
-<p>欢迎用户：<%-(locals.session==null)?"":locals.session.yjUser.AID%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账号有效期至:<%-locals.session.yjUser.VidDate%></p>
-
+<p>欢迎用户：<%-(locals.session==null)?"":locals.session.yjUser.AID%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账号有效期至:<span id="VidDateShow5"></span></p>
 </blockquote>
 <HR></br>
 	
@@ -41,6 +40,12 @@
     
     $(function(){
         g_subProcesses.renderAgentSPAdmin=function(){
+        	
+        	var VidDate="<%-locals.session.yjUser.VidDate%>";
+
+        	var VidDateShow=getDateShow(VidDate);
+        	
+        	$("#VidDateShow5").html(VidDateShow);
         	
         	
         	

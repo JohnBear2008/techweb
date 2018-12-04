@@ -1,12 +1,10 @@
 <div class="contentDiv">
 
 <blockquote class="layui-elem-quote layui-text">
-<p>欢迎用户：<%-(locals.session==null)?"":locals.session.yjUser.AID%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账号有效期至:<%-locals.session.yjUser.VidDate%></p>
-	
+<p>欢迎用户：<%-(locals.session==null)?"":locals.session.yjUser.AID%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账号有效期至:<span id="VidDateShow"></span></p>
 </blockquote>
 
 
- 
 <HR></br>
 <form class="layui-form" action="">
 
@@ -78,7 +76,6 @@
 
 
 
-
 <script type="text/javascript">
     var  processAID="MSAgent";
     var  subProcessAID="MSAkey";
@@ -90,6 +87,18 @@
         	
         	
         	var VidDate="<%-locals.session.yjUser.VidDate%>";
+
+        	var VidDateShow=getDateShow(VidDate);
+        	
+        	$("#VidDateShow").html(VidDateShow);
+        	
+//        	alert(VidDateShow);
+  
+        	
+        	
+//        	var VidDateShow=VidDate+1;
+//        	alert(getDateShow(VidDate));
+        	
         	
         	
         	

@@ -322,3 +322,17 @@
     	    	if(d<10){d="0"+d}
     	    	return y+'-'+m+'-'+d;
     	}
+    	
+    	
+  //---定义显示时间函数-------------------------   
+    	
+    	
+    	function getDateShow(date){
+    		  var date= new Date(Date.parse(date));
+    	    	var y = date.getFullYear();
+    	    	var m = date.getMonth()+1;//月份以数组形式存储 0-11 因此会少1
+    	    	if(m<10){m="0"+m}
+    	    	var d = date.getDate();
+    	    	if(d<10){d="0"+d}
+    	    	return y+'-'+m+'-'+d;
+    	}

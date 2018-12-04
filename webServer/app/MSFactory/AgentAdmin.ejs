@@ -1,9 +1,9 @@
 <div class="contentDiv">
 
 <blockquote class="layui-elem-quote layui-text">
-<p>欢迎用户：<%-(locals.session==null)?"":locals.session.yjUser.AID%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账号有效期至:<%-locals.session.yjUser.VidDate%></p>
-
+<p>欢迎用户：<%-(locals.session==null)?"":locals.session.yjUser.AID%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账号有效期至:<span id="VidDateShow"></span></p>
 </blockquote>
+
 <HR></br>
 	
 	<div class="Agentsearch">
@@ -44,6 +44,12 @@
     
     $(function(){
         g_subProcesses.renderAgentAdmin=function(){
+        	
+        	var VidDate="<%-locals.session.yjUser.VidDate%>";
+
+        	var VidDateShow=getDateShow(VidDate);
+        	
+        	$("#VidDateShow").html(VidDateShow);
         	
         	loadUsersTable();
         	
